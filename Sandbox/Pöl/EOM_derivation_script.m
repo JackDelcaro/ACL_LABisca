@@ -3,12 +3,16 @@
 % -negligible distances in the junction between arm and pendulum
 % -both the pendulum and the arm can be considered slender rods
 
+clear all;
+close all;
+
 %% Variables definition
 
 syms al th
 syms al_dot th_dot
 syms al_ddot th_ddot
-syms mp mr Lp Lr
+syms mp mr Lp Lr Jm Jh
+syms Cth Cal
 
 %% Kinematics
 
@@ -52,10 +56,10 @@ L = T - V;
 
 %% Lagrange equation terms
 
-dL_dthdot = simplify(diff(T, th_dot), 'Steps', 20);
-dL_daldot = simplify(diff(T, al_dot), 'Steps', 20);
-dL_dth = simplify(diff(T, th), 'Steps', 20);
-dL_dal = simplify(diff(T, al), 'Steps', 20);
+dL_dthdot = simplify(diff(L, th_dot), 'Steps', 20);
+dL_daldot = simplify(diff(L, al_dot), 'Steps', 20);
+dL_dth = simplify(diff(L, th), 'Steps', 20);
+dL_dal = simplify(diff(L, al), 'Steps', 20);
 
 dt_dLthdot = simplify(diff(dL_dthdot, th_dot) * th_ddot + ...
                       diff(dL_dthdot, al_dot) * al_ddot + ...
@@ -67,5 +71,16 @@ dt_dLaldot = simplify(diff(dL_daldot, th_dot) * th_ddot + ...
                       diff(dL_daldot, th) * th_dot + ...
                       diff(dL_daldot, al) * al_dot, 'Steps', 20);
                   
-dV_dth = simplify(diff(V, th), 'Steps', 20);
-dV_dal = simplify(diff(V, al), 'Steps', 20);
+lhs_th = simplify(dt_dLthdot - dL_dth + Cth * th_dot + (Jm + Jh) * th_ddot, ...
+                  'Steps', 20);
+lhs_al = simplify(dt_dLaldot - dL_dal + Cal * al_dot, 'Steps', 20);
+
+%% Dynamic parameters identification
+
+% Reformulate the dynamic equations as linear equations wrt a set of
+% dynamic parameters 
+
+dyn_params = [Jm+Jh+(mp+mr/3)*Lr^2; mp*Lp^2; mp*Lp*Lr; Cth; mp*g*Lp; Cal];
+
+Y = [th_ddot, 1/4*(1-cos(al)^2)*th_ddot + sin(2*al)*th_dot*al_dot/4, -cos(al)*al_ddot/2, th_dot, 0, 0;
+     0, al_ddot/3-sin(2*al)/2*th_dot^2, -cos(al)/2*th_ddot, 0, sin(al)/2, al_dot];

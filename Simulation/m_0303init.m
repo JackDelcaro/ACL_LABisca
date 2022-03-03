@@ -8,9 +8,11 @@ close all;
 paths.file_fullpath = matlab.desktop.editor.getActiveFilename;
 [paths.file_path, ~, ~] = fileparts(paths.file_fullpath);
 addpath(genpath(paths.file_path));
-paths.data_folder = fullfile(string(paths.file_path), "..", "Data");
+paths.mainfolder_path = strsplit(paths.file_path, 'ACL_LABisca');
+paths.mainfolder_path = fullfile(string(paths.mainfolder_path(1)), 'ACL_LABisca');
+paths.data_folder = fullfile(string(paths.mainfolder_path), "Data");
 addpath(genpath(paths.data_folder));
-paths.scripts_folder = fullfile(string(paths.file_path), "..", "Scripts");
+paths.scripts_folder = fullfile(string(paths.mainfolder_path), "Scripts");
 addpath(genpath(paths.scripts_folder));
 
 %% SETTINGS
@@ -39,12 +41,14 @@ big_tau = zeros(2*length(out.tau), 1);
 big_tau(1:2:end) = out.tau; 
 
 s = tf('s');
-omega_cut = 2*2*pi;
+omega_cut = 10*2*pi;
 filter = s/(1+s/omega_cut);
 [num,den] = tfdata(c2d(filter, dt), 'v');
 
-theta_ddot = filtfilt(num, den, out.theta_dot);
-alpha_ddot = filtfilt(num, den, out.alpha_dot);
+% theta_ddot = filtfilt(num, den, out.theta_dot);
+% alpha_ddot = filtfilt(num, den, out.alpha_dot);
+theta_ddot = gradient(out.theta_dot)/dt;
+alpha_ddot = gradient(out.alpha_dot)/dt;
 
 big_Y = zeros(2*length(out.tau), 6);
 
@@ -61,7 +65,18 @@ big_Y(2:2:end, 4) = 0;
 big_Y(2:2:end, 5) = -sin(out.alpha)/2;
 big_Y(2:2:end, 6) = -out.alpha_dot;
 
-p = fit(
+pi = pinv(big_Y)*big_tau;
+
+g = 9.81;
+dyn_params = [Jm+Jh+(mp+mr/3)*Lr^2; mp*Lp^2; mp*Lp*Lr; Cth; mp*g*Lp; Cal];
+figure;
+subplot(1,2,1); hold on;
+scatter(big_Y*dyn_params, big_tau); grid on;
+title('Theoretical Parameters');
+subplot(1,2,2); hold on;
+scatter(big_Y*pi, big_tau); grid on;
+title('Fitted Model');
+
 
 %% RESULTS
 

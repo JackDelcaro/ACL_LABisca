@@ -95,3 +95,15 @@ dyn_params = [Jm+Jh+(mp+mr/3)*Lr^2; mp*Lp^2; mp*Lp*Lr; Cth; mp*g*Lp; Cal];
 
 Y = [th_ddot, 1/4*(1-cos(al)^2)*th_ddot + sin(2*al)*th_dot*al_dot/4, -cos(al)*al_ddot/2+al_dot^2*sin(al)/2, th_dot, 0, 0;
      0, al_ddot/3-sin(2*al)/8*th_dot^2, -cos(al)/2*th_ddot, 0, sin(al)/2, al_dot];
+ 
+ 
+%% Other Model Copied from paper
+th2 = al; th2_dot = al_dot; th2_ddot = al_ddot;
+l_cm_r = Lr/2; l_cm_p = Lp/2;
+
+lhs_th_2 = th_ddot*(J_r + mr*l_cm_r^2 + mp*Lr^2 + (mp*l_cm_p^2+J_p)*sin(th2)^2) +...
+    th2_ddot*mp*Lr*l_cm_p*cos(th2) - mp*Lr*l_cm_p*sin(th2)*th2_dot^2 +...
+    (mp*l_cm_p^2+J_p)*th_dot*th2_dot*sin(2*th2) + Cth*th_dot;
+lhs_al_2 = -(th_ddot*mp*Lr*l_cm_p*cos(th2) + th2_ddot*(mp*l_cm_p^2+J_p) - ...
+    1/2*(mp*l_cm_p^2+J_p)*th_dot^2*sin(2*th2) + Cal*th2_dot + ...
+    g*mp*l_cm_p*sin(th2));

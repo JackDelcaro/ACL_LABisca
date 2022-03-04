@@ -29,3 +29,7 @@ codegen/
 
 # Octave session info
 octave-workspace
+
+# Auto-generated compiled files
+*.rt-win64
+*_quarc_win64

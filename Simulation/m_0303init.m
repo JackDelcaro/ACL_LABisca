@@ -24,7 +24,7 @@ run('graphics_options.m');
 run('m_0303params.m');
 
 T_sim = 20;
-dt = 1e-3;
+dt = 1e-4;
 
 t_vec = 0:dt:T_sim;
 w_max = 3*2*pi;

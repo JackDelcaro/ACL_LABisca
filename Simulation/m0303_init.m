@@ -21,7 +21,7 @@ run('graphics_options.m');
 
 %% INITIALIZATION
 
-run('m_0303params.m');
+run('m0303_params.m');
 
 T_sim = 20;
 dt = 1e-4;
@@ -35,7 +35,7 @@ simul.input = [t_vec', in_vec'];
 
 %% SIMULATION
 
-out = sim("s_0303main.slx");
+out = sim("s0303_main.slx");
 
 big_tau = zeros(2*length(out.tau), 1);
 big_tau(1:2:end) = out.tau; 

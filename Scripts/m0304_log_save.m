@@ -22,7 +22,7 @@ addpath(genpath(paths.scripts_folder));
 
 cd(paths.raw_data_folder);
 [filename, path] = uigetfile('MultiSelect', 'on');
-cd(paths.file_path);
+cd(paths.mainfolder_path);
 filename = string(filename)';
 
 for i = 1:length(filename)
@@ -39,9 +39,10 @@ for i = 1:length(filename)
     
     eval("log_var = " + string(strrep(strrep(filename(i), '.mat', ''), '-', '_')) + ";");
 
-    Log_data.voltage = log_var(1, :);
-    Log_data.theta = log_var(2, :) *0.176 /180 * pi;
-    Log_data.alpha = log_var(3, :) *0.176 /180 * pi;
+    Log_data.voltage = log_var(4, :)';
+    Log_data.theta = log_var(2, :)' *0.176 /180 * pi;
+    Log_data.alpha = log_var(3, :)' *0.176 /180 * pi;
+    Log_data.time = log_var(1, :)';
     
     savefile_date = get_savefile_date(filename(i));
     savefile_label = savefile_date + string(experiment_label) + ".mat";

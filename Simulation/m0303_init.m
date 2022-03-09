@@ -25,6 +25,7 @@ run('m0303_params.m');
 
 T_sim = 20;
 dt = 1e-4;
+dt_control = 2e-2;
 
 t_vec = 0:dt:T_sim;
 w_max = 3*2*pi;
@@ -50,6 +51,7 @@ filter = s/(1+s/omega_cut);
 theta_ddot = gradient(out.theta_dot)/dt;
 alpha_ddot = gradient(out.alpha_dot)/dt;
 
+
 big_Y = zeros(2*length(out.tau), 6);
 
 big_Y(1:2:end, 1) = theta_ddot;
@@ -65,7 +67,7 @@ big_Y(2:2:end, 4) = 0;
 big_Y(2:2:end, 5) = -sin(out.alpha)/2;
 big_Y(2:2:end, 6) = -out.alpha_dot;
 
-pi = pinv(big_Y)*big_tau;
+pi_vec = pinv(big_Y)*big_tau;
 
 g = 9.81;
 dyn_params = [Jm+Jh+(mp+mr/3)*Lr^2; mp*Lp^2; mp*Lp*Lr; Cth; mp*g*Lp; Cal];
@@ -74,10 +76,13 @@ subplot(1,2,1); hold on;
 scatter(big_Y*dyn_params, big_tau); grid on;
 title('Theoretical Parameters');
 subplot(1,2,2); hold on;
-scatter(big_Y*pi, big_tau); grid on;
+scatter(big_Y*pi_vec, big_tau); grid on;
 title('Fitted Model');
 
 
 %% RESULTS
+
+figure
+plot(0:dt:T_sim, out.theta, 0:dt:T_sim, out.alpha);
 
 %% SAVE RESULTS

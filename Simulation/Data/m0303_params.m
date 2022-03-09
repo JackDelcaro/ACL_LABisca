@@ -24,6 +24,12 @@ PARAMS.ki = 0.042;
 PARAMS.kv = 0.042;
 PARAMS.Dm = 0;
 PARAMS.n = 1;
+PARAMS.V_sat = 10;
+
+% Loop Parameters
+
+PARAMS.mu_V_theta_dot = PARAMS.ki /((PARAMS.mp + PARAMS.mr/3) * PARAMS.Lr^2 + ...
+                                     PARAMS.Jm + PARAMS.Jh) / PARAMS.Rm;
 
 
 

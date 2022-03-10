@@ -11,9 +11,11 @@ paths.mainfolder_path   = strsplit(paths.file_path, 'ACL_LABisca');
 paths.mainfolder_path   = fullfile(string(paths.mainfolder_path(1)), 'ACL_LABisca');
 paths.data_folder       = fullfile(string(paths.mainfolder_path), "Data");
 paths.scripts_folder    = fullfile(string(paths.mainfolder_path), "Scripts");
-addpath(genpath(paths.file_path     ));
-addpath(genpath(paths.data_folder   ));
-addpath(genpath(paths.scripts_folder));
+paths.simulation_folder = fullfile(string(paths.mainfolder_path), "Simulation");
+addpath(genpath(paths.file_path        ));
+addpath(genpath(paths.data_folder      ));
+addpath(genpath(paths.scripts_folder   ));
+addpath(genpath(paths.simulation_folder));
 
 %% SETTINGS
 

@@ -7,7 +7,7 @@ syms al th th_0 real;
 syms al_dot th_dot real;
 syms al_ddot th_ddot real;
 syms m2 m1 Lp Lr L1 L2 Jm Jh real;
-syms Cth Cal real;
+syms Cth Cal Dth Sth real;
 syms tau T Attr real;
 syms c g G C K real;  
 
@@ -59,7 +59,7 @@ Jp_l2 = simplify(Jp_l2, 10);
 I1 = m1*L1^2/12;  %add Jh Jm
 I2 = m2*L2^2/12;
 
-I1_big = diag([I1,I1,0]);
+I1_big = diag([I1,I1+Jh+Jm,0]);
 I2_big = diag([I2,I2,0]);
 
 %% matrixes
@@ -92,13 +92,21 @@ G = [0 -m2*(g0'*Jp_l2(:,2))]';
 
 %% other forces
 
-Attr = [Cth Cal]'.*Q_dot;
+Attr_v = [Cth Cal]'.*Q_dot;
 
-molla = [-K*(th-th_0) 0]'; %th_0 rest angle of the spring
+
+
+molla = [K*(th-th_0) 0]'; %th_0 rest angle of the spring
+
+
 
 %% ta-da
 
-T = simplify(B*Q_ddot + C*Q_dot + G + Attr + molla, 100);
+T = simplify(B*Q_ddot + C*Q_dot + G + Attr_v + molla, 100);
+
+b = simplify([tau;0] - (T - B*Q_ddot), 100);
+
+X = simplify(B\b, 100);
 
 
 

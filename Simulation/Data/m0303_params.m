@@ -1,8 +1,8 @@
 % Setup par
-PARAMS.th_0_cable = 0;  % -30.55*pi/180;
+PARAMS.th_0_cable = -30.55*pi/180;
 PARAMS.th_0 = 0;
 PARAMS.th_dot_0 = 0;
-PARAMS.al_0 = 33/32 * pi;
+PARAMS.al_0 = 160/161*pi;
 PARAMS.al_dot_0 = 0;
 
 % Mechanical Parameters
@@ -36,7 +36,6 @@ PARAMS.mu_V_theta_dot = PARAMS.ki /((PARAMS.mp + PARAMS.mr/3) * PARAMS.Lr^2 + ..
                                  
 % Linearized sys parameters
 
-g = 9.81;
 num = PARAMS.Jh + PARAMS.Jm + PARAMS.mp * PARAMS.Lr^2 + PARAMS.mr * PARAMS.Lr^2 / 3;
 den = PARAMS.Lp * (PARAMS.Jh + PARAMS.Jm + PARAMS.mp * PARAMS.Lr^2 / 4 + PARAMS.mr * PARAMS.Lr^2 / 3);
 
@@ -44,9 +43,16 @@ PARAMS.A_pi = zeros(2);
 PARAMS.B_pi = zeros(2,1);
 
 PARAMS.A_pi(1,2) = 1;
-PARAMS.A_pi(2,1) = 3 / 2 * g * num / den;
+PARAMS.A_pi(2,1) = 3 / 2 * 9.81 * num / den;
 
 PARAMS.B_pi(2) = 3 / 2 * PARAMS.Lr / den;
+
+% % Full state feedback
+% 
+% PARAMS.A = [ 0  1  0          0 
+%              0  0  53.3226    0
+%              0  0  0          1
+%              0  0  166.7723   0 ];
 
 
 

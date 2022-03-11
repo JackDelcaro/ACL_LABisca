@@ -1,17 +1,8 @@
-mp = 2.4e-2;
-Lp = 1.29e-1;
-mr = 9.5e-2;
-Lr = 8.5e-2;
-Jm = 4e-6;
-Jh = 6e-7;
-Cal = 5e-4;
-Cth = 1.5e-3;
-
 % Setup par
-PARAMS.th_0_cable = -30.55*pi/180;
+PARAMS.th_0_cable = 0;  % -30.55*pi/180;
 PARAMS.th_0 = 0;
 PARAMS.th_dot_0 = 0;
-PARAMS.al_0 = 0;
+PARAMS.al_0 = 33/32 * pi;
 PARAMS.al_dot_0 = 0;
 
 % Mechanical Parameters
@@ -27,6 +18,7 @@ PARAMS.K = 5e-4/(20*pi/180);
 PARAMS.Dth = 62*2e-5;
 PARAMS.Sth = 12e-4;  %static friction - dynamic friction
 PARAMS.Sth_vel_threshold = 1e-8;
+PARAMS.tau_nom = 22e-3;
 
 % Electrical Parameters
 PARAMS.Lm = 1.16e-3;
@@ -41,6 +33,20 @@ PARAMS.V_sat = 10;
 
 PARAMS.mu_V_theta_dot = PARAMS.ki /((PARAMS.mp + PARAMS.mr/3) * PARAMS.Lr^2 + ...
                                      PARAMS.Jm + PARAMS.Jh) / PARAMS.Rm;
+                                 
+% Linearized sys parameters
+
+g = 9.81;
+num = PARAMS.Jh + PARAMS.Jm + PARAMS.mp * PARAMS.Lr^2 + PARAMS.mr * PARAMS.Lr^2 / 3;
+den = PARAMS.Lp * (PARAMS.Jh + PARAMS.Jm + PARAMS.mp * PARAMS.Lr^2 / 4 + PARAMS.mr * PARAMS.Lr^2 / 3);
+
+PARAMS.A_pi = zeros(2);
+PARAMS.B_pi = zeros(2,1);
+
+PARAMS.A_pi(1,2) = 1;
+PARAMS.A_pi(2,1) = 3 / 2 * g * num / den;
+
+PARAMS.B_pi(2) = 3 / 2 * PARAMS.Lr / den;
 
 
 

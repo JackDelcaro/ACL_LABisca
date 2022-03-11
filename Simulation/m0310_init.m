@@ -27,6 +27,8 @@ run('graphics_options.m');
 run('m0303_params.m');
 
 dt = 2e-4;
+dt_control = 2e-2;
+
 T_sweep = 60;
 
 zero_length = ceil(4/dt);

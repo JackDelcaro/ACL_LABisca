@@ -20,12 +20,12 @@ PARAMS.Lp = 1.29e-1;
 PARAMS.mr = 9.5e-2;
 PARAMS.Lr = 8.5e-2;
 PARAMS.Jm = 4e-6;
-PARAMS.Jh = 6e-7;
-PARAMS.Cal = 5e-4;
-PARAMS.Cth = 1.5e-3;
-PARAMS.K = 0*5e-4/(30*pi/180);
-PARAMS.Dth = 5*2e-5;
-PARAMS.Sth = 3.3*7.5e-4;  %static friction - dynamic friction
+PARAMS.Jh = 6e-7 + 4.7395e-06;
+PARAMS.Cal = 1.4163e-05; % 5e-4;
+PARAMS.Cth = 2.2237e-4; %1.5e-3
+PARAMS.K = 5e-4/(20*pi/180);
+PARAMS.Dth = 62*2e-5;
+PARAMS.Sth = 12e-4;  %static friction - dynamic friction
 PARAMS.Sth_vel_threshold = 1e-8;
 
 % Electrical Parameters

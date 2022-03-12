@@ -41,10 +41,10 @@ out = sim("s0303_main.slx");
 big_tau = zeros(2*length(out.tau), 1);
 big_tau(1:2:end) = out.tau; 
 
-s = tf('s');
-omega_cut = 10*2*pi;
-filter = s/(1+s/omega_cut);
-[num,den] = tfdata(c2d(filter, dt), 'v');
+% s = tf('s');
+% omega_cut = 10*2*pi;
+% filter = s/(1+s/omega_cut);
+% [num,den] = tfdata(c2d(filter, dt), 'v');
 
 % theta_ddot = filtfilt(num, den, out.theta_dot);
 % alpha_ddot = filtfilt(num, den, out.alpha_dot);

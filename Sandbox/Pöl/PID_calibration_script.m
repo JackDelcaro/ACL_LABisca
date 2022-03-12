@@ -44,7 +44,7 @@ disp(D);
 %% Write transfer function part 1 - Display transfer function
 
 wc = 20;
-mu = 1;
+mu = 12.29;
 cut_zero_ratio = 100;
 pole_cut_ratio = 10;
 
@@ -63,9 +63,9 @@ disp(den);
 
 s = tf('s');
 
-R = (4000 * s^2 + 1600*s + 160) / (s * (s + 200));  % Substitute the values
-                                                     % you see on the
-                                                     % display
+R = (4000 * s^2 + 1600*s + 160) / 12.29 / (s * (s + 200));  % Substitute the values
+                                                            % you see on the
+                                                            % display
                                                      
 %% Check the results                                                     
                                                      

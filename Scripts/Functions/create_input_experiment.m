@@ -3,6 +3,7 @@ function [time, experiment] = create_input_experiment(dt, zero_time, varargin)
 is_cell_step = @(x) cellfun(@(y)(isstring(y)||ischar(y)) && contains(y, {'step', 'steps', 'Step', 'Steps'}),x,'UniformOutput',1);
 is_cell_sine = @(x) cellfun(@(y)(isstring(y)||ischar(y)) && contains(y, {'sinusoid', 'sinusoids', 'Sinusoid', 'Sinusoids'}),x,'UniformOutput',1);
 is_cell_sweep = @(x) cellfun(@(y)(isstring(y)||ischar(y)) && contains(y, {'sweep', 'Sweep'}),x,'UniformOutput',1);
+is_cell_ramp = @(x) cellfun(@(y)(isstring(y)||ischar(y)) && contains(y, {'ramp', 'Ramp', 'ramps', 'Ramps'}),x,'UniformOutput',1);
 
 if any(is_cell_step(varargin))
     step_index = find(is_cell_step(varargin)) + 1;
@@ -36,6 +37,17 @@ else
     enable_sweep = false;
 end
 
+if any(is_cell_ramp(varargin))
+    ramp_index = find(is_cell_ramp(varargin)) + 1;
+    enable_ramps = true;
+    ramps_amplitude = varargin{ramp_index};
+    ramps_duration = varargin{ramp_index+1};
+    ramps_backoff_duration = varargin{ramp_index+2};
+    varargin(ramp_index-1:ramp_index+2) = [];
+else
+    enable_ramps = false;
+end
+
 if enable_steps
     num_steps = length(steps_amplitude);
     step_length = ceil(steps_duration/dt);
@@ -48,6 +60,38 @@ if enable_steps
     steps_vector = [zeros(ceil(zero_time/dt),1); steps_vector];
 else
     steps_vector = [];
+end
+
+if enable_ramps
+    num_ramps = length(ramps_amplitude);
+    ramp_length = ceil(ramps_duration/dt);
+    backoff_length = ceil(ramps_backoff_duration/dt);
+    ramp_tot_length = ramp_length*4+4*backoff_length;
+    tot_ramps_duration = sum(ramp_tot_length);
+    ramps_vector = zeros(tot_ramps_duration,1);
+    start_ramp1_idx = 1;
+    for i = 1:num_ramps
+        end_ramp1_idx = start_ramp1_idx + ramp_length(i) - 1;
+        ramps_vector(start_ramp1_idx:end_ramp1_idx) = ramps_amplitude(i)*linspace(0,1,ramp_length(i))'.*ones(ramp_length(i),1);
+        start_ramp2_idx = end_ramp1_idx + backoff_length - 1;
+        ramps_vector(end_ramp1_idx:start_ramp2_idx) = ramps_amplitude(i)*ones(backoff_length,1);
+        end_ramp2_idx = start_ramp2_idx + ramp_length(i) - 1;
+        ramps_vector(start_ramp2_idx:end_ramp2_idx) = ramps_amplitude(i)*(1 - linspace(0,1,ramp_length(i))'.*ones(ramp_length(i),1));
+        start_ramp3_idx = end_ramp2_idx + backoff_length - 1;
+        ramps_vector(end_ramp2_idx:start_ramp3_idx) = zeros(backoff_length,1);
+        end_ramp3_idx = start_ramp3_idx + ramp_length(i) - 1;
+        ramps_vector(start_ramp3_idx:end_ramp3_idx) = - ramps_amplitude(i)*linspace(0,1,ramp_length(i))'.*ones(ramp_length(i),1);
+        start_ramp4_idx = end_ramp3_idx + backoff_length - 1;
+        ramps_vector(end_ramp3_idx:start_ramp4_idx) = -ramps_amplitude(i)*ones(backoff_length,1);
+        end_ramp4_idx = start_ramp4_idx + ramp_length(i) - 1;
+        ramps_vector(start_ramp4_idx:end_ramp4_idx) = - ramps_amplitude(i)*(1 - linspace(0,1,ramp_length(i))'.*ones(ramp_length(i),1));
+        end_idx = end_ramp4_idx + backoff_length - 1;
+        ramps_vector(end_ramp4_idx:end_idx) = zeros(backoff_length,1);
+        start_ramp1_idx = end_idx + 1;
+    end
+    ramps_vector = [zeros(ceil(zero_time/dt),1); ramps_vector];
+else
+    ramps_vector = [];
 end
 
 if enable_sweep
@@ -71,12 +115,12 @@ if enable_sines
         time_sin = (0:dt:(2*pi/tested_ome)-dt)';
         sines_vector = [sines_vector; zeros(ceil(zero_time/dt),1); sin(tested_ome * time_sin)]; %#ok<AGROW>
     end
-    sines_vector = [sines_vector];
 else
     sines_vector = [];
 end
 
 experiment = [steps_vector;
+              ramps_vector;
               sweep_vector;
               sines_vector;
               zeros(ceil(zero_time/dt),1)];

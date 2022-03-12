@@ -21,7 +21,7 @@ switch ext
         close_system(modelName, 0);
         
         pause(1); % Just to let the file system catch up
-        movefile(file, [file '.' info.ReleaseName], 'f');
+        movefile(file, fullfile(modelFilepath, 'Backup', [modelName ext '.' lower(info.ReleaseName)]), 'f');
         % Could add the old back up file to the project here
         movefile(exportedFile, file, 'f');
         result = sprintf('Created "%s" for use in %s, back up file in "%s"', ...

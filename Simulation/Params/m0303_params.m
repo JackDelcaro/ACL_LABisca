@@ -1,9 +1,10 @@
 % Setup par
 PARAMS.th_0_cable = -30.55*pi/180;
-PARAMS.th_0 = 0;
+PARAMS.th_0 = pi/2;
 PARAMS.th_dot_0 = 0;
-PARAMS.al_0 = 160/161*pi;
+PARAMS.al_0 = 0;
 PARAMS.al_dot_0 = 0;
+PARAMS.g = 9.81;
 
 % Mechanical Parameters
 PARAMS.mp = 2.4e-2;

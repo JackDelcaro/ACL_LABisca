@@ -31,6 +31,8 @@ log = load(load_experiment_name);
 
 in_voltage = [log.time, log.voltage];
 T_sim = log.time(end);
+dt_control = 2e-2;
+dt = 1e-4;
 
 %% SIMULATION
 

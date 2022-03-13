@@ -8,12 +8,23 @@ close all;
 
 %% Variables definition
 
-syms al th
-syms al_dot th_dot
-syms al_ddot th_ddot
-syms mp mr Lp Lr Jm Jh
-syms Cth Cal
-syms tau
+syms al th real
+syms al_dot th_dot real
+syms al_ddot th_ddot real
+syms mp mr Lp Lr Jm Jh real
+syms Cth Cal real
+syms g
+syms tau real
+
+model_PARAMS.mp = mp;
+model_PARAMS.mr = mr;
+model_PARAMS.Lp = Lp;
+model_PARAMS.Lr = Lr;
+model_PARAMS.Jm = Jm;
+model_PARAMS.Jh = Jh;
+model_PARAMS.Cth = Cth;
+model_PARAMS.Cal = Cal;
+model_PARAMS.g = g;
 
 %% Kinematics
 
@@ -39,8 +50,6 @@ v_cp_sq = simplify(vx_cp^2 + vy_cp^2 + vz_cp^2, 'Steps', 10);
 
 %% Energies
 
-syms g
-
 V = mp * g * h_p;
 
 J_r = mr * Lr^2 / 12;
@@ -54,6 +63,8 @@ T_pt = 1/2 * mp * v_cp_sq;
 T = T_rr + T_rt + T_pr + T_pt;
 
 L = T - V;
+
+D = 1/2 * (Cth * th_dot^2 + Cal * al_dot^2);
 
 %% Lagrange equation terms
 

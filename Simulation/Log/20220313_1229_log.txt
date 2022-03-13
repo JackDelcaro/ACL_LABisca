@@ -1,0 +1,463 @@
+
+
+----------------------------------------
+----------- WORKER NUMBER 1 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 1
+Iteration Number: 2, Worker ID: 1
+Iteration Number: 3, Worker ID: 1
+Iteration Number: 4, Worker ID: 1
+Iteration Number: 5, Worker ID: 1
+Iteration Number: 6, Worker ID: 1
+Iteration Number: 7, Worker ID: 1
+Iteration Number: 8, Worker ID: 1
+Iteration Number: 9, Worker ID: 1
+Iteration Number: 10, Worker ID: 1
+Iteration Number: 11, Worker ID: 1
+Iteration Number: 12, Worker ID: 1
+Iteration Number: 13, Worker ID: 1
+Iteration Number: 14, Worker ID: 1
+Iteration Number: 15, Worker ID: 1
+Iteration Number: 16, Worker ID: 1
+Iteration Number: 17, Worker ID: 1
+Iteration Number: 18, Worker ID: 1
+Iteration Number: 19, Worker ID: 1
+Iteration Number: 20, Worker ID: 1
+Iteration Number: 21, Worker ID: 1
+Iteration Number: 22, Worker ID: 1
+Iteration Number: 23, Worker ID: 1
+Iteration Number: 24, Worker ID: 1
+Iteration Number: 25, Worker ID: 1
+Iteration Number: 26, Worker ID: 1
+Iteration Number: 27, Worker ID: 1
+Iteration Number: 28, Worker ID: 1
+Iteration Number: 29, Worker ID: 1
+Iteration Number: 30, Worker ID: 1
+Iteration Number: 31, Worker ID: 1
+Iteration Number: 32, Worker ID: 1
+Iteration Number: 33, Worker ID: 1
+Iteration Number: 34, Worker ID: 1
+Iteration Number: 35, Worker ID: 1
+Iteration Number: 36, Worker ID: 1
+Iteration Number: 37, Worker ID: 1
+Iteration Number: 38, Worker ID: 1
+Iteration Number: 39, Worker ID: 1
+Iteration Number: 40, Worker ID: 1
+Iteration Number: 41, Worker ID: 1
+Iteration Number: 42, Worker ID: 1
+Iteration Number: 43, Worker ID: 1
+Iteration Number: 44, Worker ID: 1
+Iteration Number: 45, Worker ID: 1
+Iteration Number: 46, Worker ID: 1
+Iteration Number: 47, Worker ID: 1
+Iteration Number: 48, Worker ID: 1
+Iteration Number: 49, Worker ID: 1
+Iteration Number: 50, Worker ID: 1
+Iteration Number: 51, Worker ID: 1
+Iteration Number: 52, Worker ID: 1
+Iteration Number: 53, Worker ID: 1
+Iteration Number: 54, Worker ID: 1
+Iteration Number: 55, Worker ID: 1
+Iteration Number: 56, Worker ID: 1
+Iteration Number: 57, Worker ID: 1
+Iteration Number: 58, Worker ID: 1
+Iteration Number: 59, Worker ID: 1
+Iteration Number: 60, Worker ID: 1
+Iteration Number: 61, Worker ID: 1
+Iteration Number: 62, Worker ID: 1
+Iteration Number: 63, Worker ID: 1
+Iteration Number: 64, Worker ID: 1
+Iteration Number: 65, Worker ID: 1
+Iteration Number: 66, Worker ID: 1
+
+
+----------------------------------------
+----------- WORKER NUMBER 2 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 2
+Iteration Number: 2, Worker ID: 2
+Iteration Number: 3, Worker ID: 2
+Iteration Number: 4, Worker ID: 2
+Iteration Number: 5, Worker ID: 2
+Iteration Number: 6, Worker ID: 2
+Iteration Number: 7, Worker ID: 2
+Iteration Number: 8, Worker ID: 2
+Iteration Number: 9, Worker ID: 2
+Iteration Number: 10, Worker ID: 2
+Iteration Number: 11, Worker ID: 2
+Iteration Number: 12, Worker ID: 2
+Iteration Number: 13, Worker ID: 2
+Iteration Number: 14, Worker ID: 2
+Iteration Number: 15, Worker ID: 2
+Iteration Number: 16, Worker ID: 2
+Iteration Number: 17, Worker ID: 2
+Iteration Number: 18, Worker ID: 2
+Iteration Number: 19, Worker ID: 2
+Iteration Number: 20, Worker ID: 2
+Iteration Number: 21, Worker ID: 2
+Iteration Number: 22, Worker ID: 2
+Iteration Number: 23, Worker ID: 2
+Iteration Number: 24, Worker ID: 2
+Iteration Number: 25, Worker ID: 2
+Iteration Number: 26, Worker ID: 2
+Iteration Number: 27, Worker ID: 2
+Iteration Number: 28, Worker ID: 2
+Iteration Number: 29, Worker ID: 2
+Iteration Number: 30, Worker ID: 2
+Iteration Number: 31, Worker ID: 2
+Iteration Number: 32, Worker ID: 2
+Iteration Number: 33, Worker ID: 2
+Iteration Number: 34, Worker ID: 2
+Iteration Number: 35, Worker ID: 2
+Iteration Number: 36, Worker ID: 2
+Iteration Number: 37, Worker ID: 2
+Iteration Number: 38, Worker ID: 2
+Iteration Number: 39, Worker ID: 2
+Iteration Number: 40, Worker ID: 2
+Iteration Number: 41, Worker ID: 2
+Iteration Number: 42, Worker ID: 2
+Iteration Number: 43, Worker ID: 2
+Iteration Number: 44, Worker ID: 2
+Iteration Number: 45, Worker ID: 2
+Iteration Number: 46, Worker ID: 2
+Iteration Number: 47, Worker ID: 2
+Iteration Number: 48, Worker ID: 2
+Iteration Number: 49, Worker ID: 2
+Iteration Number: 50, Worker ID: 2
+Iteration Number: 51, Worker ID: 2
+Iteration Number: 52, Worker ID: 2
+Iteration Number: 53, Worker ID: 2
+Iteration Number: 54, Worker ID: 2
+Iteration Number: 55, Worker ID: 2
+
+
+----------------------------------------
+----------- WORKER NUMBER 3 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 3
+Iteration Number: 2, Worker ID: 3
+Iteration Number: 3, Worker ID: 3
+Iteration Number: 4, Worker ID: 3
+Iteration Number: 5, Worker ID: 3
+Iteration Number: 6, Worker ID: 3
+Iteration Number: 7, Worker ID: 3
+Iteration Number: 8, Worker ID: 3
+Iteration Number: 9, Worker ID: 3
+Iteration Number: 10, Worker ID: 3
+Iteration Number: 11, Worker ID: 3
+Iteration Number: 12, Worker ID: 3
+Iteration Number: 13, Worker ID: 3
+Iteration Number: 14, Worker ID: 3
+Iteration Number: 15, Worker ID: 3
+Iteration Number: 16, Worker ID: 3
+Iteration Number: 17, Worker ID: 3
+Iteration Number: 18, Worker ID: 3
+Iteration Number: 19, Worker ID: 3
+Iteration Number: 20, Worker ID: 3
+Iteration Number: 21, Worker ID: 3
+Iteration Number: 22, Worker ID: 3
+Iteration Number: 23, Worker ID: 3
+Iteration Number: 24, Worker ID: 3
+Iteration Number: 25, Worker ID: 3
+Iteration Number: 26, Worker ID: 3
+Iteration Number: 27, Worker ID: 3
+Iteration Number: 28, Worker ID: 3
+Iteration Number: 29, Worker ID: 3
+Iteration Number: 30, Worker ID: 3
+Iteration Number: 31, Worker ID: 3
+Iteration Number: 32, Worker ID: 3
+Iteration Number: 33, Worker ID: 3
+Iteration Number: 34, Worker ID: 3
+Iteration Number: 35, Worker ID: 3
+Iteration Number: 36, Worker ID: 3
+Iteration Number: 37, Worker ID: 3
+Iteration Number: 38, Worker ID: 3
+Iteration Number: 39, Worker ID: 3
+Iteration Number: 40, Worker ID: 3
+Iteration Number: 41, Worker ID: 3
+Iteration Number: 42, Worker ID: 3
+Iteration Number: 43, Worker ID: 3
+Iteration Number: 44, Worker ID: 3
+Iteration Number: 45, Worker ID: 3
+Iteration Number: 46, Worker ID: 3
+Iteration Number: 47, Worker ID: 3
+Iteration Number: 48, Worker ID: 3
+Iteration Number: 49, Worker ID: 3
+Iteration Number: 50, Worker ID: 3
+Iteration Number: 51, Worker ID: 3
+Iteration Number: 52, Worker ID: 3
+
+
+----------------------------------------
+----------- WORKER NUMBER 4 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 4
+Iteration Number: 2, Worker ID: 4
+Iteration Number: 3, Worker ID: 4
+Iteration Number: 4, Worker ID: 4
+Iteration Number: 5, Worker ID: 4
+Iteration Number: 6, Worker ID: 4
+Iteration Number: 7, Worker ID: 4
+Iteration Number: 8, Worker ID: 4
+Iteration Number: 9, Worker ID: 4
+Iteration Number: 10, Worker ID: 4
+Iteration Number: 11, Worker ID: 4
+Iteration Number: 12, Worker ID: 4
+Iteration Number: 13, Worker ID: 4
+Iteration Number: 14, Worker ID: 4
+Iteration Number: 15, Worker ID: 4
+Iteration Number: 16, Worker ID: 4
+Iteration Number: 17, Worker ID: 4
+Iteration Number: 18, Worker ID: 4
+Iteration Number: 19, Worker ID: 4
+
+
+----------------------------------------
+----------- WORKER NUMBER 5 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 5
+Iteration Number: 2, Worker ID: 5
+Iteration Number: 3, Worker ID: 5
+Iteration Number: 4, Worker ID: 5
+Iteration Number: 5, Worker ID: 5
+Iteration Number: 6, Worker ID: 5
+Iteration Number: 7, Worker ID: 5
+Iteration Number: 8, Worker ID: 5
+Iteration Number: 9, Worker ID: 5
+Iteration Number: 10, Worker ID: 5
+Iteration Number: 11, Worker ID: 5
+Iteration Number: 12, Worker ID: 5
+Iteration Number: 13, Worker ID: 5
+Iteration Number: 14, Worker ID: 5
+Iteration Number: 15, Worker ID: 5
+Iteration Number: 16, Worker ID: 5
+Iteration Number: 17, Worker ID: 5
+Iteration Number: 18, Worker ID: 5
+Iteration Number: 19, Worker ID: 5
+Iteration Number: 20, Worker ID: 5
+Iteration Number: 21, Worker ID: 5
+Iteration Number: 22, Worker ID: 5
+Iteration Number: 23, Worker ID: 5
+Iteration Number: 24, Worker ID: 5
+Iteration Number: 25, Worker ID: 5
+Iteration Number: 26, Worker ID: 5
+Iteration Number: 27, Worker ID: 5
+Iteration Number: 28, Worker ID: 5
+Iteration Number: 29, Worker ID: 5
+Iteration Number: 30, Worker ID: 5
+Iteration Number: 31, Worker ID: 5
+Iteration Number: 32, Worker ID: 5
+Iteration Number: 33, Worker ID: 5
+Iteration Number: 34, Worker ID: 5
+Iteration Number: 35, Worker ID: 5
+Iteration Number: 36, Worker ID: 5
+Iteration Number: 37, Worker ID: 5
+Iteration Number: 38, Worker ID: 5
+Iteration Number: 39, Worker ID: 5
+Iteration Number: 40, Worker ID: 5
+Iteration Number: 41, Worker ID: 5
+Iteration Number: 42, Worker ID: 5
+Iteration Number: 43, Worker ID: 5
+Iteration Number: 44, Worker ID: 5
+Iteration Number: 45, Worker ID: 5
+Iteration Number: 46, Worker ID: 5
+Iteration Number: 47, Worker ID: 5
+Iteration Number: 48, Worker ID: 5
+
+
+----------------------------------------
+----------- WORKER NUMBER 6 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 6
+Iteration Number: 2, Worker ID: 6
+Iteration Number: 3, Worker ID: 6
+Iteration Number: 4, Worker ID: 6
+Iteration Number: 5, Worker ID: 6
+Iteration Number: 6, Worker ID: 6
+Iteration Number: 7, Worker ID: 6
+Iteration Number: 8, Worker ID: 6
+Iteration Number: 9, Worker ID: 6
+Iteration Number: 10, Worker ID: 6
+Iteration Number: 11, Worker ID: 6
+Iteration Number: 12, Worker ID: 6
+Iteration Number: 13, Worker ID: 6
+Iteration Number: 14, Worker ID: 6
+Iteration Number: 15, Worker ID: 6
+Iteration Number: 16, Worker ID: 6
+Iteration Number: 17, Worker ID: 6
+Iteration Number: 18, Worker ID: 6
+Iteration Number: 19, Worker ID: 6
+Iteration Number: 20, Worker ID: 6
+Iteration Number: 21, Worker ID: 6
+Iteration Number: 22, Worker ID: 6
+Iteration Number: 23, Worker ID: 6
+Iteration Number: 24, Worker ID: 6
+Iteration Number: 25, Worker ID: 6
+Iteration Number: 26, Worker ID: 6
+Iteration Number: 27, Worker ID: 6
+Iteration Number: 28, Worker ID: 6
+Iteration Number: 29, Worker ID: 6
+Iteration Number: 30, Worker ID: 6
+Iteration Number: 31, Worker ID: 6
+Iteration Number: 32, Worker ID: 6
+Iteration Number: 33, Worker ID: 6
+Iteration Number: 34, Worker ID: 6
+Iteration Number: 35, Worker ID: 6
+Iteration Number: 36, Worker ID: 6
+Iteration Number: 37, Worker ID: 6
+Iteration Number: 38, Worker ID: 6
+Iteration Number: 39, Worker ID: 6
+Iteration Number: 40, Worker ID: 6
+Iteration Number: 41, Worker ID: 6
+Iteration Number: 42, Worker ID: 6
+Iteration Number: 43, Worker ID: 6
+Iteration Number: 44, Worker ID: 6
+Iteration Number: 45, Worker ID: 6
+Iteration Number: 46, Worker ID: 6
+Iteration Number: 47, Worker ID: 6
+Iteration Number: 48, Worker ID: 6
+Iteration Number: 49, Worker ID: 6
+Iteration Number: 50, Worker ID: 6
+Iteration Number: 51, Worker ID: 6
+
+
+----------------------------------------
+----------- WORKER NUMBER 7 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 7
+Iteration Number: 2, Worker ID: 7
+Iteration Number: 3, Worker ID: 7
+Iteration Number: 4, Worker ID: 7
+Iteration Number: 5, Worker ID: 7
+Iteration Number: 6, Worker ID: 7
+Iteration Number: 7, Worker ID: 7
+Iteration Number: 8, Worker ID: 7
+Iteration Number: 9, Worker ID: 7
+Iteration Number: 10, Worker ID: 7
+Iteration Number: 11, Worker ID: 7
+Iteration Number: 12, Worker ID: 7
+Iteration Number: 13, Worker ID: 7
+Iteration Number: 14, Worker ID: 7
+Iteration Number: 15, Worker ID: 7
+Iteration Number: 16, Worker ID: 7
+Iteration Number: 17, Worker ID: 7
+Iteration Number: 18, Worker ID: 7
+Iteration Number: 19, Worker ID: 7
+Iteration Number: 20, Worker ID: 7
+Iteration Number: 21, Worker ID: 7
+Iteration Number: 22, Worker ID: 7
+Iteration Number: 23, Worker ID: 7
+Iteration Number: 24, Worker ID: 7
+Iteration Number: 25, Worker ID: 7
+Iteration Number: 26, Worker ID: 7
+Iteration Number: 27, Worker ID: 7
+Iteration Number: 28, Worker ID: 7
+Iteration Number: 29, Worker ID: 7
+Iteration Number: 30, Worker ID: 7
+Iteration Number: 31, Worker ID: 7
+Iteration Number: 32, Worker ID: 7
+Iteration Number: 33, Worker ID: 7
+Iteration Number: 34, Worker ID: 7
+Iteration Number: 35, Worker ID: 7
+Iteration Number: 36, Worker ID: 7
+Iteration Number: 37, Worker ID: 7
+Iteration Number: 38, Worker ID: 7
+Iteration Number: 39, Worker ID: 7
+Iteration Number: 40, Worker ID: 7
+Iteration Number: 41, Worker ID: 7
+Iteration Number: 42, Worker ID: 7
+Iteration Number: 43, Worker ID: 7
+Iteration Number: 44, Worker ID: 7
+Iteration Number: 45, Worker ID: 7
+Iteration Number: 46, Worker ID: 7
+Iteration Number: 47, Worker ID: 7
+Iteration Number: 48, Worker ID: 7
+Iteration Number: 49, Worker ID: 7
+Iteration Number: 50, Worker ID: 7
+Iteration Number: 51, Worker ID: 7
+
+
+----------------------------------------
+----------- WORKER NUMBER 8 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 8
+Iteration Number: 2, Worker ID: 8
+Iteration Number: 3, Worker ID: 8
+Iteration Number: 4, Worker ID: 8
+Iteration Number: 5, Worker ID: 8
+Iteration Number: 6, Worker ID: 8
+Iteration Number: 7, Worker ID: 8
+Iteration Number: 8, Worker ID: 8
+Iteration Number: 9, Worker ID: 8
+Iteration Number: 10, Worker ID: 8
+Iteration Number: 11, Worker ID: 8
+Iteration Number: 12, Worker ID: 8
+Iteration Number: 13, Worker ID: 8
+Iteration Number: 14, Worker ID: 8
+Iteration Number: 15, Worker ID: 8
+Iteration Number: 16, Worker ID: 8
+Iteration Number: 17, Worker ID: 8
+Iteration Number: 18, Worker ID: 8
+Iteration Number: 19, Worker ID: 8
+Iteration Number: 20, Worker ID: 8
+Iteration Number: 21, Worker ID: 8
+Iteration Number: 22, Worker ID: 8
+Iteration Number: 23, Worker ID: 8
+Iteration Number: 24, Worker ID: 8
+Iteration Number: 25, Worker ID: 8
+Iteration Number: 26, Worker ID: 8
+Iteration Number: 27, Worker ID: 8
+Iteration Number: 28, Worker ID: 8
+Iteration Number: 29, Worker ID: 8
+Iteration Number: 30, Worker ID: 8
+Iteration Number: 31, Worker ID: 8
+Iteration Number: 32, Worker ID: 8
+Iteration Number: 33, Worker ID: 8
+Iteration Number: 34, Worker ID: 8
+Iteration Number: 35, Worker ID: 8
+Iteration Number: 36, Worker ID: 8
+Iteration Number: 37, Worker ID: 8
+Iteration Number: 38, Worker ID: 8
+Iteration Number: 39, Worker ID: 8
+Iteration Number: 40, Worker ID: 8
+Iteration Number: 41, Worker ID: 8
+Iteration Number: 42, Worker ID: 8
+Iteration Number: 43, Worker ID: 8
+Iteration Number: 44, Worker ID: 8
+Iteration Number: 45, Worker ID: 8
+Iteration Number: 46, Worker ID: 8
+Iteration Number: 47, Worker ID: 8
+Iteration Number: 48, Worker ID: 8
+Iteration Number: 49, Worker ID: 8
+Iteration Number: 50, Worker ID: 8
+Iteration Number: 51, Worker ID: 8
+Iteration Number: 52, Worker ID: 8
+Iteration Number: 53, Worker ID: 8
+Iteration Number: 54, Worker ID: 8
+Iteration Number: 55, Worker ID: 8
+Iteration Number: 56, Worker ID: 8
+Iteration Number: 57, Worker ID: 8
+Iteration Number: 58, Worker ID: 8
+Iteration Number: 59, Worker ID: 8
+Iteration Number: 60, Worker ID: 8
+Iteration Number: 61, Worker ID: 8
+Iteration Number: 62, Worker ID: 8
+Iteration Number: 63, Worker ID: 8
+Iteration Number: 64, Worker ID: 8
+Iteration Number: 65, Worker ID: 8

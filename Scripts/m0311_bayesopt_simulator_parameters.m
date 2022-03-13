@@ -33,9 +33,9 @@ addpath(genpath(paths.sim_folder    ));
 save_log = 1;
 save_output = 1;
 parallel_pool = 1;
-number_of_workers = 16;
-iteration_number = 3000;
-seed_number = 400;
+number_of_workers = 8;
+iteration_number = 400;
+seed_number = 150;
 output_folder = paths.sim_data_folder;
 date_string = datestr(now, 'yyyymmdd_HHMM_');
 max_colorbar = inf;
@@ -54,11 +54,11 @@ tuner_limits.Sth_multiplier = [0.5 1.5];
 tuner.K_multiplier = 1;
 tuner_limits.K_multiplier = [0.5 1.5];
 tuner.Jh_additive = 0;
-tuner_limits.Jh_additive = [0 1]*1e-7;
+% tuner_limits.Jh_additive = [0 1]*1e-7;
 tuner.Cal_multiplier = 1;
-tuner_limits.Cal_multiplier = [0.5 1.5];
+% tuner_limits.Cal_multiplier = [0.5 1.5];
 tuner.Cth_multiplier = 1;
-tuner_limits.Cth_multiplier = [0.5 1.5];
+% tuner_limits.Cth_multiplier = [0.5 1.5];
 
 %% BAYESIAN OPTIMIZATION
 
@@ -92,27 +92,29 @@ if parallel_pool == 1
         'PARAMS','dt','T_sim','tuner');
 end
 
-if save_log == 1
-    % We create a mutex for the common resources of the parallel workers
-    try
-        cache_ctrl = mps.cache.control('myMATFileConnection','Redis','Port', 4519);
-    catch
-        cache_ctrl = mps.cache.control('myMATFileConnection');
-    end
-    try
-        start(cache_ctrl);
-    catch
-    end
-    mutex_lock = mps.sync.mutex('myDbLock','Connection','myMATFileConnection');
-    sim_handle = @(x) BO_simulation(x, log, loss_weights, save_log, paths.sim_log_folder, parallel_pool, date_string, mutex_lock);
+% We create a mutex for the common resources of the parallel workers
+try
+    cache_ctrl = mps.cache.control('myMATFileConnection','Redis','Port', 4519);
+catch
+    cache_ctrl = mps.cache.control('myMATFileConnection');
+end
+try
+    start(cache_ctrl);
+catch
+end
+
+if save_log == 1 
+    sim_handle = @(x) BO_simulation(x, log, loss_weights, save_log, paths.sim_log_folder, parallel_pool, date_string);
 else
     sim_handle = @(x) BO_simulation(x, log, loss_weights, save_log, paths.sim_log_folder, parallel_pool, date_string);
 end
 if save_output == 1
+    save_mutex_lock = mps.sync.mutex('mySavefileMutex','Connection','myMATFileConnection');
     savefile_name = fullfile(paths.sim_data_folder, date_string + "optimization_result.mat");
+    iteration_savefile_name = fullfile(paths.sim_data_folder, date_string + "iteration_result.mat");
     save(savefile_name, 'sim_in', 'load_experiment_name', 'tuner',...
         'tuner_limits','PARAMS','loss_weights', '-v7.3');
-    iterative_save_fcn = @(results,state) bayesopt_iterative_save_fcn(results,state,savefile_name);
+    iterative_save_fcn = @(results,state) bayesopt_iterative_save_fcn(results,state,iteration_savefile_name,save_mutex_lock);
 else
     iterative_save_fcn = @(results,state) bayesopt_out_fcn(results,state);
 end
@@ -135,10 +137,14 @@ display(['Elapsed Time: ', num2str(elapsedTime)]);
 
 if save_output == 1
     save(savefile_name, 'bayesopt_res', '-append');
+    delete(iteration_savefile_name);
 end
 if parallel_pool == 1
     delete(fullfile(paths.sim_folder,  string(date_string) + "tmp.mat"));
-    stop(cache_ctrl);
+    try
+        stop(cache_ctrl);
+    catch
+    end
 end
 
 create_unique_log(paths.sim_log_folder, date_string);
@@ -147,7 +153,7 @@ create_unique_log(paths.sim_log_folder, date_string);
 % FUNCTIONS
 
 function  loss_function = BO_simulation(in, real_data, loss_weights, verbose_log, log_folder,...
-    parallel_pool, date_string, mutex_lock)
+    parallel_pool, date_string)
 
     if nargin == 1
         verbose_log = 0;
@@ -256,12 +262,12 @@ function stop = bayesopt_out_fcn(results,state) %#ok<INUSD>
     stop = false;
 end
 
-function stop = bayesopt_iterative_save_fcn(results,state,savefile_name)
+function stop = bayesopt_iterative_save_fcn(results,state,savefile_name,mutex_lock)
     stop = false;
     if state == "iteration"
-        bayesopt_res = results;
-        save(savefile_name, 'bayesopt_res', '-append');
-        clearvars bayesopt_res;
+        acquire(mutex_lock, 10);
+        save(savefile_name, 'results');
+        release(mutex_lock);
     end
 end
 

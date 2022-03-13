@@ -33,9 +33,9 @@ addpath(genpath(paths.sim_folder    ));
 save_log = 1;
 save_output = 1;
 parallel_pool = 1;
-number_of_workers = 2;
-iteration_number = 3;
-seed_number = 2;
+number_of_workers = 16;
+iteration_number = 3000;
+seed_number = 400;
 output_folder = paths.sim_data_folder;
 date_string = datestr(now, 'yyyymmdd_HHMM_');
 max_colorbar = inf;
@@ -48,17 +48,17 @@ log = load(load_experiment_name);
 %% OPTIMIZATION VARIABLES
 
 tuner.Dth_multiplier = 1;
-tuner_limits.Dth_multiplier = [0.5 1.5];
+tuner_limits.Dth_multiplier = [0.2 1.5];
 tuner.Sth_multiplier = 1;
 tuner_limits.Sth_multiplier = [0.5 1.5];
 tuner.K_multiplier = 1;
 tuner_limits.K_multiplier = [0.5 1.5];
 tuner.Jh_additive = 0;
-% tuner_limits.Jh_additive = [0 1]*1e-7;
+tuner_limits.Jh_additive = [0 1]*1e-7;
 tuner.Cal_multiplier = 1;
-% tuner_limits.Cal_multiplier = [0.5 1.5];
+tuner_limits.Cal_multiplier = [0.5 1.5];
 tuner.Cth_multiplier = 1;
-% tuner_limits.Cth_multiplier = [0.5 1.5];
+tuner_limits.Cth_multiplier = [0.5 1.5];
 
 %% BAYESIAN OPTIMIZATION
 
@@ -111,7 +111,7 @@ end
 if save_output == 1
     savefile_name = fullfile(paths.sim_data_folder, date_string + "optimization_result.mat");
     save(savefile_name, 'sim_in', 'load_experiment_name', 'tuner',...
-        'tuner_limits','PARAMS','loss_weights');
+        'tuner_limits','PARAMS','loss_weights', '-v7.3');
     iterative_save_fcn = @(results,state) bayesopt_iterative_save_fcn(results,state,savefile_name);
 else
     iterative_save_fcn = @(results,state) bayesopt_out_fcn(results,state);

@@ -1,0 +1,276 @@
+
+
+----------------------------------------
+----------- WORKER NUMBER 1 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 1
+Iteration Number: 2, Worker ID: 1
+Iteration Number: 3, Worker ID: 1
+Iteration Number: 4, Worker ID: 1
+Iteration Number: 5, Worker ID: 1
+Iteration Number: 6, Worker ID: 1
+Iteration Number: 7, Worker ID: 1
+Iteration Number: 8, Worker ID: 1
+Iteration Number: 9, Worker ID: 1
+Iteration Number: 10, Worker ID: 1
+Iteration Number: 1, Worker ID: 1
+
+
+----------------------------------------
+----------- WORKER NUMBER 2 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 2
+Iteration Number: 2, Worker ID: 2
+Iteration Number: 3, Worker ID: 2
+Iteration Number: 4, Worker ID: 2
+Iteration Number: 5, Worker ID: 2
+Iteration Number: 6, Worker ID: 2
+Iteration Number: 7, Worker ID: 2
+Iteration Number: 8, Worker ID: 2
+Iteration Number: 9, Worker ID: 2
+Iteration Number: 10, Worker ID: 2
+Iteration Number: 1, Worker ID: 2
+
+
+----------------------------------------
+----------- WORKER NUMBER 3 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 3
+Iteration Number: 2, Worker ID: 3
+Iteration Number: 3, Worker ID: 3
+Iteration Number: 4, Worker ID: 3
+Iteration Number: 5, Worker ID: 3
+Iteration Number: 6, Worker ID: 3
+Iteration Number: 7, Worker ID: 3
+Iteration Number: 8, Worker ID: 3
+Iteration Number: 9, Worker ID: 3
+Iteration Number: 1, Worker ID: 3
+
+
+----------------------------------------
+----------- WORKER NUMBER 4 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 4
+Iteration Number: 2, Worker ID: 4
+Iteration Number: 3, Worker ID: 4
+Iteration Number: 4, Worker ID: 4
+Iteration Number: 5, Worker ID: 4
+Iteration Number: 6, Worker ID: 4
+Iteration Number: 7, Worker ID: 4
+
+
+----------------------------------------
+----------- WORKER NUMBER 5 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 5
+Iteration Number: 2, Worker ID: 5
+Iteration Number: 3, Worker ID: 5
+Iteration Number: 4, Worker ID: 5
+Iteration Number: 5, Worker ID: 5
+Iteration Number: 6, Worker ID: 5
+Iteration Number: 7, Worker ID: 5
+Iteration Number: 8, Worker ID: 5
+Iteration Number: 9, Worker ID: 5
+Iteration Number: 10, Worker ID: 5
+Iteration Number: 11, Worker ID: 5
+Iteration Number: 1, Worker ID: 5
+Iteration Number: 2, Worker ID: 5
+
+
+----------------------------------------
+----------- WORKER NUMBER 6 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 6
+Iteration Number: 2, Worker ID: 6
+Iteration Number: 3, Worker ID: 6
+Iteration Number: 4, Worker ID: 6
+Iteration Number: 5, Worker ID: 6
+Iteration Number: 6, Worker ID: 6
+Iteration Number: 7, Worker ID: 6
+Iteration Number: 8, Worker ID: 6
+Iteration Number: 9, Worker ID: 6
+Iteration Number: 10, Worker ID: 6
+Iteration Number: 1, Worker ID: 6
+
+
+----------------------------------------
+----------- WORKER NUMBER 7 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 7
+Iteration Number: 2, Worker ID: 7
+Iteration Number: 3, Worker ID: 7
+Iteration Number: 4, Worker ID: 7
+Iteration Number: 5, Worker ID: 7
+Iteration Number: 6, Worker ID: 7
+Iteration Number: 7, Worker ID: 7
+Iteration Number: 8, Worker ID: 7
+Iteration Number: 9, Worker ID: 7
+Iteration Number: 1, Worker ID: 7
+
+
+----------------------------------------
+----------- WORKER NUMBER 8 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 8
+Iteration Number: 2, Worker ID: 8
+Iteration Number: 3, Worker ID: 8
+Iteration Number: 4, Worker ID: 8
+Iteration Number: 5, Worker ID: 8
+Iteration Number: 6, Worker ID: 8
+Iteration Number: 7, Worker ID: 8
+Iteration Number: 8, Worker ID: 8
+Iteration Number: 9, Worker ID: 8
+Iteration Number: 10, Worker ID: 8
+Iteration Number: 1, Worker ID: 8
+
+
+----------------------------------------
+----------- WORKER NUMBER 9 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 9
+Iteration Number: 2, Worker ID: 9
+Iteration Number: 3, Worker ID: 9
+Iteration Number: 4, Worker ID: 9
+Iteration Number: 5, Worker ID: 9
+Iteration Number: 6, Worker ID: 9
+Iteration Number: 7, Worker ID: 9
+Iteration Number: 8, Worker ID: 9
+Iteration Number: 9, Worker ID: 9
+Iteration Number: 1, Worker ID: 9
+
+
+----------------------------------------
+----------- WORKER NUMBER 10 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 10
+Iteration Number: 2, Worker ID: 10
+Iteration Number: 3, Worker ID: 10
+Iteration Number: 4, Worker ID: 10
+Iteration Number: 5, Worker ID: 10
+Iteration Number: 6, Worker ID: 10
+Iteration Number: 7, Worker ID: 10
+Iteration Number: 8, Worker ID: 10
+Iteration Number: 9, Worker ID: 10
+Iteration Number: 10, Worker ID: 10
+Iteration Number: 1, Worker ID: 10
+
+
+----------------------------------------
+----------- WORKER NUMBER 11 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 11
+Iteration Number: 2, Worker ID: 11
+Iteration Number: 3, Worker ID: 11
+Iteration Number: 4, Worker ID: 11
+Iteration Number: 5, Worker ID: 11
+Iteration Number: 6, Worker ID: 11
+Iteration Number: 7, Worker ID: 11
+Iteration Number: 8, Worker ID: 11
+Iteration Number: 9, Worker ID: 11
+Iteration Number: 1, Worker ID: 11
+
+
+----------------------------------------
+----------- WORKER NUMBER 12 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 12
+Iteration Number: 2, Worker ID: 12
+Iteration Number: 3, Worker ID: 12
+Iteration Number: 4, Worker ID: 12
+Iteration Number: 5, Worker ID: 12
+Iteration Number: 6, Worker ID: 12
+Iteration Number: 7, Worker ID: 12
+Iteration Number: 8, Worker ID: 12
+Iteration Number: 9, Worker ID: 12
+Iteration Number: 10, Worker ID: 12
+Iteration Number: 1, Worker ID: 12
+
+
+----------------------------------------
+----------- WORKER NUMBER 13 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 13
+Iteration Number: 2, Worker ID: 13
+Iteration Number: 3, Worker ID: 13
+Iteration Number: 4, Worker ID: 13
+Iteration Number: 5, Worker ID: 13
+Iteration Number: 6, Worker ID: 13
+Iteration Number: 7, Worker ID: 13
+Iteration Number: 8, Worker ID: 13
+Iteration Number: 9, Worker ID: 13
+Iteration Number: 1, Worker ID: 13
+
+
+----------------------------------------
+----------- WORKER NUMBER 14 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 14
+Iteration Number: 2, Worker ID: 14
+Iteration Number: 3, Worker ID: 14
+Iteration Number: 4, Worker ID: 14
+Iteration Number: 5, Worker ID: 14
+Iteration Number: 6, Worker ID: 14
+Iteration Number: 7, Worker ID: 14
+Iteration Number: 8, Worker ID: 14
+Iteration Number: 1, Worker ID: 14
+
+
+----------------------------------------
+----------- WORKER NUMBER 15 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 15
+Iteration Number: 2, Worker ID: 15
+Iteration Number: 3, Worker ID: 15
+Iteration Number: 4, Worker ID: 15
+Iteration Number: 5, Worker ID: 15
+Iteration Number: 6, Worker ID: 15
+Iteration Number: 7, Worker ID: 15
+Iteration Number: 1, Worker ID: 15
+
+
+----------------------------------------
+----------- WORKER NUMBER 16 ------------
+----------------------------------------
+
+
+Iteration Number: 1, Worker ID: 16
+Iteration Number: 2, Worker ID: 16
+Iteration Number: 3, Worker ID: 16
+Iteration Number: 4, Worker ID: 16
+Iteration Number: 5, Worker ID: 16
+Iteration Number: 6, Worker ID: 16
+Iteration Number: 7, Worker ID: 16
+Iteration Number: 8, Worker ID: 16
+Iteration Number: 9, Worker ID: 16
+Iteration Number: 10, Worker ID: 16
+Iteration Number: 1, Worker ID: 16

@@ -29,14 +29,14 @@ load_system([model_name '.slx']);
 params_script_name = 'm0303_params';
 run([params_script_name '.m']);
 
-simulator_name = 's0310_simulator';
+simulator_name = 's0312_simulator';
 motor_simulator_name = 's0303_motor_simulator';
 controller_name = 's0307_theta_controller_PID';
 set_param([model_name '/Simulator Subsystem'], 'ReferencedSubsystem', simulator_name);
 set_param([model_name '/Motor Simulator Subsystem'], 'ReferencedSubsystem', motor_simulator_name);
 set_param([model_name '/Controller Subsystem'], 'ReferencedSubsystem', controller_name);
 
-using_dynamically_generated_model = false;
+using_dynamically_generated_model = true;
 
 if using_dynamically_generated_model
 
@@ -46,6 +46,16 @@ if using_dynamically_generated_model
     run('m0312_gen_dyn_model.m');
 
 end
+
+
+
+save_system(simulator_name);
+save_system(motor_simulator_name);
+save_system(controller_name);
+save_system(model_name);
+
+close_system(model_name);
+
 
 T_sim = 20;
 dt = 1e-4;

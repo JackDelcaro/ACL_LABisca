@@ -106,6 +106,6 @@ end
 
 complete_experiment = [complete_experiment;
               zeros(ceil(zero_time/dt),1)];
-time = 0:dt:(length(complete_experiment)-1)*dt;
+time = (0:dt:(length(complete_experiment)-1)*dt)';
 
 end

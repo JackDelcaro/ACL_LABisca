@@ -57,6 +57,12 @@ for i = 1:length(filename)
     Log_data.theta   = log_var(2, :)' *0.176 /180 * pi;
     Log_data.alpha   = log_var(3, :)' *0.176 /180 * pi;
     Log_data.voltage = log_var(4, :)';
+    if size(log_var, 1) >= 5
+        Log_data.theta_ref = log_var(5, :)';
+    end
+    if size(log_var, 1) >= 6
+        Log_data.alpha_ref = log_var(6, :)';
+    end
     
     if enable_time_selection
         figure;
@@ -67,12 +73,12 @@ for i = 1:length(filename)
         ylabel('$Voltage\;[V]$');
 
         sub(2) = subplot(3,1,2);
-        plot(Log_data.time, Log_data.theta); hold on; grid on;
-        ylabel('$\theta\;[rad]$');
+        plot(Log_data.time, Log_data.theta*180/pi); hold on; grid on;
+        ylabel('$\theta\;[deg]$');
 
         sub(3) = subplot(3,1,3);
-        plot(Log_data.time, Log_data.alpha); hold on; grid on;
-        ylabel('$\alpha\;[rad]$');
+        plot(Log_data.time, Log_data.alpha*180/pi); hold on; grid on;
+        ylabel('$\alpha\;[deg]$');
         xlabel('$time\;[s]$');
 
         linkaxes(sub, 'x');
@@ -84,10 +90,16 @@ for i = 1:length(filename)
     end
     
     % Time interval selection
-    Log_data.voltage = Log_data.voltage(Log_data.time > inf_time_th & Log_data.time < sup_time_th);
-    Log_data.theta   = Log_data.theta(Log_data.time > inf_time_th & Log_data.time < sup_time_th);
-    Log_data.alpha   = Log_data.alpha(Log_data.time > inf_time_th & Log_data.time < sup_time_th);
-    Log_data.time    = Log_data.time(Log_data.time > inf_time_th & Log_data.time < sup_time_th);
+    Log_data.voltage = Log_data.voltage(Log_data.time >= inf_time_th & Log_data.time <= sup_time_th);
+    Log_data.theta   = Log_data.theta(Log_data.time >= inf_time_th & Log_data.time <= sup_time_th);
+    Log_data.alpha   = Log_data.alpha(Log_data.time >= inf_time_th & Log_data.time <= sup_time_th);
+    if size(log_var, 1) >= 5
+        Log_data.theta_ref   = Log_data.theta_ref(Log_data.time >= inf_time_th & Log_data.time <= sup_time_th);
+    end
+    if size(log_var, 1) >= 6
+        Log_data.alpha_ref   = Log_data.alpha_ref(Log_data.time >= inf_time_th & Log_data.time <= sup_time_th);
+    end
+    Log_data.time    = Log_data.time(Log_data.time >= inf_time_th & Log_data.time <= sup_time_th);
     Log_data.time    = Log_data.time - Log_data.time(1);
     
     savefile_date = get_savefile_date(filename(i));

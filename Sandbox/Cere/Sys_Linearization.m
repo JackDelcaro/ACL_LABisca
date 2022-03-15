@@ -3,7 +3,7 @@
 % -negligible distances in the junction between arm and pendulum
 % -both the pendulum and the arm can be considered slender rods
 
-clearvars;
+% clearvars;
 close all;
 
 %% Variables definition
@@ -59,11 +59,11 @@ C = [1 0 1 0];
 
 
 %% Sys equations
-
-run('m0303_params.m');
+% 
+% run('m0303_params.m');
 
 Params = [mp, mr, Lp, Lr, Jm, Jh, g, Cth, Cal];
-Params_value = [PARAMS.mp, PARAMS.mr, PARAMS.Lp, PARAMS.Lr, PARAMS.Jm, PARAMS.Jh, g_value, 0, 0];
+Params_value = [PARAMS.mp, PARAMS.mr, PARAMS.Lp, PARAMS.Lr, PARAMS.Jm, PARAMS.Jh, g_value, PARAMS.Cth, PARAMS.Cal];
 
 A_sys = double(subs(A_pi, Params, Params_value));
 B_sys = double(subs(B_pi, Params, Params_value));
@@ -85,3 +85,7 @@ K_pp = place(A_sys(3:4, 3:4), B_sys(3:4), Poles_cl);
 A_cl = A_sys(3:4, 3:4) - B_sys(3:4) * K_pp;
 
 eigenvalues_cl = eig(A_cl);
+
+% %% Sys equation with Regulator
+% 
+% sys_int = ss(P

@@ -12,15 +12,11 @@ PARAMS.Lp = 1.29e-1;     % exp0314 ~0.1225 forse una questione dell'esatta formu
 PARAMS.mr = 9.5e-2;
 PARAMS.Lr = 8.5e-2;
 PARAMS.Jm = 4e-6;
-%<<<<<<< HEAD
+
 PARAMS.Jh = 6e-7 + 4.7395e-06; %   (?)    exp0314 Jh+Jm=8e-6 ~ok
 PARAMS.Cal = 1.4163e-05; % 5e-4;   exp0314 6.4940e-6
 PARAMS.Cth = 2.2237e-4; %1.5e-3    exp0314 1.2135e-5 (solo motore)
-%=======
-PARAMS.Jh = 6e-7 + 4.7395e-06;
-PARAMS.Cal = 1.4163e-05; % 5e-4;
-PARAMS.Cth = 2.2237e-4; %1.5e-3;
-%>>>>>>> fde3ec0c05eb9a009fa192959748c49d848ecb83
+
 PARAMS.K = 5e-4/(20*pi/180);
 PARAMS.Dth = 62*2e-5;
 PARAMS.Sth = 12e-4;  %static friction - dynamic friction

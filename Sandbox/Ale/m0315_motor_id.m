@@ -31,7 +31,7 @@ log = load(load_experiment_name);
 
 dt = mean(diff(log.time));
 s = tf('s');
-omega_cut = 100*2*pi;
+omega_cut = 20*2*pi;
 filter = 1/(1+s/omega_cut);
 [num,den] = tfdata(c2d(filter, dt), 'v');
 
@@ -47,7 +47,7 @@ plot(log.time, log.voltage); hold on; grid on;
 ylabel('$Voltage\;[V]$');
 
 sub(2) = subplot(2,1,2);
-plot(log.time, theta_filtered*180/pi); hold on; grid on;
+plot(log.time, log.theta*180/pi); hold on; grid on;
 ylabel('$\theta\;[deg]$');
 
 linkaxes(sub, 'x');
@@ -84,8 +84,11 @@ Jnopend = Cth/omega_pole;
 G_thdot_tau = 1/(Jnopend*s + Cth);
 G_tot = G_el*G_thdot_tau/(1+PARAMS.ki*G_el*G_thdot_tau);
 simulated_thdot = step(G_tot, log.time);
+simulated_thdot2 = lsim(G_thdot_tau, tau, log.time);
 plot(log.time, simulated_thdot);
-xlim([0 0.5]);
+plot(log.time, simulated_thdot2);
+%xlim([0 2]);
+
 
 %% VALIDATION
 

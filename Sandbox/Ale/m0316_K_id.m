@@ -30,7 +30,7 @@ log = load(load_experiment_name);
 
 dt = mean(diff(log.time));
 s = tf('s');
-omega_cut = 100*2*pi;
+omega_cut = 20*2*pi;
 filter = 1/(1+s/omega_cut);
 [num,den] = tfdata(c2d(filter, dt), 'v');
 
@@ -117,7 +117,7 @@ linkaxes(sub, 'x');
 
 %% TRANSFER FUNCTION ANALYSIS
 
-K=0.00132;
+K=0.0055;
 G_el = PARAMS.ki/(PARAMS.Rm+s*PARAMS.Lm);
 G_th_tau = 1/(Jtot*s^2 + Cm*s + K);
 G_tot = G_el*G_th_tau/(1+s*PARAMS.ki*G_el*G_th_tau);

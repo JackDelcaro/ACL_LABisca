@@ -59,8 +59,8 @@ C = [1 0 1 0];
 
 
 %% Sys equations
-% 
-% run('m0303_params.m');
+
+run('m0303_params.m');
 
 Params = [mp, mr, Lp, Lr, Jm, Jh, g, Cth, Cal];
 Params_value = [PARAMS.mp, PARAMS.mr, PARAMS.Lp, PARAMS.Lr, PARAMS.Jm, PARAMS.Jh, g_value, PARAMS.Cth, PARAMS.Cal];
@@ -76,16 +76,3 @@ G_tau_alpha = tf(sys);
 
 eigenvalues = eig(A_sys);
 
-%% Pole placement 
-
-Poles_cl = [-200, -201];
-
-K_pp = place(A_sys(3:4, 3:4), B_sys(3:4), Poles_cl);
-
-A_cl = A_sys(3:4, 3:4) - B_sys(3:4) * K_pp;
-
-eigenvalues_cl = eig(A_cl);
-
-% %% Sys equation with Regulator
-% 
-% sys_int = ss(P

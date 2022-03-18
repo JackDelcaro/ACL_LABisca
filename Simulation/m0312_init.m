@@ -1,6 +1,6 @@
 clc;
 clearvars;
-close all;
+%close all;
 
 %% PATHS
 
@@ -40,25 +40,21 @@ using_dynamically_generated_model = true;
 
 if using_dynamically_generated_model
 
-    dyn_model_name = 'm0312_dyn_model';
+    dyn_model_name = 'm0317_dyn_model';
     cable_model_name = 'm0313_cable_model';
     friction_model_name = 'm0313_friction_model';
-    run('m0312_gen_dyn_model.m');
+    run('m0317_gen_dyn_model.m');
 
 end
-
-
 
 save_system(simulator_name);
 save_system(motor_simulator_name);
 save_system(controller_name);
 save_system(model_name);
-
 close_system(model_name);
-
 
 T_sim = 20;
 dt = 1e-4;
 dt_control = 2e-2;
 
-sim(model_name);
+out = sim(model_name);

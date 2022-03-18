@@ -116,8 +116,12 @@ title('Simulated Response VS Real Response');
 plot(time, theta_dot); hold on; grid on;
 ylabel('$\dot{\theta}\;[rad/s]$');
 
-Jnoa_tot_theoretical = Jnopend + (PARAMS.Lr^2*PARAMS.mr)/3 + PARAMS.Lr^2*PARAMS.mp;
-Cth_theoretical = PARAMS.Cth;
+% Jnoa_tot_theoretical = Jnopend + (PARAMS.Lr^2*PARAMS.mr)/3 + PARAMS.Lr^2*PARAMS.mp;
+% Cth_theoretical = PARAMS.Cth;
+
+% K_id = 0.002035859269283;
+Jnoa_tot_theoretical = 3.382949932341001e-04;
+Cth_theoretical = 6.015696887686062e-04;
 
 % Tinf = 0.21; omega_pole = 5/Tinf;
 % Jnopend = Cth/omega_pole;

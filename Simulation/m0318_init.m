@@ -60,7 +60,7 @@ ylabel('$\theta\;[deg]$');
 sub(3) = subplot(3,1,3);
 plot(simout.alpha.Time, simout.alpha.Data*180/pi, 'DisplayName', 'Simulated'); hold on; grid on;
 % plot(simout.alpha_ref.Time, simout.alpha_ref.Data*180/pi, 'DisplayName', 'Reference');
-plot(log.time, -log.alpha*180/pi, 'DisplayName', 'Real Data');
+plot(log.time, log.alpha*180/pi, 'DisplayName', 'Real Data');
 legend;
 ylabel('$\alpha\;[deg]$');
 xlabel('$time\;[s]$');

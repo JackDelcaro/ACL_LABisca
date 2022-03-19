@@ -10,16 +10,16 @@ PARAMS.g = 9.81;
 
 % Mechanical Parameters
 PARAMS.mp = 2.4e-2;
-PARAMS.Lp = 1.29e-1;
+PARAMS.Lp = 0.75*1.29e-1;
 PARAMS.mr = 9.5e-2;
 PARAMS.Lr = 8.5e-2;
 PARAMS.Jm = 4e-6;
 
 PARAMS.Jh = 8.009e-6 - PARAMS.Jm; % official inertia 6e-7
 PARAMS.Cal = 6.494e-6; % previously 1.4163e-05
-PARAMS.Cth = 6.016e-4; % previously 2.2237e-4
+PARAMS.Cth = 3.660e-4; % previously 2.2237e-4
 
-PARAMS.K = 2.036e-3;
+PARAMS.K = 2.215e-3;
 PARAMS.Sth = 7.9e-4;  % static friction
 PARAMS.Dth = 0.85*PARAMS.Sth; % dynamic friction
 PARAMS.Sth_vel_threshold = 1e-8;

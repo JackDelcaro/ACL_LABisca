@@ -51,15 +51,17 @@ plot(simout.voltage.Time, simout.voltage.Data); hold on; grid on;
 ylabel('$Voltage\;[V]$');
 
 sub(2) = subplot(3,1,2);
-plot(simout.theta.Time, simout.theta.Data*180/pi); hold on; grid on;
-% plot(simout.theta_ref.Time, simout.theta_ref.Data*180/pi);
-plot(log.time, log.theta*180/pi);
+plot(simout.theta.Time, simout.theta.Data*180/pi, 'DisplayName', 'Simulated'); hold on; grid on;
+% plot(simout.theta_ref.Time, simout.theta_ref.Data*180/pi, 'DisplayName', 'Reference');
+plot(log.time, log.theta*180/pi, 'DisplayName', 'Real Data');
+legend;
 ylabel('$\theta\;[deg]$');
 
 sub(3) = subplot(3,1,3);
-plot(simout.alpha.Time, simout.alpha.Data*180/pi); hold on; grid on;
-% plot(simout.alpha_ref.Time, simout.alpha_ref.Data*180/pi);
-plot(log.time, log.alpha*180/pi);
+plot(simout.alpha.Time, simout.alpha.Data*180/pi, 'DisplayName', 'Simulated'); hold on; grid on;
+% plot(simout.alpha_ref.Time, simout.alpha_ref.Data*180/pi, 'DisplayName', 'Reference');
+plot(log.time, -log.alpha*180/pi, 'DisplayName', 'Real Data');
+legend;
 ylabel('$\alpha\;[deg]$');
 xlabel('$time\;[s]$');
 linkaxes(sub, 'x');

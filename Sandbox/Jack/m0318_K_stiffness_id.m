@@ -20,7 +20,7 @@ addpath(genpath(paths.simulation_folder));
 %% SETTINGS
 
 run('graphics_options.m');
-run('m0303_params.m');
+run('m0318_params.m');
 
 %% LOAD DATA
 
@@ -49,6 +49,13 @@ theta_dot = gradient(theta_filtered, log.time);
 alpha_dot = gradient(alpha_filtered, log.time);
 theta_dot = theta_dot(log.time >= tstart & log.time <= tend);
 alpha_dot = alpha_dot(log.time >= tstart & log.time <= tend);
+
+omega_cut = 5*2*pi;
+filter = 1/(1+s/omega_cut);
+[num,den] = tfdata(c2d(filter, dt), 'v');
+theta_ultrafiltered = filtfilt(num, den, log.theta);
+theta_dot_ultrafiltered = gradient(theta_ultrafiltered, log.time);
+theta_dot_ultrafiltered = theta_dot_ultrafiltered(log.time >= tstart & log.time <= tend);
 
 %% PLOTS
 
@@ -93,6 +100,37 @@ linkaxes(sub, 'x');
 Jnopend = 8.138e-6;
 Jtot_theoretical = Jnopend + (PARAMS.Lr^2*PARAMS.mr)/3 + PARAMS.Lr^2*PARAMS.mp;
 
+G_V_tau = PARAMS.ki/(s*PARAMS.Lm + PARAMS.Rm);
+Gel_dt = c2d(G_V_tau, 2e-3);
+[num_Gel_dt, den_Gel_dt] = tfdata(G_V_tau, 'v');
+
+my_sign = @(x) sign(x) .* (abs(x) > PARAMS.Sth_vel_threshold); 
+
+tau_frictionless = tau - PARAMS.Dth*my_sign(theta_dot_ultrafiltered) - PARAMS.Sth*(my_sign(theta_dot_ultrafiltered) == 0);
+
+coeffs = den_Gel_dt/num_Gel_dt(end);
+tmp = [tau_frictionless; 0];
+voltage_frictionless = NaN(size(voltage));
+for i = 1:length(voltage)
+    voltage_frictionless(i) = coeffs(2)*tmp(i); % + coeffs(1)*tmp(i+1);
+end
+voltage_frictionless = voltage_frictionless + PARAMS.kv*theta_dot;
+
+figure;
+clearvars sub;
+sub(1) = subplot(2,1,1);
+plot(time, tau,'DisplayName','tau'); hold on; grid on;
+plot(time, tau_frictionless,'DisplayName','tau frictionless');
+legend;
+ylabel('$\tau\;(approx)\;[Nm]$');
+
+sub(2) = subplot(2,1,2);
+plot(time, voltage,'DisplayName','voltage'); hold on; grid on;
+ylabel('$voltage\;[V]$');
+plot(time, voltage_frictionless,'DisplayName','voltage frictionless');
+legend;
+ylabel('$voltage\;[V]$');
+
 
 %% TRANSFER FUNCTIONS
 
@@ -126,15 +164,17 @@ Jtot_theoretical = Jnopend + (PARAMS.Lr^2*PARAMS.mr)/3 + PARAMS.Lr^2*PARAMS.mp;
 
 %% BEST FITTED TF
 
-G_best_fit = 14.78/(s^2 + 2.399*s + 6.018);
+% G_best_fit = 14.78/(s^2 + 2.399*s + 6.018); % old without friction
+% considerations
+G_best_fit = 14.02/(s^2 + 1.615*s + 6.211);
 gain = dcgain(G_best_fit);
 % gain = PARAMS.ki/PARAMS.Rm/PARAMS.K
 % term which multiplies s (CthR + KiKv)/Ki (numerator of tf is 1)
 % term which multiplies s^2 RJ/Ki (numerator of tf is 1)
 
 K_id = PARAMS.ki/PARAMS.Rm/gain;
-J_id = 1/14.78*PARAMS.ki/PARAMS.Rm;
-C_th_id = (2.399/14.78*PARAMS.ki - PARAMS.ki*PARAMS.kv)/PARAMS.Rm;
+J_id = 1/14.02*PARAMS.ki/PARAMS.Rm;
+C_th_id = (1.615/14.02*PARAMS.ki - PARAMS.ki*PARAMS.kv)/PARAMS.Rm;
 
 %% LOAD DATA
 
@@ -187,7 +227,6 @@ linkaxes(sub, 'x');
 figure;
 sgtitle("Experiment: " + string(strrep(strrep(load_experiment_name, ".mat", ""), "_", "\_")));
 
-G_V_tau = PARAMS.ki/(s*PARAMS.Lm + PARAMS.Rm);
 tau = lsim(G_V_tau, voltage - PARAMS.kv*theta_dot, time);
 sub(1) = subplot(3,1,1);
 plot(time, tau); hold on; grid on;

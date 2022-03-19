@@ -39,7 +39,7 @@ Tsim = log.time(end);
 
 %% SIMULATION
 
-out = sim("s0318_main.slx");
+simout = sim("s0318_main.slx");
 
 %% RESULTS
 
@@ -47,17 +47,19 @@ figure;
 sgtitle("Simulation Results");
 
 sub(1) = subplot(3,1,1);
-plot(out.tout, out.voltage); hold on; grid on;
+plot(simout.voltage.Time, simout.voltage.Data); hold on; grid on;
 ylabel('$Voltage\;[V]$');
 
 sub(2) = subplot(3,1,2);
-plot(out.tout, out.theta*180/pi); hold on; grid on;
-plot(out.tout, out.theta_ref*180/pi);
+plot(simout.theta.Time, simout.theta.Data*180/pi); hold on; grid on;
+% plot(simout.theta_ref.Time, simout.theta_ref.Data*180/pi);
+plot(log.time, log.theta*180/pi);
 ylabel('$\theta\;[deg]$');
 
 sub(3) = subplot(3,1,3);
-plot(out.tout, out.alpha*180/pi); hold on; grid on;
-plot(out.tout, out.alpha_ref*180/pi); hold on; grid on;
+plot(simout.alpha.Time, simout.alpha.Data*180/pi); hold on; grid on;
+% plot(simout.alpha_ref.Time, simout.alpha_ref.Data*180/pi);
+plot(log.time, log.alpha*180/pi);
 ylabel('$\alpha\;[deg]$');
 xlabel('$time\;[s]$');
 linkaxes(sub, 'x');
@@ -65,15 +67,15 @@ clearvars sub;
 
 figure
 sub(1) = subplot(3,1,1);
-plot(out.tout, out.tau); hold on; grid on;
+plot(simout.tau.Time, simout.tau.Data); hold on; grid on;
 ylabel('$\tau\;[Nm]$');
 
 sub(2) = subplot(3,1,2);
-plot(out.tout, out.theta_dot*180/pi); hold on; grid on;
+plot(simout.theta_dot.Time, simout.theta_dot.Data*180/pi); hold on; grid on;
 ylabel('$\dot{\theta}\;[deg/s]$');
 
 sub(3) = subplot(3,1,3);
-plot(out.tout, out.alpha_dot*180/pi); hold on; grid on;
+plot(simout.alpha_dot.Time, simout.alpha_dot.Data*180/pi); hold on; grid on;
 ylabel('$\dot{\alpha}\;[deg/s]$');
 xlabel('$time\;[s]$');
 linkaxes(sub, 'x');

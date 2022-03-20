@@ -37,6 +37,12 @@ log = load(loadfile_name);
 simin.voltage = [log.time, log.voltage];
 Tsim = log.time(end);
 
+%% DERIVATIVE FILTER
+
+omega_der_filter = 18;
+der_filt = s/(s/(2*pi*omega_der_filter)+1);
+[num_der_filter, den_der_filter] = tfdata(c2d(der_filt, dt_control), 'v');
+
 %% SIMULATION
 
 simout = sim("s0318_main.slx");

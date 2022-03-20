@@ -40,7 +40,7 @@ sys_dt = c2d(sys_ct, dt);
 %% YALMIP OPTIMIZATION
 
 enable_red_cntrl_effort = true;
-Tsettling = 2;
+Tsettling = 0.5;
 rho = exp(-5*dt/Tsettling);
 rho2 = 0.4;
 alpha = -(1 - rho2);

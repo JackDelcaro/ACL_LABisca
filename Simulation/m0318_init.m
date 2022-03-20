@@ -39,8 +39,9 @@ Tsim = log.time(end);
 
 %% DERIVATIVE FILTER
 
-omega_der_filter = 18;
-der_filt = s/(s/(2*pi*omega_der_filter)+1);
+s = tf('s');
+freq_der_filter = 18;
+der_filt = s/(s/(2*pi*freq_der_filter)+1);
 [num_der_filter, den_der_filter] = tfdata(c2d(der_filt, dt_control), 'v');
 
 %% SIMULATION

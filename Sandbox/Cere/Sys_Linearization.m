@@ -60,7 +60,7 @@ C = [1 0 1 0];
 
 %% Sys equations
 
-run('m0303_params.m');
+run('m0318_params.m');
 
 Params = [mp, mr, Lp, Lr, Jm, Jh, g, Cth, Cal];
 Params_value = [PARAMS.mp, PARAMS.mr, PARAMS.Lp, PARAMS.Lr, PARAMS.Jm, PARAMS.Jh, g_value, PARAMS.Cth, PARAMS.Cal];

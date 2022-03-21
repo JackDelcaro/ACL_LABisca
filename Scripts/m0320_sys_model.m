@@ -274,13 +274,13 @@ G_V_alpha = G_mimo(2);
 eigvals_pi_V = eig(A_sys_V(pi));
 
 %%
-
-for i = 1:size(A_s, 1)
-    for j = 1:size(A_s, 2)
-        tmp3(i, j) = simplify(gradient(A_s(i,j), V), 100);
-        tmp4(i, j) = simplify(gradient(A_s(i,j), th), 100);
-    end
-end
-
-tmp5 = simplify(tmp3 + tmp4/K/R*ki, 100);
-% pretty(tmp5);
+% 
+% for i = 1:size(A_s, 1)
+%     for j = 1:size(A_s, 2)
+%         tmp3(i, j) = simplify(gradient(A_s(i,j), V), 100);
+%         tmp4(i, j) = simplify(gradient(A_s(i,j), th), 100);
+%     end
+% end
+% 
+% tmp5 = simplify(tmp3 + tmp4/K/R*ki, 100);
+% % pretty(tmp5);

@@ -4,7 +4,7 @@ PARAMS.angle_quantization = 0.00307;
 PARAMS.th_0_cable = 0;
 PARAMS.th_0 = 10/180*pi;
 PARAMS.th_dot_0 = 0;
-PARAMS.al_0 = 0;
+PARAMS.al_0 = 170/180*pi;
 PARAMS.al_dot_0 = 0;
 PARAMS.g = 9.81;
 

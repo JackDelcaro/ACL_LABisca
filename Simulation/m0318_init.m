@@ -80,6 +80,20 @@ freq_der_filter = 18;
 der_filt = s/(s/(2*pi*freq_der_filter)+1);
 [num_der_filter, den_der_filter] = tfdata(c2d(der_filt, dt_control), 'v');
 
+%% FILTER
+
+s = tf('s');
+freq_filter = 15;
+filt = 1/(s/(2*pi*freq_filter)+1);
+[num_filter, den_filter] = tfdata(c2d(filt, dt_control), 'v');
+
+%% REF FILTER
+
+s = tf('s');
+freq_ref_filter = 1;
+ref_filt = 1/(s/(2*pi*freq_ref_filter)+1);
+[num_ref_filter, den_ref_filter] = tfdata(c2d(ref_filt, dt_control), 'v');
+
 % %% SIMULATION
 % 
 % simout = sim("s0318_main.slx");

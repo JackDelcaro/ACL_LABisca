@@ -78,6 +78,29 @@ PARAMS.A_pi_int(3, 1:2) = [-1 0];
 
 PARAMS.B_pi_int(1:2, 1) = PARAMS.B_pi;
 
+% Tsettling = 2; csi = 0.0001; red_contr; LMIs DT new paper m0325_K_al_th
+PARAMS.K_pp_al_th_pi_2 = [4.1265    1.8863  -44.4296   -3.3301];
+% Tsettling = 1.5; csi = 0.65; red_contr; LMIs CT (filter up to 15 hz is
+% fine)
+PARAMS.K_pp_al_th_pi_3 = [4.1265    1.8863  -44.4296   -3.3301];
+% PAOLOOOOOO CHE PARAMETRI SONO?
+PARAMS.K_pp_al_th_pi_int_1 = [11.1394 2.6857 -39.5275 -3.1135 -18.4929];
+% PAOLOOOOOO METTI QUI IL FILTRO NUMERO 2 TESTATO IN LAB
+% PARAMS.K_pp_al_th_pi_int_2;
+% Tsettling = 1.5; csi = 0.65; red_contr; LMIs CT
+PARAMS.K_pp_al_th_pi_int_3 = [15.2679    4.0205  -71.4237   -5.4872  -24.2209];
+% Tsettling = 2; csi = 0.65; red_contr; LMIs CT
+PARAMS.K_pp_al_th_pi_int_4 = [8.9949    2.8354  -57.2486   -4.3455  -11.6041];
+% Tsettling = 4; csi = 0.0001; red_contr; LMIs DT
+PARAMS.K_pp_al_th_pi_int_5 = [16.6630    5.7182  -98.9577   -7.7006  -15.2651]; % does not work, inputs are too high
+% Tsettling = 15; csi = 0.0001; red_contr; LMIs DT
+PARAMS.K_pp_al_th_pi_int_6 = [3.9670    2.3061  -61.6491   -4.5726   -1.6836];
+
+
+PARAMS.K_pp_state = PARAMS.K_pp_al_th_pi_int_5(1:4);
+PARAMS.K_pp_th_int = PARAMS.K_pp_al_th_pi_int_5(5);
+
+
 
 
 

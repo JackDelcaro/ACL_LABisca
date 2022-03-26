@@ -28,6 +28,11 @@ run('graphics_options.m');
 run('m0320_sys_model.m');
 A = A_sys_V(pi);
 B = B_sys_V(pi);
+C_th_int = [1 0 0 0];
+A = [A  zeros(4, 1); -C_th_int 0];
+B = [B; 0];
+C = [1 0 0 0 0;
+     0 0 1 0 0];
 clearvars -except colors paths A B C;
 sys_ct = ss(A, B, C, []);
 dt = 2e-3;
@@ -40,7 +45,7 @@ sys_dt = c2d(sys_ct, dt);
 %% YALMIP OPTIMIZATION
 
 enable_red_cntrl_effort = true;
-Tsettling = 2;
+Tsettling = 4;
 csi = 0.0001;
 
 % Algorithm
@@ -140,9 +145,9 @@ eig_DT = eig(F+G*K);
 
 % PLOTS
 figure;
-initial( ss(F, zeros(size(G)), C, [], dt), [5*pi/180 0 5*pi/180 0]');
+initial( ss(F, zeros(size(G)), C, [], dt), [5*pi/180 0 5*pi/180 0 0]');
 figure;
-initial( ss(F+G*K, zeros(size(G)), C, [], dt), [5*pi/180 0 5*pi/180 0]');
+initial( ss(F+G*K, zeros(size(G)), C, [], dt), [5*pi/180 0 5*pi/180 0 0]');
 
 %%
 x_unit_circle = cos(0:0.01:2*pi)';

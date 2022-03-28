@@ -69,8 +69,8 @@ sweep_params = [0.05 0.3 176]; % [ initial_frequency [Hz], final_frequency [Hz],
 % experiment = 0*1.5*ones(size(sim_time));
 
 simin.theta_ref = [sim_time,pi/2*experiment];
-figure;
-plot(sim_time,experiment); grid on;
+% figure;
+% plot(sim_time,experiment); grid on;
 T_sim = sim_time(end);
 
 %% DERIVATIVE FILTER

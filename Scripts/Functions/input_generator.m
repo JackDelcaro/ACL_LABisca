@@ -29,17 +29,19 @@ while ~isempty(varargin)
     elseif is_cell_sine(varargin(1))
         
         sinusoids_frequencies = varargin{2};
+        sin_iterations = varargin{3};
         
         sinusoids_omegas = sinusoids_frequencies*2*pi;
         sines_vector = [];
         for i = 1:length(sinusoids_omegas)
             tested_ome = sinusoids_omegas(i);
-            time_sin = (0:dt:(2*pi/tested_ome)-dt)';
-            sines_vector = [sines_vector; zeros(ceil(zero_time/dt),1); sin(tested_ome * time_sin)]; %#ok<AGROW>
+            time_single_sin = (0:dt:(2*pi/tested_ome)-dt)';
+            single_sin = sin(tested_ome * time_single_sin);
+            sines_vector = [sines_vector; zeros(ceil(zero_time/dt),1); repmat(single_sin, sin_iterations(i), 1)]; %#ok<AGROW>
         end
         experiment = sines_vector;
         
-        varargin(1:2) = [];
+        varargin(1:3) = [];
         
     elseif is_cell_sweep(varargin(1))
         
@@ -56,6 +58,8 @@ while ~isempty(varargin)
             sweep_omega_start = max(sweep_omega_start, 0.00001);
             sweep_vector = sin(sweep_omega_start*sweep_duration/log(sweep_omega_end/sweep_omega_start)*(arrayfun(@(x)(sweep_omega_end/sweep_omega_start)^(x/sweep_duration), sweep_t_vec) - 1));
         end
+        last_idx = find(abs(sweep_vector) < 1e-2, 1, 'last');
+        sweep_vector = sweep_vector(1:last_idx);
         experiment = [zeros(ceil(zero_time/dt),1); sweep_vector];
         
         varargin(1:3) = [];

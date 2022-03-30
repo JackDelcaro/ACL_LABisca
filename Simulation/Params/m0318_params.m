@@ -97,8 +97,8 @@ PARAMS.K_pp_al_th_pi_int_5 = [16.6630    5.7182  -98.9577   -7.7006  -15.2651]; 
 PARAMS.K_pp_al_th_pi_int_6 = [3.9670    2.3061  -61.6491   -4.5726   -1.6836];
 
 
-PARAMS.K_pp_state = PARAMS.K_pp_al_th_pi_int_5(1:4);
-PARAMS.K_pp_th_int = PARAMS.K_pp_al_th_pi_int_5(5);
+PARAMS.K_pp_state = PARAMS.K_pp_al_th_pi_int_4(1:4);
+PARAMS.K_pp_th_int = PARAMS.K_pp_al_th_pi_int_4(5);
 
 
 

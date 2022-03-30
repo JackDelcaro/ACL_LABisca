@@ -58,7 +58,7 @@ dt_control = 2e-3;
 
 % 
 res_theoretical = sqrt(1.5*PARAMS.g/PARAMS.Lp)/2/pi;
-standby_duration = 15; % [s]
+standby_duration = 3; % [s]
 % Steps Parameters
 % steps_amplitude = [0.5 1];
 % steps_duration = 3; % [s]
@@ -67,7 +67,7 @@ standby_duration = 15; % [s]
 % ramps_duration = [5 3]; % [s]
 % ramps_backoff_duration = 1;
 % Sine Sweep Parameters
-sweep_params = [res_theoretical*0.5 res_theoretical*1.5 100]; % [ initial_frequency [Hz], final_frequency [Hz], duration [s] ]
+sweep_params = [res_theoretical*0.8 res_theoretical*1.3 50]; % [ initial_frequency [Hz], final_frequency [Hz], duration [s] ]
 % sine sweep can be 'linear' or 'exponential'
 % Sinusoids Parameters
 sinusoid_freq = [res_theoretical]; % frequencies in [Hz]
@@ -90,7 +90,7 @@ sinusoid_iterations = [10];
 % sim_time = (0:dt:T_sim-dt)';
 % experiment = 0*1.5*ones(size(sim_time));
 
-simin.voltage = [sim_time, experiment];
+simin.voltage = [sim_time, 10*experiment];
 simin.theta_ref = [sim_time, pi/2*experiment];
 % figure;
 % plot(sim_time,experiment); grid on;

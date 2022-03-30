@@ -9,7 +9,7 @@ PARAMS.al_dot_0 = 0;
 PARAMS.g = 9.81;
 
 % Mechanical Parameters
-PARAMS.mp = 3*2.4e-2;
+PARAMS.mp = 2.4e-2;
 PARAMS.Lp = 0.85*1.29e-1;
 PARAMS.mr = 9.5e-2;
 PARAMS.Lr = 8.5e-2;

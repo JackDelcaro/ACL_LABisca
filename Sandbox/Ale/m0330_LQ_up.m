@@ -1,4 +1,3 @@
-
 clc;
 clearvars;
 close all;
@@ -25,18 +24,17 @@ dt=2e-3;
 
 %% LQ
 
-sys_0_V = ss(A_sys_V(0), B_sys_V(0), C, 0);
-sys_0_V_dt = c2d(sys_0_V, dt);
-[F, G, H, ~, ~] = ssdata(sys_0_V_dt);
+sys_pi_V = ss(A_sys_V(pi), B_sys_V(pi), C, 0);
+sys_pi_V_dt = c2d(sys_pi_V, dt);
+[F, G, H, ~, ~] = ssdata(sys_pi_V_dt);
 Q = diag([1 0.01 1 0.01]);
 R = 1;
 N = zeros(4,1);
 
 [K, S, CLP] = dlqr(1.01*F, 1.01*G, Q, R, N);
 K
-real(eig(A_sys_V(0)))
-abs(eig(F))
-log(abs(eig(F)))/dt
-abs(eig(F-G*K))
-log(abs(eig(F-G*K)))/dt
-
+eigA = real(eig(A_sys_V(pi)))
+rhoF = abs(eig(F))
+eigF_ct = log(abs(eig(F)))/dt
+rhoF_cl = abs(eig(F-G*K))
+eigF_cl_ct = log(abs(eig(F-G*K)))/dt

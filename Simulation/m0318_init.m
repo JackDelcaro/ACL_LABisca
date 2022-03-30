@@ -60,16 +60,18 @@ dt_control = 2e-3;
 res_theoretical = sqrt(1.5*PARAMS.g/PARAMS.Lp)/2/pi;
 standby_duration = 3; % [s]
 % Steps Parameters
-% steps_amplitude = [0.5 1];
-% steps_duration = 3; % [s]
+steps_amplitude = [0.3 0.5 0.8 1];
+steps_duration = 3; % [s]
 % Ramps Parameters
-% ramps_amplitude = [1 1];
-% ramps_duration = [5 3]; % [s]
-% ramps_backoff_duration = 1;
+ ramps_amplitude = [1 1];
+ ramps_duration = [8 5]; % [s]
+ ramps_backoff_duration = 1;
 % Sine Sweep Parameters
-sweep_params = [res_theoretical*0.8 res_theoretical*1.3 50]; % [ initial_frequency [Hz], final_frequency [Hz], duration [s] ]
+sweep_params = [0.5 8 50]; % [ initial_frequency [Hz], final_frequency [Hz], duration [s] ]
                 
 [sim_time_th, experiment_th] = input_generator(dt, standby_duration,...
+                               'steps', steps_amplitude, steps_duration,...
+                               'ramps', ramps_amplitude, ramps_duration, ramps_backoff_duration,...
                                'sweep', sweep_params, 'linear');
 
                 

@@ -2,7 +2,7 @@ PARAMS.angle_quantization = 0.00307;
 
 % Setup par
 PARAMS.th_0_cable = 0;
-PARAMS.th_0 = 0*10/180*pi;
+PARAMS.th_0 = 10/180*pi;
 PARAMS.th_dot_0 = 0;
 PARAMS.al_0 = 0*170/180*pi;
 PARAMS.al_dot_0 = 0;
@@ -95,6 +95,15 @@ PARAMS.K_pp_al_th_pi_int_4 = [8.9949    2.8354  -57.2486   -4.3455  -11.6041];
 PARAMS.K_pp_al_th_pi_int_5 = [16.6630    5.7182  -98.9577   -7.7006  -15.2651]; % does not work, inputs are too high
 % Tsettling = 15; csi = 0.0001; red_contr; LMIs DT
 PARAMS.K_pp_al_th_pi_int_6 = [3.9670    2.3061  -61.6491   -4.5726   -1.6836];
+
+
+%LQ
+%Q = diag([1 0.01 1 0.01]) R = 1; [K, S, CLP] = dlqr(1.01*F, 1.01*G, Q, R, N);
+PARAMS.K_LQ_down1 = -[11.0652    2.9103  -16.3115    0.7839];
+
+%Q = diag([1 0.01 1 0.01]) R = 1; [K, S, CLP] = dlqr(1.01*F, 1.01*G, Q, R, N);
+PARAMS.K_LQ_up1 = -[-13.3597   -4.1353   74.1672    6.1174];
+
 
 
 PARAMS.K_pp_state = PARAMS.K_pp_al_th_pi_int_4(1:4);

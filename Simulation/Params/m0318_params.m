@@ -4,7 +4,7 @@ PARAMS.angle_quantization = 0.00307;
 PARAMS.th_0_cable = 0;
 PARAMS.th_0 = 10/180*pi;
 PARAMS.th_dot_0 = 0;
-PARAMS.al_0 = 0*170/180*pi;
+PARAMS.al_0 = 170/180*pi;
 PARAMS.al_dot_0 = 0;
 PARAMS.g = 9.81;
 
@@ -104,10 +104,23 @@ PARAMS.K_LQ_down1 = -[11.0652    2.9103  -16.3115    0.7839];
 %Q = diag([1 0.01 1 0.01]) R = 1; [K, S, CLP] = dlqr(1.01*F, 1.01*G, Q, R, N);
 PARAMS.K_LQ_up1 = -[-13.3597   -4.1353   74.1672    6.1174];
 
+% LQ int
+% Tsettling = 2; Q = diag([0.1 0.01 1 0.01 0.1]); R = 1;
+PARAMS.K_LQ_int_down1 = -[6.6748    1.4382   -5.1058    0.1867  -11.9854];
+% Tsettling = 1.5; Q = diag([1 0.01 1 0.01 0.1]); R = 1;
+PARAMS.K_LQ_int_down2 = -[14.7467    2.4421   -7.4821    0.6436  -32.6271];
+% Tsettling = 1.5; Q = diag([1 0.01 1 0.01 0.1]); R = 10;
+PARAMS.K_LQ_int_down3 = -[12.8100    2.2404   -7.2298    0.5428  -26.8886];
+% Tsettling = 1.5; Q = diag([1 0.01 1000 0.01 0.1]); R = 10;
+PARAMS.K_LQ_int_down4 = -[20.3440    3.5740  -14.4428    1.2646  -41.0934];
 
 
-PARAMS.K_pp_state = PARAMS.K_pp_al_th_pi_int_4(1:4);
-PARAMS.K_pp_th_int = PARAMS.K_pp_al_th_pi_int_4(5);
+% Tsettling = 2; Q = diag([0.1 0.01 1 0.01 0.1]); R = 1;
+PARAMS.K_LQ_int_up1 = -[-9.8980   -2.7541   55.3324    4.4881   14.0087];
+
+
+PARAMS.K_pp_state = PARAMS.K_LQ_int_up1(1:4);
+PARAMS.K_pp_th_int = PARAMS.K_LQ_int_up1(5);
 
 
 

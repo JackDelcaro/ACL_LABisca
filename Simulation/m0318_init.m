@@ -97,7 +97,7 @@ T_sim = simin.theta_ref(end, 1);
 %% DERIVATIVE FILTER
 
 s = tf('s');
-freq_der_filter = 18;
+freq_der_filter = 15;
 der_filt = s/(s/(2*pi*freq_der_filter)+1);
 [num_der_filter, den_der_filter] = tfdata(c2d(der_filt, dt_control), 'v');
 
@@ -115,7 +115,7 @@ freq_ref_filter = 1;
 ref_filt = 1/(s/(2*pi*freq_ref_filter)+1);
 [num_ref_filter, den_ref_filter] = tfdata(c2d(ref_filt, dt_control), 'v');
 
-% %% SIMULATION
+%% SIMULATION
 
 simout = sim("s0318_main.slx");
 

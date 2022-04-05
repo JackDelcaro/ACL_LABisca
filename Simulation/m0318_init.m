@@ -25,7 +25,7 @@ run('graphics_options.m');
 %% INITIALIZATION
 
 dt = 2e-4;
-run('m0318_params.m');
+run('m0405_params.m');
 % mech_simulator_model = "s0318_mechanical_simulator";
 % motor_simulator_model = "s0303_motor_simulator";
 dt_control = 2e-3;
@@ -86,11 +86,32 @@ sweep_params = [0.7*res_theoretical 1*res_theoretical 100]; % [ initial_frequenc
 % sim_time = (0:dt:T_sim-dt)';
 % experiment = 0*1.5*ones(size(sim_time));
 
-simin.voltage = [sim_time_th, 10*experiment_th];
-simin.theta_ref = [sim_time_th, pi/4*experiment_th];
+dataset = load('20220321_1748_ol_full_pendulum_swing_90');
+% dataset = load('20220314_1650_sinesweep_0p75V_exp07');
+
+dt_dataset = mean(diff(dataset.time));
+omega_cut = 100*2*pi;
+s = tf('s');
+filter = 1/(1+s/omega_cut);
+[num,den] = tfdata(c2d(filter, dt_dataset), 'v');
+
+dataset.theta_filtered = filtfilt(num, den, dataset.theta);
+dataset.alpha_filtered = filtfilt(num, den, dataset.alpha);
+
+dataset.theta_dot = gradient(dataset.theta_filtered, dataset.time);
+dataset.alpha_dot = gradient(dataset.alpha_filtered, dataset.time);
+
+
+simin.voltage = [dataset.time, dataset.voltage];
+simin.theta = [dataset.time, dataset.theta];
+simin.theta_dot = [dataset.time, dataset.theta_dot];
+PARAMS.al_0 = dataset.alpha(1);
+PARAMS.th_0 = dataset.theta(1);
+
+% simin.theta_ref = [sim_time_th, pi/4*experiment_th];
 % figure;
 % plot(sim_time,experiment); grid on;
-T_sim = simin.theta_ref(end, 1);
+T_sim = simin.voltage(end, 1);
 
 %% DERIVATIVE FILTER
 
@@ -101,59 +122,61 @@ der_filt = s/(s/(2*pi*freq_der_filter)+1);
 
 %% FILTER
 
-s = tf('s');
 freq_filter = 15;
 filt = 1/(s/(2*pi*freq_filter)+1);
 [num_filter, den_filter] = tfdata(c2d(filt, dt_control), 'v');
 
 %% REF FILTER
 
-s = tf('s');
 freq_ref_filter = 3;
 ref_filt = 1/(s/(2*pi*freq_ref_filter)+1);
 [num_ref_filter, den_ref_filter] = tfdata(c2d(ref_filt, dt_control), 'v');
 
 %% SIMULATION
 
-% simout = sim("s0318_main.slx");
-% 
-% %% RESULTS
-% 
-% figure;
-% sgtitle("Simulation Results");
-% 
-% sub(1) = subplot(3,1,1);
-% plot(simout.voltage.Time, simout.voltage.Data); hold on; grid on;
-% ylabel('$Voltage\;[V]$');
-% 
-% sub(2) = subplot(3,1,2);
-% plot(simout.theta.Time, simout.theta.Data*180/pi, 'DisplayName', 'Simulated'); hold on; grid on;
-% % plot(simout.theta_ref.Time, simout.theta_ref.Data*180/pi, 'DisplayName', 'Reference');
-% % plot(log.time, log.theta*180/pi, 'DisplayName', 'Real Data');
-% legend;
-% ylabel('$\theta\;[deg]$');
-% 
-% sub(3) = subplot(3,1,3);
-% plot(simout.alpha.Time, simout.alpha.Data*180/pi, 'DisplayName', 'Simulated'); hold on; grid on;
-% % plot(simout.alpha_ref.Time, simout.alpha_ref.Data*180/pi, 'DisplayName', 'Reference');
-% % plot(log.time, log.alpha*180/pi, 'DisplayName', 'Real Data');
-% legend;
-% ylabel('$\alpha\;[deg]$');
-% xlabel('$time\;[s]$');
-% linkaxes(sub, 'x');
-% clearvars sub;
-% 
-% figure
-% sub(1) = subplot(3,1,1);
-% plot(simout.tau.Time, simout.tau.Data); hold on; grid on;
-% ylabel('$\tau\;[Nm]$');
-% 
-% sub(2) = subplot(3,1,2);
-% plot(simout.theta_dot.Time, simout.theta_dot.Data*180/pi); hold on; grid on;
-% ylabel('$\dot{\theta}\;[deg/s]$');
-% 
-% sub(3) = subplot(3,1,3);
-% plot(simout.alpha_dot.Time, simout.alpha_dot.Data*180/pi); hold on; grid on;
-% ylabel('$\dot{\alpha}\;[deg/s]$');
-% xlabel('$time\;[s]$');
-% linkaxes(sub, 'x');
+simout = sim("s0318_main.slx");
+
+%% RESULTS
+
+figure;
+sgtitle("Simulation Results");
+
+sub(1) = subplot(3,1,1);
+plot(simout.voltage.Time, simout.voltage.Data); hold on; grid on;
+ylabel('$Voltage\;[V]$');
+
+sub(2) = subplot(3,1,2);
+plot(simout.theta.Time, simout.theta.Data*180/pi, 'DisplayName', 'Simulated'); hold on; grid on;
+% plot(simout.theta_ref.Time, simout.theta_ref.Data*180/pi, 'DisplayName', 'Reference');
+plot(dataset.time, dataset.theta*180/pi, 'DisplayName', 'Real Data');
+legend;
+ylabel('$\theta\;[deg]$');
+
+sub(3) = subplot(3,1,3);
+plot(simout.alpha.Time, simout.alpha.Data*180/pi, 'DisplayName', 'Simulated'); hold on; grid on;
+% plot(simout.alpha_ref.Time, simout.alpha_ref.Data*180/pi, 'DisplayName', 'Reference');
+plot(dataset.time, dataset.alpha*180/pi, 'DisplayName', 'Real Data');
+legend;
+ylabel('$\alpha\;[deg]$');
+xlabel('$time\;[s]$');
+linkaxes(sub, 'x');
+clearvars sub;
+
+figure
+sub(1) = subplot(3,1,1);
+plot(simout.tau.Time, simout.tau.Data); hold on; grid on;
+ylabel('$\tau\;[Nm]$');
+
+sub(2) = subplot(3,1,2);
+plot(simout.theta_dot.Time, simout.theta_dot.Data*180/pi, 'DisplayName', 'Simulated'); hold on; grid on;
+plot(dataset.time, dataset.theta_dot*180/pi, 'DisplayName', 'Real Data');
+legend;
+ylabel('$\dot{\theta}\;[deg/s]$');
+
+sub(3) = subplot(3,1,3);
+plot(simout.alpha_dot.Time, simout.alpha_dot.Data*180/pi, 'DisplayName', 'Simulated'); hold on; grid on;
+plot(dataset.time, dataset.alpha_dot*180/pi, 'DisplayName', 'Real Data');
+legend;
+ylabel('$\dot{\alpha}\;[deg/s]$');
+xlabel('$time\;[s]$');
+linkaxes(sub, 'x');

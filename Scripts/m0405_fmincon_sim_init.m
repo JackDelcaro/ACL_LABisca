@@ -1,7 +1,10 @@
 
 %% PATHS
-
-paths.file_fullpath = matlab.desktop.editor.getActiveFilename;
+try
+    paths.file_fullpath = matlab.desktop.editor.getActiveFilename;
+catch
+    paths.file_fullpath = pwd;
+end
 [paths.file_path, ~, ~] = fileparts(paths.file_fullpath);
 
 paths.mainfolder_path       = strsplit(paths.file_path, 'ACL_LABisca');

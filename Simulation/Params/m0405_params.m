@@ -15,12 +15,12 @@ PARAMS.Lp = 1.29e-1 - PARAMS.Lp_offset;
 PARAMS.mr = 9.5e-2;
 PARAMS.Lr = 8.5e-2;
 PARAMS.Jm = 4e-6;
-PARAMS.l2 = 0.9823*(PARAMS.Lp/2 - PARAMS.Lp_offset);
-PARAMS.l1 = 0.5351*PARAMS.Lr/2;
+PARAMS.l2 = (PARAMS.Lp/2 - PARAMS.Lp_offset);
+PARAMS.l1 = 0.5117*PARAMS.Lr/2;
 
 PARAMS.Jh = 8.009e-6 - PARAMS.Jm; % official inertia 6e-7
-PARAMS.Cal = 6.494e-6; % previously 1.4163e-05
-PARAMS.Cth = 3.660e-4; % previously 2.2237e-4
+PARAMS.Cal = 2*6.494e-6;
+PARAMS.Cth = 0.94*3.660e-4;
 
 PARAMS.K = 2.215e-3;
 PARAMS.Sth = 7.9e-4;  % static friction

@@ -1,0 +1,164 @@
+z0
+
+\left(\begin{array}{c}
+0\\
+0\\
+1
+\end{array}\right)
+
+
+z1
+
+\left(\begin{array}{c}
+-\mathrm{sin}\left(\mathrm{\theta}\right)\\
+\mathrm{cos}\left(\mathrm{\theta}\right)\\
+0
+\end{array}\right)
+
+
+Pl1
+
+\left(\begin{array}{c}
+-l_1 \,\mathrm{sin}\left(\mathrm{\theta}\right)\\
+l_1 \,\mathrm{cos}\left(\mathrm{\theta}\right)\\
+0
+\end{array}\right)
+
+
+P1
+
+\left(\begin{array}{c}
+-\mathrm{Lr}\,\mathrm{sin}\left(\mathrm{\theta}\right)\\
+\mathrm{Lr}\,\mathrm{cos}\left(\mathrm{\theta}\right)\\
+0
+\end{array}\right)
+
+
+Pl2
+
+\left(\begin{array}{c}
+-\mathrm{Lr}\,\mathrm{sin}\left(\mathrm{\theta}\right)-l_2 \,\mathrm{sin}\left(\mathrm{\alpha}\right)\,\mathrm{cos}\left(\mathrm{\theta}\right)\\
+\mathrm{Lr}\,\mathrm{cos}\left(\mathrm{\theta}\right)-l_2 \,\mathrm{sin}\left(\mathrm{\alpha}\right)\,\mathrm{sin}\left(\mathrm{\theta}\right)\\
+-l_2 \,\mathrm{cos}\left(\mathrm{\alpha}\right)
+\end{array}\right)
+
+
+R01
+
+\left(\begin{array}{ccc}
+\mathrm{cos}\left(\mathrm{\theta}\right) & 0 & -\mathrm{sin}\left(\mathrm{\theta}\right)\\
+\mathrm{sin}\left(\mathrm{\theta}\right) & 0 & \mathrm{cos}\left(\mathrm{\theta}\right)\\
+0 & -1 & 0
+\end{array}\right)
+
+
+R12
+
+\left(\begin{array}{ccc}
+\mathrm{cos}\left(\mathrm{\alpha}\right) & 0 & -\mathrm{sin}\left(\mathrm{\alpha}\right)\\
+\mathrm{sin}\left(\mathrm{\alpha}\right) & 0 & \mathrm{cos}\left(\mathrm{\alpha}\right)\\
+0 & -1 & 0
+\end{array}\right)
+
+
+R02
+
+\left(\begin{array}{ccc}
+\mathrm{cos}\left(\mathrm{\alpha}\right)\,\mathrm{cos}\left(\mathrm{\theta}\right) & \mathrm{sin}\left(\mathrm{\theta}\right) & -\mathrm{sin}\left(\mathrm{\alpha}\right)\,\mathrm{cos}\left(\mathrm{\theta}\right)\\
+\mathrm{cos}\left(\mathrm{\alpha}\right)\,\mathrm{sin}\left(\mathrm{\theta}\right) & -\mathrm{cos}\left(\mathrm{\theta}\right) & -\mathrm{sin}\left(\mathrm{\alpha}\right)\,\mathrm{sin}\left(\mathrm{\theta}\right)\\
+-\mathrm{sin}\left(\mathrm{\alpha}\right) & 0 & -\mathrm{cos}\left(\mathrm{\alpha}\right)
+\end{array}\right)
+
+
+I1_big
+
+\left(\begin{array}{ccc}
+\frac{{\mathrm{Lr}}^2 \,\mathrm{mr}}{12} & 0 & 0\\
+0 & \frac{\mathrm{mr}\,{\mathrm{Lr}}^2 }{12}+\mathrm{Jh}+\mathrm{Jm} & 0\\
+0 & 0 & 0
+\end{array}\right)
+
+
+I2_big
+
+\left(\begin{array}{ccc}
+\frac{{\mathrm{Lp}}^2 \,\mathrm{mp}}{12} & 0 & 0\\
+0 & \frac{{\mathrm{Lp}}^2 \,\mathrm{mp}}{12} & 0\\
+0 & 0 & 0
+\end{array}\right)
+
+
+B
+
+\left(\begin{array}{cc}
+\mathrm{Jh}+\mathrm{Jm}+{\mathrm{Lr}}^2 \,\mathrm{mp}+\frac{{\mathrm{Lr}}^2 \,\mathrm{mr}}{12}+{l_1 }^2 \,\mathrm{mr}+\frac{{\mathrm{Lp}}^2 \,\mathrm{mp}\,{\mathrm{sin}\left(\mathrm{\alpha}\right)}^2 }{12}+{l_2 }^2 \,\mathrm{mp}\,{\mathrm{sin}\left(\mathrm{\alpha}\right)}^2  & \mathrm{Lr}\,l_2 \,\mathrm{mp}\,\mathrm{cos}\left(\mathrm{\alpha}\right)\\
+\mathrm{Lr}\,l_2 \,\mathrm{mp}\,\mathrm{cos}\left(\mathrm{\alpha}\right) & \frac{\mathrm{mp}\,{\left({\mathrm{Lp}}^2 +12\,{l_2 }^2 \right)}}{12}
+\end{array}\right)
+
+
+C
+
+\left(\begin{array}{cc}
+\mathrm{Jh}+\mathrm{Jm}+{\mathrm{Lr}}^2 \,\mathrm{mp}+\frac{{\mathrm{Lr}}^2 \,\mathrm{mr}}{12}+{l_1 }^2 \,\mathrm{mr}+\frac{{\mathrm{Lp}}^2 \,\mathrm{mp}\,{\mathrm{sin}\left(\mathrm{\alpha}\right)}^2 }{12}+{l_2 }^2 \,\mathrm{mp}\,{\mathrm{sin}\left(\mathrm{\alpha}\right)}^2  & \mathrm{Lr}\,l_2 \,\mathrm{mp}\,\mathrm{cos}\left(\mathrm{\alpha}\right)\\
+\mathrm{Lr}\,l_2 \,\mathrm{mp}\,\mathrm{cos}\left(\mathrm{\alpha}\right) & \frac{\mathrm{mp}\,{\left({\mathrm{Lp}}^2 +12\,{l_2 }^2 \right)}}{12}
+\end{array}\right)
+
+
+G
+
+\left(\begin{array}{c}
+\mathrm{Cth}\,\dot{\textrm{\theta}} \\
+\mathrm{Cal}\,\dot{\textrm{\alpha}} 
+\end{array}\right)
+
+Attr_v
+
+\left(\begin{array}{c}
+\mathrm{Cth}\,\dot{\textrm{\theta}} \\
+\mathrm{Cal}\,\dot{\textrm{\alpha}} 
+\end{array}\right)
+
+
+molla
+
+\left(\begin{array}{c}
+K\,{\left(\mathrm{\theta}-{\textrm{\theta}}_0 \right)}\\
+0
+\end{array}\right)
+
+
+T
+
+\begin{array}{l}
+\left(\begin{array}{c}
+\mathrm{Cth}\,\dot{\textrm{\theta}} +\mathrm{Jh}\,\ddot{\textrm{\theta}} +\mathrm{Jm}\,\ddot{\textrm{\theta}} +K\,\mathrm{\theta}-K\,{\textrm{\theta}}_0 +{l_1 }^2 \,\mathrm{mr}\,\ddot{\textrm{\theta}} +{\mathrm{Lr}}^2 \,\mathrm{mp}\,\ddot{\textrm{\theta}} +\frac{{\mathrm{Lr}}^2 \,\mathrm{mr}\,\ddot{\textrm{\theta}} }{12}+\frac{{\mathrm{Lp}}^2 \,\mathrm{mp}\,\ddot{\textrm{\theta}} \,{\mathrm{sin}\left(\mathrm{\alpha}\right)}^2 }{12}+{l_2 }^2 \,\mathrm{mp}\,\ddot{\textrm{\theta}} \,{\mathrm{sin}\left(\mathrm{\alpha}\right)}^2 -\mathrm{Lr}\,{\dot{\textrm{\alpha}} }^2 \,l_2 \,\mathrm{mp}\,\mathrm{sin}\left(\mathrm{\alpha}\right)+\frac{{\mathrm{Lp}}^2 \,\dot{\textrm{\alpha}} \,\mathrm{mp}\,\dot{\textrm{\theta}} \,\mathrm{sin}\left(2\,\mathrm{\alpha}\right)}{12}+\dot{\textrm{\alpha}} \,{l_2 }^2 \,\mathrm{mp}\,\dot{\textrm{\theta}} \,\mathrm{sin}\left(2\,\mathrm{\alpha}\right)+\mathrm{Lr}\,\ddot{\textrm{\alpha}} \,l_2 \,\mathrm{mp}\,\mathrm{cos}\left(\mathrm{\alpha}\right)\\
+-\frac{\mathrm{mp}\,\mathrm{cos}\left(\mathrm{\alpha}\right)\,\mathrm{sin}\left(\mathrm{\alpha}\right)\,\sigma_1 \,{\dot{\textrm{\theta}} }^2 }{12}+\mathrm{Cal}\,\dot{\textrm{\alpha}} +\frac{\ddot{\textrm{\alpha}} \,\mathrm{mp}\,\sigma_1 }{12}+g\,l_2 \,\mathrm{mp}\,\mathrm{sin}\left(\mathrm{\alpha}\right)+\mathrm{Lr}\,l_2 \,\mathrm{mp}\,\ddot{\textrm{\theta}} \,\mathrm{cos}\left(\mathrm{\alpha}\right)
+\end{array}\right)\\
+\mathrm{}\\
+\textrm{where}\\
+\mathrm{}\\
+\;\;\sigma_1 ={\mathrm{Lp}}^2 +12\,{l_2 }^2 
+\end{array}
+
+
+b
+
+\left(\begin{array}{c}
+-\frac{\mathrm{mp}\,\dot{\textrm{\theta}} \,\mathrm{sin}\left(2\,\mathrm{\alpha}\right)\,{\mathrm{Lp}}^2 \,\dot{\textrm{\alpha}} }{12}+\mathrm{Lr}\,\mathrm{mp}\,\mathrm{sin}\left(\mathrm{\alpha}\right)\,{\dot{\textrm{\alpha}} }^2 \,l_2 -\mathrm{mp}\,\dot{\textrm{\theta}} \,\mathrm{sin}\left(2\,\mathrm{\alpha}\right)\,\dot{\textrm{\alpha}} \,{l_2 }^2 +\tau -\mathrm{Cth}\,\dot{\textrm{\theta}} -K\,\mathrm{\theta}+K\,{\textrm{\theta}}_0 \\
+\frac{\mathrm{mp}\,\mathrm{sin}\left(2\,\mathrm{\alpha}\right)\,{\left({\mathrm{Lp}}^2 +12\,{l_2 }^2 \right)}\,{\dot{\textrm{\theta}} }^2 }{24}-\mathrm{Cal}\,\dot{\textrm{\alpha}} -g\,l_2 \,\mathrm{mp}\,\mathrm{sin}\left(\mathrm{\alpha}\right)
+\end{array}\right)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

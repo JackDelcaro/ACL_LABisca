@@ -24,9 +24,10 @@ PARAMS.Jh = 8.009e-6 - PARAMS.Jm; % official inertia 6e-7
 PARAMS.Cal = 2*6.494e-6;
 PARAMS.Cth = 0.94*3.660e-4;
 
-PARAMS.K = 2.215e-3;
+PARAMS.K = 0.0014;
 PARAMS.Sth = 7.9e-4;  % static friction
-PARAMS.Dth = 0.85*PARAMS.Sth; % dynamic friction
+% PARAMS.Dth = 0.85*PARAMS.Sth; % dynamic friction
+PARAMS.Dth = 0.001;
 PARAMS.Sth_vel_threshold = 1e-8;
 PARAMS.tau_nom = 22e-3;
 

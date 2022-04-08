@@ -31,48 +31,11 @@ dt_control = 2e-3;
 
 % dataset = load('20220321_1748_ol_full_pendulum_swing_90');
 % dataset = load('20220314_1650_sinesweep_0p75V_exp07'); % optimization
-dataset = load('20220314_1640_varin_exp07'); % validation
-
-dt_dataset = mean(diff(dataset.time));
-omega_cut_1 = 15*2*pi;
-omega_cut_2 = 20*2*pi;
-s = tf('s');
-filter = 1/(1+s/omega_cut_1)/(1+s/omega_cut_2);
-[num,den] = tfdata(c2d(filter, dt_dataset), 'v');
-
-dataset.theta_filtered = filtfilt(num, den, dataset.theta);
-dataset.alpha_filtered = filtfilt(num, den, dataset.alpha);
-
-dataset.theta_dot = gradient(dataset.theta_filtered, dataset.time);
-dataset.alpha_dot = gradient(dataset.alpha_filtered, dataset.time);
-
-simin.voltage = [dataset.time, dataset.voltage];
-simin.theta = [dataset.time, dataset.theta];
-simin.theta_dot = [dataset.time, dataset.theta_dot];
-
-PARAMS.al_0 = dataset.alpha(1);
-PARAMS.th_0 = dataset.theta(1);
-
-T_sim = simin.voltage(end, 1);
-
-%% DERIVATIVE FILTER
-
-s = tf('s');
-freq_der_filter = 15;
-der_filt = s/(s/(2*pi*freq_der_filter)+1);
-[num_der_filter, den_der_filter] = tfdata(c2d(der_filt, dt_control), 'v');
-
-%% FILTER
-
-freq_filter = 15;
-filt = 1/(s/(2*pi*freq_filter)+1);
-[num_filter, den_filter] = tfdata(c2d(filt, dt_control), 'v');
-
-%% REF FILTER
-
-freq_ref_filter = 3;
-ref_filt = 1/(s/(2*pi*freq_ref_filter)+1);
-[num_ref_filter, den_ref_filter] = tfdata(c2d(ref_filt, dt_control), 'v');
+% dataset_name = '20220314_1640_varin_exp07';
+dataset_name = '20220314_1640_varin_exp07_cut_ramps';
+dataset_name = '20220314_1640_varin_exp07_cut_squarewaves_ramps';
+dataset = load(dataset_name); % validation
+run('m0405_fmincon_sim_init');
 
 %% SIMULATION
 

@@ -25,7 +25,9 @@ addpath(genpath(paths.sim_folder    ));
 %% SIMULATION PARAMETERS
 
 % dataset_name = '20220321_1748_ol_full_pendulum_swing_90';
-dataset_name = '20220314_1650_sinesweep_0p75V_exp07';
+% dataset_name = '20220314_1650_sinesweep_0p75V_exp07';
+dataset_name = '20220314_1640_varin_exp07_cut_ramps';
+dataset_name = '20220314_1640_varin_exp07_cut_squarewaves_ramps';
 dataset = load(dataset_name);
 run('m0405_fmincon_sim_init');
 
@@ -40,10 +42,10 @@ model_name = 's0405_fmincon';
 
 %% OPTIMIZATION VARIABLES
 
-weights.theta = 0;
-weights.alpha = 1;
-weights.theta_dot = 0.5;
-weights.alpha_dot = 0.05;
+weights.theta = 1; % 0
+weights.alpha = 0; % 1
+weights.theta_dot = 1; % 0.5
+weights.alpha_dot = 0; % 0.05
 
 %% PARPOOL INITIALIZATION
 
@@ -81,10 +83,13 @@ end
 
 %% TUNABLE PARAMETERS
 
-tun_pars_limits.l1 = [0.5, 2];
-tun_pars_limits.l2 = [0.5, 2];
-tun_pars_limits.Cal = [0.5, 2];
-tun_pars_limits.Cth = [0.5, 2];
+tun_pars_limits.Dth = [0.5, 2];
+% tun_pars_limits.Sth = [0.5, 2];
+tun_pars_limits.K = [0.5, 2];
+% tun_pars_limits.l1 = [0.5, 2];
+% tun_pars_limits.l2 = [0.5, 2];
+% tun_pars_limits.Cal = [0.5, 2];
+% tun_pars_limits.Cth = [0.5, 2];
 tun_pars_labels = string(fields(tun_pars_limits));
 
 x_lb_fmincon = nan(size(tun_pars_labels));

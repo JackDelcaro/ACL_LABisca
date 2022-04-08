@@ -27,18 +27,25 @@ dt = 2e-4;
 run('m0405_params.m');
 dt_control = 2e-3;
 PARAMS.al_0 = dataset.alpha(1);
-PARAMS.th_0 = dataset.theta(1);
+PARAMS.th_0 = -dataset.theta(1);
 
 %% DERIVATIVES OF REAL DATA
 
 dt_dataset = mean(diff(dataset.time));
-omega_cut = 100*2*pi;
+omega_cut_1 = 18*2*pi;
+omega_cut_2 = 30*2*pi;
 s = tf('s');
-filter = 1/(1+s/omega_cut);
-[num,den] = tfdata(c2d(filter, dt_dataset), 'v');
+% filter = 1/(1+s/omega_cut_1)/(1+s/omega_cut_2);
+% [num,den] = tfdata(c2d(filter, dt_dataset), 'v');
 
-dataset.theta_filtered = filtfilt(num, den, dataset.theta);
-dataset.alpha_filtered = filtfilt(num, den, dataset.alpha);
+tmp = sgolayfilt(dataset.theta, 1, 51);
+dataset.theta_filtered = sgolayfilt(tmp, 1, 25);
+
+tmp = sgolayfilt(dataset.alpha, 1, 51);
+dataset.alpha_filtered = sgolayfilt(tmp, 1, 25);
+
+% dataset.theta_filtered = filtfilt(num, den, dataset.theta);
+% dataset.alpha_filtered = filtfilt(num, den, dataset.alpha);
 
 dataset.theta_dot = gradient(dataset.theta_filtered, dataset.time);
 dataset.alpha_dot = gradient(dataset.alpha_filtered, dataset.time);

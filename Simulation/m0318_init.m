@@ -25,10 +25,10 @@ run('graphics_options.m');
 %% INITIALIZATION
 
 dt = 2e-4;
+dt_control = 2e-3;
 run('m0405_params.m');
 % mech_simulator_model = "s0318_mechanical_simulator";
 % motor_simulator_model = "s0303_motor_simulator";
-dt_control = 2e-3;
 
 %% INPUT EXPERIMENT
 % log = load("20220314_1825_cl_PID_20_15_10_varin_exp14.mat");

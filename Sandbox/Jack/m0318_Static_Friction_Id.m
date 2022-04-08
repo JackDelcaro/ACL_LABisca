@@ -74,6 +74,7 @@ figure;
 sgtitle("Experiment: " + string(strrep(strrep(load_experiment_name, ".mat", ""), "_", "\_")));
 
 G_V_tau = PARAMS.ki/(s*PARAMS.Lm + PARAMS.Rm);
+
 tau = lsim(G_V_tau, voltage - PARAMS.kv*theta_dot, time);
 sub(1) = subplot(3,1,1);
 plot(time, tau); hold on; grid on;

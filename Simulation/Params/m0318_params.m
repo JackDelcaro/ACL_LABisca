@@ -39,44 +39,34 @@ PARAMS.V_sat = 10;
 PARAMS.mu_V_theta_dot = PARAMS.ki /((PARAMS.mp + PARAMS.mr/3) * PARAMS.Lr^2 + ...
                                      PARAMS.Jm + PARAMS.Jh) / PARAMS.Rm;
                                  
-% Linearized sys parameters (without friction and only alpha state feedback control law)
+% Loop Parameters
 
-num = PARAMS.Jh + PARAMS.Jm + PARAMS.mp * PARAMS.Lr^2 + PARAMS.mr * PARAMS.Lr^2 / 3;
-den = PARAMS.Lp * (PARAMS.Jh + PARAMS.Jm + PARAMS.mp * PARAMS.Lr^2 / 4 + PARAMS.mr * PARAMS.Lr^2 / 3);
+PARAMS.mu_V_theta_dot = PARAMS.ki /((PARAMS.mp + PARAMS.mr/3) * PARAMS.Lr^2 + ...
+                                     PARAMS.Jm + PARAMS.Jh) / PARAMS.Rm;
+                                 
+PARAMS.A_pi_CT = [0       1       0        0;
+                  -7.9065 -2.056  53.5758  -0.027;
+                  0       0       0        1;
+                  -9.1936 -2.3907 196.4972 -0.0989];          
+PARAMS.B_pi_CT = [0; 17.8475; 0; 20.753];
+PARAMS.A_0_CT = [0       1       0         0;
+                 -7.9065 -2.056  53.5758   0.027;
+                 0       0       0         1;
+                 9.1936  2.3907  -196.4972 -0.0989]; 
+PARAMS.B_0_CT = [0; 17.8475; 0; -20.753];
+PARAMS.C = [1 0 0 0;
+            0 0 1 0];
+PARAMS.D = [0; 0];
 
-PARAMS.A_pi = zeros(2);
-PARAMS.B_pi = zeros(2,1);
+sys_pi_CT = ss(PARAMS.A_pi_CT, PARAMS.B_pi_CT, PARAMS.C, PARAMS.D);
+sys_0_CT = ss(PARAMS.A_0_CT, PARAMS.B_0_CT, PARAMS.C, PARAMS.D);
+sys_pi_DT = c2d(sys_pi_CT, dt_control);
+sys_0_DT = c2d(sys_0_CT, dt_control);
 
-PARAMS.A_pi(1,2) = 1;
-PARAMS.A_pi(2,1) = 3 / 2 * 9.81 * num / den;
-
-PARAMS.B_pi(2) = 3 / 2 * PARAMS.Lr / den;
-
-% Linearized sys parameters (with friction and full state feedback control law)
-
-% PARAMS.A_pi = zeros(4);
-% PARAMS.B_pi = zeros(4,1);
-% 
-% PARAMS.A_pi(1, 2) = 1;
-% PARAMS.A_pi(2, 2) = - PARAMS.Cth / (PARAMS.Jh + PARAMS.Jm + PARAMS.Lr^2 * PARAMS.mp / 4 + PARAMS.Lr^2 * PARAMS.mr / 3);
-% PARAMS.A_pi(2, 3) = (9 * PARAMS.Lr * PARAMS.g * PARAMS.mp) / (12 * PARAMS.Jh + 12 * PARAMS.Jm + 3 * PARAMS.Lr^2 * PARAMS.mp + 4 * PARAMS.Lr^2 * PARAMS.mr);
-% PARAMS.A_pi(2, 4) = -(18 * PARAMS.Cal * PARAMS.Lr) / (12 * den);
-% 
-% PARAMS.A_pi(3, 4) = 1;
-% PARAMS.A_pi(4, 2) = -(18 * PARAMS.Cth * PARAMS.Lr) / (12 * den);
-% PARAMS.A_pi(4, 3) = 3 / 2 * PARAMS.g * num / den;
-% PARAMS.A_pi(4, 4) = -3 * PARAMS.Cal * num / (den * PARAMS.Lp * PARAMS.mp);
-% 
-% PARAMS.B_pi(2, 1) = PARAMS.Lp / den;
-% PARAMS.B_pi(4, 1) = 3 / 2 * PARAMS.Lr / den;
-
-PARAMS.A_pi_int = zeros(3);
-PARAMS.B_pi_int = zeros(3,1);
-
-PARAMS.A_pi_int(1:2, 1:2) = PARAMS.A_pi;
-PARAMS.A_pi_int(3, 1:2) = [-1 0];
-
-PARAMS.B_pi_int(1:2, 1) = PARAMS.B_pi;
+PARAMS.A_pi_DT = sys_pi_DT.A;          
+PARAMS.B_pi_DT = sys_pi_DT.B;
+PARAMS.A_0_DT = sys_0_DT.A; 
+PARAMS.B_0_DT = sys_0_DT.B;
 
 % Tsettling = 2; csi = 0.0001; red_contr; LMIs DT new paper m0325_K_al_th
 PARAMS.K_pp_al_th_pi_2 = [4.1265    1.8863  -44.4296   -3.3301];

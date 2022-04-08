@@ -26,8 +26,8 @@ run('graphics_options.m');
 %% LOAD SYSTEM
 
 run('m0320_sys_model.m');
-A = A_sys_V(pi);
-B = B_sys_V(pi);
+A = A_sys_V(0);
+B = B_sys_V(0);
 clearvars -except colors paths A B C;
 
 

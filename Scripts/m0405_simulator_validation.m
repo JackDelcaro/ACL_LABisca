@@ -29,11 +29,11 @@ dt_control = 2e-3;
 
 %% INPUT EXPERIMENT
 
-% dataset = load('20220321_1748_ol_full_pendulum_swing_90');
-% dataset = load('20220314_1650_sinesweep_0p75V_exp07'); % optimization
+% dataset_name = '20220321_1748_ol_full_pendulum_swing_90';
+dataset_name = '20220314_1650_sinesweep_0p75V_exp07'; % optimization
 % dataset_name = '20220314_1640_varin_exp07';
-dataset_name = '20220314_1640_varin_exp07_cut_ramps';
-dataset_name = '20220314_1640_varin_exp07_cut_squarewaves_ramps';
+% dataset_name = '20220314_1640_varin_exp07_cut_ramps';
+% dataset_name = '20220314_1640_varin_exp07_cut_squarewaves_ramps';
 dataset = load(dataset_name); % validation
 run('m0405_fmincon_sim_init');
 

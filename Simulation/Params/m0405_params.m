@@ -18,7 +18,7 @@ PARAMS.mr = 9.5e-2;
 PARAMS.Lr = 8.5e-2;
 PARAMS.Jm = 4e-6;
 PARAMS.l2 = (PARAMS.Lp/2 - PARAMS.Lp_offset);
-PARAMS.l1 = 0.5117*PARAMS.Lr/2;
+PARAMS.l1 = 0.5*PARAMS.Lr/2;
 
 PARAMS.Jh = 8.009e-6 - PARAMS.Jm; % official inertia 6e-7
 PARAMS.Cal = 2*6.494e-6;

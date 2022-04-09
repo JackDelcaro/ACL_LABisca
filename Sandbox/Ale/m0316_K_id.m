@@ -128,6 +128,7 @@ plot(log.time, theta_filtered); hold on; grid on;
 ylabel('$\theta\;[rad]$');
 simulated_thdot = lsim(G_tot, log.voltage, log.time);
 plot(log.time, simulated_thdot);
+legend('data', 'simulated');
 
 
 %% bis
@@ -219,5 +220,6 @@ plot(log.time, theta_filtered); hold on; grid on;
 ylabel('$\theta\;[rad]$');
 simulated_thdot = lsim(G_tot, log.voltage, log.time);
 plot(log.time, simulated_thdot);
+legend('data', 'simulated');
 
 

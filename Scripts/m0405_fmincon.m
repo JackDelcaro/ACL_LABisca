@@ -90,6 +90,7 @@ tun_pars_limits.l1 = [0.5, 2];
 tun_pars_limits.l2 = [0.5, 2];
 tun_pars_limits.Cal = [0.5, 2];
 tun_pars_limits.Cth = [0.5, 2];
+tun_pars_limits.Jh = [0.5, 2];
 tun_pars_labels = string(fields(tun_pars_limits));
 
 x_lb_fmincon = nan(size(tun_pars_labels));
@@ -99,7 +100,8 @@ x_0_fmincon = nan(size(tun_pars_labels));
 for i = 1:length(tun_pars_labels)
     x_lb_fmincon(i) = PARAMS.(tun_pars_labels(i))*tun_pars_limits.(tun_pars_labels(i))(1);
     x_ub_fmincon(i) = PARAMS.(tun_pars_labels(i))*tun_pars_limits.(tun_pars_labels(i))(2);
-    x_0_fmincon(i)  = PARAMS.(tun_pars_labels(i))*(0.5+rand());
+%     x_0_fmincon(i)  = PARAMS.(tun_pars_labels(i))*(0.5+rand());
+    x_0_fmincon(i)  = PARAMS.(tun_pars_labels(i));
 end
 
 %% FUNCTION HANDLES

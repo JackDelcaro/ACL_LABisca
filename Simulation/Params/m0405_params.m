@@ -4,9 +4,9 @@ PARAMS.angle_quantization = 0.00307;
 
 % Setup par
 PARAMS.th_0_cable = 0;
-PARAMS.th_0 = 0;
+PARAMS.th_0 = 0*10/180*pi;
 PARAMS.th_dot_0 = 0;
-PARAMS.al_0 = 0;
+PARAMS.al_0 = 170/180*pi;
 PARAMS.al_dot_0 = 0;
 PARAMS.g = 9.81;
 
@@ -18,16 +18,15 @@ PARAMS.mr = 9.5e-2;
 PARAMS.Lr = 8.5e-2;
 PARAMS.Jm = 4e-6;
 PARAMS.l2 = (PARAMS.Lp/2 - PARAMS.Lp_offset);
-PARAMS.l1 = 0.5*PARAMS.Lr/2;
+PARAMS.l1 = 0.5117*PARAMS.Lr/2;
 
 PARAMS.Jh = 8.009e-6 - PARAMS.Jm; % official inertia 6e-7
 PARAMS.Cal = 2*6.494e-6;
 PARAMS.Cth = 0.94*3.660e-4;
 
-PARAMS.K = 0.0014;
+PARAMS.K = 2.215e-3;
 PARAMS.Sth = 7.9e-4;  % static friction
-% PARAMS.Dth = 0.85*PARAMS.Sth; % dynamic friction
-PARAMS.Dth = 0.001;
+PARAMS.Dth = 0.85*PARAMS.Sth; % dynamic friction
 PARAMS.Sth_vel_threshold = 1e-8;
 PARAMS.tau_nom = 22e-3;
 
@@ -55,9 +54,8 @@ PARAMS.A_0_CT = [0       1       0         0;
                  0       0       0         1;
                  9.1936  2.3907  -196.4972 -0.0989]; 
 PARAMS.B_0_CT = [0; 17.8475; 0; -20.753];
-PARAMS.C = [1 0 0 0;
-            0 0 1 0];
-PARAMS.D = [0; 0];
+PARAMS.C = eye(4);
+PARAMS.D = zeros(4, 1);
 
 sys_pi_CT = ss(PARAMS.A_pi_CT, PARAMS.B_pi_CT, PARAMS.C, PARAMS.D);
 sys_0_CT = ss(PARAMS.A_0_CT, PARAMS.B_0_CT, PARAMS.C, PARAMS.D);
@@ -68,6 +66,9 @@ PARAMS.A_pi_DT = sys_pi_DT.A;
 PARAMS.B_pi_DT = sys_pi_DT.B;
 PARAMS.A_0_DT = sys_0_DT.A; 
 PARAMS.B_0_DT = sys_0_DT.B;
+
+PARAMS.A_DT = PARAMS.A_pi_DT;
+PARAMS.B_DT = PARAMS.B_pi_DT;
 
 % Tsettling = 2; csi = 0.0001; red_contr; LMIs DT new paper m0325_K_al_th
 PARAMS.K_pp_al_th_pi_2 = [4.1265    1.8863  -44.4296   -3.3301];
@@ -115,3 +116,18 @@ PARAMS.K_pp_th_int = PARAMS.K_LQ_int_up1(5);
 
 
 % KF
+PARAMS.Q_pi1 = [50 0   0  0;
+                0  0.9 0  0;
+                0  0   50 0;
+                0  0   0  0.9];
+            
+PARAMS.R_pi1 = [2e-2 0;
+                0    2e-2];
+            
+PARAMS.L1_KF = [0.0023 0.0001 0.0042 0.0006;
+                0.0137 0.0020 0.0592 0.0080;
+                0.0042 0.0006 0.0181 0.0025;
+                0.0555 0.0080 0.2460 0.0335];
+            
+PARAMS.Q_KF = PARAMS.Q_pi1;
+PARAMS.R_KF = PARAMS.R_pi1;

@@ -1,3 +1,5 @@
+dt_control = 2e-3;
+
 PARAMS.angle_quantization = 0.00307;
 
 % Setup par
@@ -113,8 +115,14 @@ PARAMS.K_pp_state = PARAMS.K_LQ_int_up1(1:4);
 PARAMS.K_pp_th_int = PARAMS.K_LQ_int_up1(5);
 
 
-
-
-
-
-
+% KF
+PARAMS.Q_pi1 = [1e-2 0 0    0;
+                0    1 0    0;
+                0    0 1e-2 0;
+                0    0 0    1];
+            
+PARAMS.R_pi1 = [1e-1 0;
+                0    1e-1];
+            
+PARAMS.Q_KF = PARAMS.Q_pi1;
+PARAMS.R_KF = PARAMS.R_pi1;

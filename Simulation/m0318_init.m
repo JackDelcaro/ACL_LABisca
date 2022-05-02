@@ -24,7 +24,7 @@ run('graphics_options.m');
 
 %% INITIALIZATION
 
-dt = 2e-4;
+dt = 2e-5;
 dt_control = 2e-3;
 run('m0405_params.m');
 % mech_simulator_model = "s0318_mechanical_simulator";
@@ -107,8 +107,8 @@ dataset.alpha_dot = gradient(dataset.alpha_filtered, dataset.time);
 simin.voltage = [dataset.time, dataset.voltage];
 simin.theta = [dataset.time, dataset.theta];
 simin.theta_dot = [dataset.time, dataset.theta_dot];
-PARAMS.al_0 = dataset.alpha(1);
-PARAMS.th_0 = dataset.theta(1);
+% PARAMS.al_0 = dataset.alpha(1);
+% PARAMS.th_0 = dataset.theta(1);
 
 % simin.theta_ref = [sim_time_th, pi/4*experiment_th];
 % figure;

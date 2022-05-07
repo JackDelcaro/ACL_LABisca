@@ -111,8 +111,8 @@ dataset.alpha_dot = gradient(dataset.alpha_filtered, dataset.time);
 simin.voltage = [dataset.time, dataset.voltage];
 simin.theta = [dataset.time, dataset.theta];
 simin.theta_dot = [dataset.time, dataset.theta_dot];
-PARAMS.al_0 = dataset.alpha(1);
-PARAMS.th_0 = dataset.theta(1);
+% PARAMS.al_0 = dataset.alpha(1);
+% PARAMS.th_0 = dataset.theta(1);
 
 simin.theta_ref = [sim_time_th, pi/2*experiment_th];
 figure;

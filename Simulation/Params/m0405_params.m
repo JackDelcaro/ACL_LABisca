@@ -4,7 +4,7 @@ PARAMS.angle_quantization = 0.00307;
 
 % Setup par
 PARAMS.th_0_cable = 0;
-PARAMS.th_0 = 0*10/180*pi;
+PARAMS.th_0 = 10/180*pi;
 PARAMS.th_dot_0 = 0;
 PARAMS.al_0 = 170/180*pi;
 PARAMS.al_dot_0 = 0;
@@ -115,7 +115,7 @@ PARAMS.K_LQ_int_down4 = -[20.3440    3.5740  -14.4428    1.2646  -41.0934];
 PARAMS.K_LQ_int_up1 = -[-9.8980   -2.7541   55.3324    4.4881   14.0087];
 
 
-PARAMS.K_pp_state = PARAMS.K_LQ_int_up1(1:4);
+PARAMS.K_pp_state = PARAMS.K_LQ_up1(1:4);
 PARAMS.K_pp_th_int = PARAMS.K_LQ_int_up1(5);
 
 
@@ -135,3 +135,18 @@ PARAMS.L1_KF = [0.0023 0.0001 0.0042 0.0006;
             
 PARAMS.Q_KF = PARAMS.Q_pi1;
 PARAMS.R_KF = PARAMS.R_pi1;
+
+%% OVERWRITE PARAMETERS
+
+PARAMS.polyfit.order = 1;
+PARAMS.polyfit.window = 130;
+PARAMS.polyfit.forgetting_factor = (10^-3)^(1/PARAMS.polyfit.window);
+PARAMS.polyfit.center_idx = floor(PARAMS.polyfit.window/2);
+PARAMS.polyfit.time = (0:dt_control:(PARAMS.polyfit.window-1)*dt_control)';
+PARAMS.polyfit.time = PARAMS.polyfit.time - PARAMS.polyfit.time(PARAMS.polyfit.center_idx);
+PARAMS.polyfit.powers = PARAMS.polyfit.order:-1:0;
+for j = 1:(PARAMS.polyfit.order+1)
+    R(:, j) = (PARAMS.polyfit.time.^(PARAMS.polyfit.order - j + 1)) .* (PARAMS.polyfit.forgetting_factor.^((length(PARAMS.polyfit.time)-1):-1:0)');
+end
+PARAMS.polyfit.pinvR = pinv(R);
+clearvars R;

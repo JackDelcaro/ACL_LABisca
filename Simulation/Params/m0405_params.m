@@ -75,6 +75,10 @@ PARAMS.K_pp_al_th_pi_2 = [4.1265    1.8863  -44.4296   -3.3301];
 % Tsettling = 1.5; csi = 0.65; red_contr; LMIs CT (filter up to 15 hz is
 % fine)
 PARAMS.K_pp_al_th_pi_3 = [4.1265    1.8863  -44.4296   -3.3301];
+% Tsettling = 5/7; csi = 0.65; red_contr; LMIs CT
+PARAMS.K_pp_al_th_pi_4 = [20.048    5.5215  -88.2768   -7.3710];
+% Tsettling = 5/7; csi = 0.65; red_contr; LMIs CT
+PARAMS.K_pp_al_th_0_0 = [-19.432    -4.8652  34.1206   -1.5614];
 % PAOLOOOOOO CHE PARAMETRI SONO?
 PARAMS.K_pp_al_th_pi_int_1 = [11.1394 2.6857 -39.5275 -3.1135 -18.4929];
 % PAOLOOOOOO METTI QUI IL FILTRO NUMERO 2 TESTATO IN LAB

@@ -26,8 +26,8 @@ run('graphics_options.m');
 %% LOAD SYSTEM
 
 run('m0320_sys_model.m');
-A = A_sys_V(pi);
-B = B_sys_V(pi);
+A = A_sys_V(0);
+B = B_sys_V(0);
 C_th_int = [1 0 0 0];
 A = [A  zeros(4, 1); -C_th_int 0];
 B = [B; 0];
@@ -39,7 +39,7 @@ clearvars -except colors paths A B C;
 %% YALMIP OPTIMIZATION
 
 enable_red_cntrl_effort = true;
-Tsettling = 2;
+Tsettling = 1.15;
 csi_min = 0.65;
 alpha = 5/Tsettling;
 
@@ -89,3 +89,6 @@ figure;
 initial( ss(F, zeros(size(G)), C, [], dt), [5*pi/180 0 5*pi/180 0 0]');
 figure;
 initial( ss(F+G*K, zeros(size(G)), C, [], dt), [5*pi/180 0 5*pi/180 0 0]');
+feas
+K
+

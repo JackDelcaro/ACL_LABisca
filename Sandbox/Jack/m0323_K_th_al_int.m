@@ -26,8 +26,8 @@ run('graphics_options.m');
 %% LOAD SYSTEM
 
 run('m0320_sys_model.m');
-A = A_sys_V(pi);
-B = B_sys_V(pi);
+A = A_sys_V(0);
+B = B_sys_V(0);
 C_th_int = [1 0 0 0];
 A = [A  zeros(4, 1); -C_th_int 0];
 B = [B; 0];
@@ -45,7 +45,7 @@ sys_dt = c2d(sys_ct, dt);
 %% YALMIP OPTIMIZATION
 
 enable_red_cntrl_effort = true;
-Tsettling = 4;
+Tsettling = 1.5;
 csi = 0.0001;
 
 % Algorithm

@@ -115,9 +115,9 @@ simin.theta_dot = [dataset.time, dataset.theta_dot];
 % PARAMS.th_0 = dataset.theta(1);
 
 simin.theta_ref = [sim_time_th, pi/2*experiment_th];
-figure;
-plot(sim_time_th,experiment_th); grid on;
-T_sim = simin.theta_ref(end, 1);
+% figure;
+% plot(sim_time_th,experiment_th); grid on;
+% T_sim = simin.theta_ref(end, 1);
 
 %% DERIVATIVE FILTER
 

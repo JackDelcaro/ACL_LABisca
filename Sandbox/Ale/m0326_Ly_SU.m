@@ -36,6 +36,9 @@ Ly_dot = th*th_dot + 10*al*al_dot + 0.01*th_dot*th_ddot + 0.01*al_dot*al_ddot;
 eq = Ly_dot == -th^2-al^2-th_dot^2-al_dot^2;
 V_eq = simplify(solve(eq, V), 100); %this is never gonna work
 V_eq
+x=string(V_eq)
+
+eval("BUH ="+x)
 
 
 

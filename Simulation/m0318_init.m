@@ -69,13 +69,13 @@ steps_duration = 5; % [s]
 % Sine Sweep Parameters
 sweep_params = [0.4/2/pi 9/2/pi 300]; % [ initial_frequency [Hz], final_frequency [Hz], duration [s] ]
                 
-% [sim_time_th, experiment_th] = input_generator(dt, standby_duration,...
-%                                 'sweep', sweep_params, 'exponential',...
-%                                 'steps', steps_amplitude, steps_duration);
-% [sim_time_th, experiment_th] = input_generator(dt, standby_duration,...
-%                                 'steps', steps_amplitude, steps_duration);
 [sim_time_th, experiment_th] = input_generator(dt, standby_duration,...
-                                'sweep', sweep_params, 'linear');
+                                'sweep', sweep_params, 'exponential',...
+                                'steps', steps_amplitude, steps_duration);
+% [sim_time_th, experiment_th] = input_generator(dt, standby_duration,...
+%                                 'steps', steps_amplitude, steps_duration);
+% [sim_time_th, experiment_th] = input_generator(dt, standby_duration,...
+%                                 'sweep', sweep_params, 'linear');
                 
 % [sim_time, experiment] = input_generator(dt, standby_duration,...
 %                     'sinusoids', sinusoid_freq,...
@@ -115,9 +115,9 @@ simin.theta_dot = [dataset.time, dataset.theta_dot];
 % PARAMS.th_0 = dataset.theta(1);
 
 simin.theta_ref = [sim_time_th, pi/2*experiment_th];
-% figure;
-% plot(sim_time_th,experiment_th); grid on;
-% T_sim = simin.theta_ref(end, 1);
+figure;
+plot(sim_time_th,experiment_th); grid on;
+T_sim = simin.theta_ref(end, 1);
 
 %% DERIVATIVE FILTER
 

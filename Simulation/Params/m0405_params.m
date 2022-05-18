@@ -4,9 +4,9 @@ PARAMS.angle_quantization = 0.00307;
 
 % Setup par
 PARAMS.th_0_cable = 0;
-PARAMS.th_0 = 10/180*pi*0;
+PARAMS.th_0 = 0/180*pi*0;
 PARAMS.th_dot_0 = 0;
-PARAMS.al_0 = 170/180*pi;
+PARAMS.al_0 = 0/180*pi;
 PARAMS.al_dot_0 = 0;
 PARAMS.g = 9.81;
 
@@ -115,7 +115,7 @@ PARAMS.K_LQ_int_down4 = -[20.3440    3.5740  -14.4428    1.2646  -41.0934];
 PARAMS.K_LQ_int_up1 = -[-9.8980   -2.7541   55.3324    4.4881   14.0087];
 
 
-PARAMS.K_pp_state = PARAMS.K_LQ_up1(1:4);
+PARAMS.K_pp_state = PARAMS.K_pp_al_th_pi_3(1:4);
 PARAMS.K_pp_th_int = PARAMS.K_LQ_int_up1(5);
 
 

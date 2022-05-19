@@ -121,7 +121,7 @@ T = simplify(B*Q_ddot + C*Q_dot + G + Attr_v + molla, 100);
 b = simplify([tau;0] - (T - B*Q_ddot), 100);
 
 tmp = simplify(B\b, 100);
-% tmp = subs(tmp, th_0, 0);
+tmp = subs(tmp, th_0, 0);
 
 th_ddot = tmp(1);
 al_ddot = tmp(2);
@@ -129,5 +129,11 @@ al_ddot = tmp(2);
 th_ddot_old = -(12*Cth*Lp*th_dot - sin(al)*(6*Lr*mp*Lp^2*al_dot^2 + 9*Lr*g*mp*cos(al)*Lp) - 12*Lp*tau + 12*K*Lp*th - 12*K*Lp*th_0 - 18*Cal*Lr*al_dot*cos(al) + 4*Lp^3*al_dot*mp*th_dot*sin(2*al) + 3*Lr*Lp^2*mp*th_dot^2*sin(2*al)*cos(al))/(Lp*(12*Jh + 12*Jm + 4*Lr^2*mr + 12*Lr^2*mp - 9*Lr^2*mp*cos(al)^2 + 4*Lp^2*mp*sin(al)^2));
 al_ddot_old = -(36*Cal*Jh*al_dot + 36*Cal*Jm*al_dot + 12*Cal*Lr^2*al_dot*mr + 36*Cal*Lr^2*al_dot*mp + 6*Lp^3*g*mp^2*sin(al)^3 + 12*Cal*Lp^2*al_dot*mp*sin(al)^2 + 18*Lr^2*Lp*g*mp^2*sin(al) + (9*Lr^2*Lp^2*al_dot^2*mp^2*sin(2*al))/2 - 6*Lr^2*Lp^2*mp^2*th_dot^2*sin(2*al) + 18*Lr*Lp*mp*tau*cos(al) + 18*Jh*Lp*g*mp*sin(al) + 18*Jm*Lp*g*mp*sin(al) - 4*Lp^4*mp^2*th_dot^2*cos(al)*sin(al)^3 - 6*Jh*Lp^2*mp*th_dot^2*sin(2*al) - 6*Jm*Lp^2*mp*th_dot^2*sin(2*al) + 6*Lr^2*Lp*g*mr*mp*sin(al) - 2*Lr^2*Lp^2*mr*mp*th_dot^2*sin(2*al) - 18*Cth*Lr*Lp*mp*th_dot*cos(al) - 18*K*Lr*Lp*mp*th*cos(al) + 18*K*Lr*Lp*mp*th_0*cos(al) + 12*Lr*Lp^3*al_dot*mp^2*th_dot*sin(al)*(sin(al)^2 - 1))/(Lp^2*mp*(12*Jh + 12*Jm + 4*Lr^2*mr + 3*Lr^2*mp + 9*Lr^2*mp*sin(al)^2 + 4*Lp^2*mp*sin(al)^2));
  
-th_ddot_new = subs(th_ddot, [l1 l2], [Lr/2 Lp/2]);
-al_ddot_new = subs(al_ddot, [l1 l2], [Lr/2 Lp/2]);
+% th_ddot_new = simplify(subs(th_ddot, [l1 l2], [Lr/2 Lp/2]),100);
+% al_ddot_new = subs(al_ddot, [l1 l2], [Lr/2 Lp/2]);
+
+
+th_ddot = subs(th_ddot, tau, ki/R * (V - kv*th_dot));
+al_ddot = subs(al_ddot, tau, ki/R * (V - kv*th_dot));
+
+

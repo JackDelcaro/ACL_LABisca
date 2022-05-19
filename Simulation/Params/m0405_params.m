@@ -146,7 +146,7 @@ PARAMS.polyfit.time = (0:dt_control:(PARAMS.polyfit.window-1)*dt_control)';
 PARAMS.polyfit.time = PARAMS.polyfit.time - PARAMS.polyfit.time(PARAMS.polyfit.center_idx);
 PARAMS.polyfit.powers = PARAMS.polyfit.order:-1:0;
 for j = 1:(PARAMS.polyfit.order+1)
-    R(:, j) = (PARAMS.polyfit.time.^(PARAMS.polyfit.order - j + 1)) .* (PARAMS.polyfit.forgetting_factor.^((length(PARAMS.polyfit.time)-1):-1:0)');
+    Reg(:, j) = (PARAMS.polyfit.time.^(PARAMS.polyfit.order - j + 1)) .* (PARAMS.polyfit.forgetting_factor.^((length(PARAMS.polyfit.time)-1):-1:0)');
 end
-PARAMS.polyfit.pinvR = pinv(R);
-clearvars R;
+PARAMS.polyfit.pinvR = pinv(Reg);
+clearvars Reg;

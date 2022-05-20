@@ -4,9 +4,9 @@ PARAMS.angle_quantization = 0.00307;
 
 % Setup par
 PARAMS.th_0_cable = 0;
-PARAMS.th_0 = 0/180*pi*0;
+PARAMS.th_0 = 10/180*pi;
 PARAMS.th_dot_0 = 0;
-PARAMS.al_0 = 0/180*pi;
+PARAMS.al_0 = 170/180*pi;
 PARAMS.al_dot_0 = 0;
 PARAMS.g = 9.81;
 
@@ -78,7 +78,17 @@ PARAMS.K_pp_al_th_pi_3 = [4.1265    1.8863  -44.4296   -3.3301];
 % Tsettling = 5/7; csi = 0.65; red_contr; LMIs CT
 PARAMS.K_pp_al_th_pi_4 = [20.048    5.5215  -88.2768   -7.3710];
 % Tsettling = 5/7; csi = 0.65; red_contr; LMIs CT
-PARAMS.K_pp_al_th_0_0 = [-19.432    -4.8652  34.1206   -1.5614];
+PARAMS.K_pp_al_th_0_1 = [-19.432    -4.8652  34.1206   -1.5614];
+% Tsettling = 1.5; csi = 0.65; red_contr; LMIs CT
+PARAMS.K_pp_al_th_0_2 = [-2.9639 -1.0897 12.9853 0.6530];
+% Tsettling = 1.5; csi = 0.65; red_contr; LMIs CT
+PARAMS.K_pp_al_th_0_int_1 = [-9.3798 -2.2442  20.0627 0.0519 15.6933];
+% Tsettling = 1.5; csi = 0.65; red_contr; LMIs CT; Same as 0_int_1 int gain
+% halved
+PARAMS.K_pp_al_th_0_int_2 = [-9.3798 -2.2442  20.0627 0.0519 7];
+% Tsettling = 5/7; csi = 0.65; red_contr; LMIs CT; State gain same as 0_1
+% int gain same as 0_int_2
+PARAMS.K_pp_al_th_0_int_3 = [-19.432    -4.8652  34.1206   -1.5614 7];
 % PAOLOOOOOO CHE PARAMETRI SONO?
 PARAMS.K_pp_al_th_pi_int_1 = [11.1394 2.6857 -39.5275 -3.1135 -18.4929];
 % PAOLOOOOOO METTI QUI IL FILTRO NUMERO 2 TESTATO IN LAB
@@ -96,9 +106,16 @@ PARAMS.K_pp_al_th_pi_int_6 = [3.9670    2.3061  -61.6491   -4.5726   -1.6836];
 %LQ
 %Q = diag([1 0.01 1 0.01]) R = 1; [K, S, CLP] = dlqr(1.01*F, 1.01*G, Q, R, N);
 PARAMS.K_LQ_down1 = -[11.0652    2.9103  -16.3115    0.7839];
+%Q = diag([1 0.01 1 0.01]) R = 10; T_settling = 5/7;
+PARAMS.K_LQ_down2 = -[28.8076    6.2177  -27.3012    2.8533];
+%Q = diag([1 0.01 1 0.01]) R = 10; T_settling = 1.5; higher R or lower
+%Q_vel don't change result;
+PARAMS.K_LQ_down3 = -[3.7083    1.3043   -7.7097    0.0341];
+%Q = diag([1 1 1 1]) R = 10; T_settling = 1.5;
+PARAMS.K_LQ_down4 = -[5.1799    1.7065  -11.0265    0.1152];
 
 %Q = diag([1 0.01 1 0.01]) R = 1; [K, S, CLP] = dlqr(1.01*F, 1.01*G, Q, R, N);
-PARAMS.K_LQ_up1 = -[-13.3597   -4.1353   74.1672    6.1174];
+PARAMS.K_LQ_up1 = -[3.7083    1.3043   -7.7097    0.0341];
 
 % LQ int
 % Tsettling = 2; Q = diag([0.1 0.01 1 0.01 0.1]); R = 1;
@@ -109,14 +126,17 @@ PARAMS.K_LQ_int_down2 = -[14.7467    2.4421   -7.4821    0.6436  -32.6271];
 PARAMS.K_LQ_int_down3 = -[12.8100    2.2404   -7.2298    0.5428  -26.8886];
 % Tsettling = 1.5; Q = diag([1 0.01 1000 0.01 0.1]); R = 10;
 PARAMS.K_LQ_int_down4 = -[20.3440    3.5740  -14.4428    1.2646  -41.0934];
-
+% Tsettling = 1.5; Q = diag([1 0.01 1 0.01 0.001]); R = 10;
+PARAMS.K_LQ_int_down5 = -[13.1717    2.2966   -7.4566    0.5662  -27.6754];
+% Tsettling = 5/7; Q = diag([1 0.01 1 0.01 0.001]); R = 10;
+PARAMS.K_LQ_int_down6 = -[117.4679   10.6780   12.8370    6.0146 -409.5086];
 
 % Tsettling = 2; Q = diag([0.1 0.01 1 0.01 0.1]); R = 1;
 PARAMS.K_LQ_int_up1 = -[-9.8980   -2.7541   55.3324    4.4881   14.0087];
 
 
-PARAMS.K_pp_state = PARAMS.K_pp_al_th_pi_3(1:4);
-PARAMS.K_pp_th_int = PARAMS.K_LQ_int_up1(5);
+PARAMS.K_pp_state = PARAMS.K_LQ_int_down5(1:4);
+PARAMS.K_pp_th_int = PARAMS.K_LQ_int_down5(5);
 
 
 % KF
@@ -138,8 +158,8 @@ PARAMS.R_KF = PARAMS.R_pi1;
 
 %% OVERWRITE PARAMETERS
 
-PARAMS.polyfit.order = 1;
-PARAMS.polyfit.window = 130;
+PARAMS.polyfit.order = 2;
+PARAMS.polyfit.window = 120;
 PARAMS.polyfit.forgetting_factor = (10^-3)^(1/PARAMS.polyfit.window);
 PARAMS.polyfit.center_idx = floor(PARAMS.polyfit.window/2);
 PARAMS.polyfit.time = (0:dt_control:(PARAMS.polyfit.window-1)*dt_control)';

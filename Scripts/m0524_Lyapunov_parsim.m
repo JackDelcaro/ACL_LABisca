@@ -23,7 +23,7 @@ run('graphics_options.m');
 run('m0524_Lyapunov_parsim_init.m');
 
 %% PARPOOL SETUP
-number_of_workers = 4;
+number_of_workers = 8;
 p = gcp('nocreate'); % If no pool is active, do not create new one.
 if isempty(p)
     previous_poolsize = 0;
@@ -38,9 +38,9 @@ if previous_poolsize ~= number_of_workers
 end
 
 %% PARLOOP
-k_th_vect = [0 1 100]*1.3057e-04*1.3;
-k_delta_vect = [0 1 100]*1.3057e-05*1.5;
-k_ome_vect = [1 100]*1.3057e-05;
+k_th_vect = [1/125 1/25 1/5 1 5 25 125]*1.3057e-04*1.3;
+k_delta_vect = [1/125 1/25 1/5 1 5 25 125]*1.3057e-05*1.5;
+k_ome_vect = [0.8 1 1.5]*1.3057e-05;
 
 iteration_number = length(k_th_vect)*length(k_delta_vect)*length(k_ome_vect);
 % Initialize the array of simulations

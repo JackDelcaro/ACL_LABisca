@@ -21,13 +21,13 @@ PARAMS.l2 = (PARAMS.Lp/2 - PARAMS.Lp_offset);
 PARAMS.l1 = 0.5117*PARAMS.Lr/2;
 
 PARAMS.Jh = 8.009e-6 - PARAMS.Jm; % official inertia 6e-7
-PARAMS.Cal = 2*6.494e-6;
-PARAMS.Cth = 0.94*3.660e-4;
+PARAMS.Cal = 2*6.494e-6*0;
+PARAMS.Cth = 0.94*3.660e-4*0;
 
 PARAMS.K = 2.215e-3;
-PARAMS.Sth = 7.9e-4;  % static friction
+PARAMS.Sth = 7.9e-4*0;  % static friction
 PARAMS.Dth = 0.85*PARAMS.Sth; % dynamic friction
-PARAMS.Sth_vel_threshold = 1e-8;
+PARAMS.Sth_vel_threshold = 1e-8*0;
 PARAMS.tau_nom = 22e-3;
 
 % Electrical Parameters

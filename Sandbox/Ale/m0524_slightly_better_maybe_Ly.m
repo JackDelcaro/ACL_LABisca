@@ -4,8 +4,8 @@ clearvars;
 
 %% PATHS
 
-paths.file_fullpath = matlab.desktop.editor.getActiveFilename;
-[paths.file_path, ~, ~] = fileparts(paths.file_fullpath);
+paths.file_full2ath = matlab.desktop.editor.getActiveFilename;
+[paths.file_path, ~, ~] = fileparts(paths.file_full2ath);
 paths.mainfolder_path   = strsplit(paths.file_path, 'ACL_LABisca');
 paths.mainfolder_path   = fullfile(string(paths.mainfolder_path(1)), 'ACL_LABisca');
 paths.data_folder       = fullfile(string(paths.mainfolder_path), "Data");
@@ -22,16 +22,20 @@ addpath(genpath(paths.simulation_folder));
 run('graphics_options.m');
 run('m0405_sys_model.m');
 
-D = simplify(subs(B, al, al + sym(pi)),100);
-H = simplify(subs(C*Q_dot+Attr_v, al, al + sym(pi)),100);
-G = simplify(subs(G, al, al+ sym(pi)),100);
+D = [Jm+Jh+mr*Lr^2/12+mr*l1^2+mp*(Lr^2+l2^2*sin(al)^2) mp*l2*Lr*cos(al);
+    mp*l2*Lr*cos(al) mp*(Lp^2/12+l2^2)];
+H = [mp*l2^2*sin(2*al)*th_dot*al_dot-mp*Lr*l2*sin(al)*al_dot^2;
+    -1/2*mp*l2^2*sin(2*al)*th_dot^2];
+G = [0; -mp*g*l2*sin(al)];
 B = [1;0];
 
 E = simplify(1/2*Q_dot'*D*Q_dot + mp*g*l2*(cos(al)-1), 100);
 
 syms k_E k_ome k_th k_delta real
 
-Lambda = simplify(k_E*E + k_ome*(B'/D)*B, 100);
+E_0 = 0.01;
+
+Lambda = simplify(k_E*(E-E_0) + k_ome*(B'/D)*B, 100);
 
 tau = (k_ome*(B'/D)*(H+G)-k_th*th-k_delta*th_dot)/Lambda;
 

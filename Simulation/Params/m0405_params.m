@@ -4,9 +4,9 @@ PARAMS.angle_quantization = 0.00307;
 
 % Setup par
 PARAMS.th_0_cable = 0;
-PARAMS.th_0 = 45/180*pi;
+PARAMS.th_0 = 10/180*pi;
 PARAMS.th_dot_0 = 0;
-PARAMS.al_0 = 0/180*pi;
+PARAMS.al_0 = 170/180*pi;
 PARAMS.al_dot_0 = 0;
 PARAMS.g = 9.81;
 
@@ -21,13 +21,13 @@ PARAMS.l2 = (PARAMS.Lp/2 - PARAMS.Lp_offset);
 PARAMS.l1 = 0.5117*PARAMS.Lr/2;
 
 PARAMS.Jh = 8.009e-6 - PARAMS.Jm; % official inertia 6e-7
-PARAMS.Cal = 2*6.494e-6*0;
-PARAMS.Cth = 0.94*3.660e-4*0;
+PARAMS.Cal = 2*6.494e-6;
+PARAMS.Cth = 0.94*3.660e-4;
 
 PARAMS.K = 2.215e-3;
-PARAMS.Sth = 7.9e-4*0;  % static friction
+PARAMS.Sth = 7.9e-4;  % static friction
 PARAMS.Dth = 0.85*PARAMS.Sth; % dynamic friction
-PARAMS.Sth_vel_threshold = 1e-8*0;
+PARAMS.Sth_vel_threshold = 1e-8;
 PARAMS.tau_nom = 22e-3;
 
 % Electrical Parameters
@@ -130,13 +130,16 @@ PARAMS.K_LQ_int_down4 = -[20.3440    3.5740  -14.4428    1.2646  -41.0934];
 PARAMS.K_LQ_int_down5 = -[13.1717    2.2966   -7.4566    0.5662  -27.6754];
 % Tsettling = 5/7; Q = diag([1 0.01 1 0.01 0.001]); R = 10;
 PARAMS.K_LQ_int_down6 = -[117.4679   10.6780   12.8370    6.0146 -409.5086];
+% same as K_LQ_down2 and int tuned separately
+PARAMS.K_LQ_int_down7 = [PARAMS.K_LQ_down2 13];
 
 % Tsettling = 2; Q = diag([0.1 0.01 1 0.01 0.1]); R = 1;
 PARAMS.K_LQ_int_up1 = -[-9.8980   -2.7541   55.3324    4.4881   14.0087];
+% Tsettling = 1.5; Q = diag([1 0.01 1 0.01 0.0001]); R = 10;
+PARAMS.K_LQ_int_up2 = -[-19.2311 -4.5206 76.9661 6.3535 33.5411];
 
-
-PARAMS.K_pp_state = PARAMS.K_LQ_int_down5(1:4);
-PARAMS.K_pp_th_int = PARAMS.K_LQ_int_down5(5);
+PARAMS.K_pp_state = PARAMS.K_pp_al_th_pi_3(1:4);
+PARAMS.K_pp_th_int = PARAMS.K_pp_al_th_pi_int_3(5);
 
 
 % KF
@@ -166,7 +169,7 @@ PARAMS.polyfit.time = (0:dt_control:(PARAMS.polyfit.window-1)*dt_control)';
 PARAMS.polyfit.time = PARAMS.polyfit.time - PARAMS.polyfit.time(PARAMS.polyfit.center_idx);
 PARAMS.polyfit.powers = PARAMS.polyfit.order:-1:0;
 for j = 1:(PARAMS.polyfit.order+1)
-    Reg(:, j) = (PARAMS.polyfit.time.^(PARAMS.polyfit.order - j + 1)) .* (PARAMS.polyfit.forgetting_factor.^((length(PARAMS.polyfit.time)-1):-1:0)');
+    R(:, j) = (PARAMS.polyfit.time.^(PARAMS.polyfit.order - j + 1)) .* (PARAMS.polyfit.forgetting_factor.^((length(PARAMS.polyfit.time)-1):-1:0)');
 end
-PARAMS.polyfit.pinvR = pinv(Reg);
-clearvars Reg;
+PARAMS.polyfit.pinvR = pinv(R);
+clearvars R;

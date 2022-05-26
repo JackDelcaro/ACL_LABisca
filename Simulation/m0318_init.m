@@ -1,4 +1,4 @@
-    
+
 clc;
 clearvars;
 close all;
@@ -59,15 +59,15 @@ run('m0405_params.m');
 % 
 res_theoretical = sqrt(1.5*PARAMS.g/PARAMS.Lp)/2/pi;
 standby_duration = 5; % [s]
-% Steps Parameters
-steps_amplitude = [1/3 2/3 1];
 steps_duration = 5; % [s]
-% % Ramps Parameters
-%  ramps_amplitude = [1 1];
-%  ramps_duration = [8 5 3]; % [s]
-%  ramps_backoff_duration = 1;
-% Sine Sweep Parameters
-sweep_params = [0.4/2/pi 9/2/pi 300]; % [ initial_frequency [Hz], final_frequency [Hz], duration [s] ]
+
+% Pendulum down
+% steps_amplitude = [1/3 2/3 1];
+% sweep_params = [0.4/2/pi 9/2/pi 300]; % [ initial_frequency [Hz], final_frequency [Hz], duration [s] ]
+
+% Pendulum up
+steps_amplitude = [0.75/2 0.75];
+sweep_params = [0.4/2/pi 6/2/pi 250]; % [ initial_frequency [Hz], final_frequency [Hz], duration [s] ]
                 
 [sim_time_th, experiment_th] = input_generator(dt, standby_duration,...
                                 'sweep', sweep_params, 'exponential',...
@@ -114,7 +114,12 @@ simin.theta_dot = [dataset.time, dataset.theta_dot];
 % PARAMS.al_0 = dataset.alpha(1);
 % PARAMS.th_0 = dataset.theta(1);
 
-simin.theta_ref = [sim_time_th, pi/2*experiment_th];
+
+% Pendulum down
+% simin.theta_ref = [sim_time_th, pi/2*experiment_th];
+
+% Pendulum up
+simin.theta_ref = [sim_time_th, pi/3*experiment_th];
 figure;
 plot(sim_time_th,experiment_th); grid on;
 T_sim = simin.theta_ref(end, 1);

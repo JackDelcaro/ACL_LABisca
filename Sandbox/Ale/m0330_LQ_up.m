@@ -24,17 +24,31 @@ dt=2e-3;
 
 %% LQ
 
-sys_pi_V = ss(A_sys_V(pi), B_sys_V(pi), C, 0);
-sys_pi_V_dt = c2d(sys_pi_V, dt);
-[F, G, H, ~, ~] = ssdata(sys_pi_V_dt);
+% sys_pi_V = ss(A_sys_V(pi), B_sys_V(pi), C, 0);
+% sys_pi_V_dt = c2d(sys_pi_V, dt);
+% [F, G, H, ~, ~] = ssdata(sys_pi_V_dt);
+% Q = diag([1 0.01 1 0.01]);
+% R = 1;
+% N = zeros(4,1);
+% 
+% [K, S, CLP] = dlqr(1.01*F, 1.01*G, Q, R, N);
+% K
+% eigA = real(eig(A_sys_V(pi)))
+% rhoF = abs(eig(F))
+% eigF_ct = log(abs(eig(F)))/dt
+% rhoF_cl = abs(eig(F-G*K))
+% eigF_cl_ct = log(abs(eig(F-G*K)))/dt
+
+Tsettling = 1.5;
+alpha = 5 / Tsettling;
+A = A_sys_V(pi);
+B = B_sys_V(pi);
+sys_0_V = ss(A, B, C, 0);
 Q = diag([1 0.01 1 0.01]);
-R = 1;
+R = 10;
 N = zeros(4,1);
 
-[K, S, CLP] = dlqr(1.01*F, 1.01*G, Q, R, N);
+[K, S, CLP] = lqr(A+alpha*eye(4), B, Q, R, N);
 K
-eigA = real(eig(A_sys_V(pi)))
-rhoF = abs(eig(F))
-eigF_ct = log(abs(eig(F)))/dt
-rhoF_cl = abs(eig(F-G*K))
-eigF_cl_ct = log(abs(eig(F-G*K)))/dt
+real(eig(A))
+real(eig(A-B*K))

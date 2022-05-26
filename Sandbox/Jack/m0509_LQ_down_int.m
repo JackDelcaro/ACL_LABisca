@@ -1,3 +1,4 @@
+
 clc;
 clearvars;
 close all;
@@ -22,22 +23,22 @@ addpath(genpath(paths.simulation_folder));
 run('m0320_sys_model.m');
 dt=2e-3;
 
-%% LQ
+%% LQ dt
 % Tsettling = 1.5;
 % rho = exp(-5*dt/Tsettling);
 % 
-% A = A_sys_V(pi);
-% B = B_sys_V(pi);
+% A = A_sys_V(0);
+% B = B_sys_V(0);
 % C_th_int = [1 0 0 0];
 % A = [A  zeros(4, 1); -C_th_int 0];
 % B = [B; 0];
 % C = [1 0 0 0 0;
 %      0 0 1 0 0];
-% sys_pi_V = ss(A, B, C, 0);
-% sys_pi_V_dt = c2d(sys_pi_V, dt);
-% [F, G, H, ~, ~] = ssdata(sys_pi_V_dt);
-% Q = diag([0.1 0.01 1 0.01 0.1]);
-% R = 1;
+% sys_0_V = ss(A, B, C, 0);
+% sys_0_V_dt = c2d(sys_0_V, dt);
+% [F, G, H, ~, ~] = ssdata(sys_0_V_dt);
+% Q = diag([1 0.01 1000 0.01 0.1]);
+% R = 10;
 % N = zeros(5,1);
 % 
 % [K, S, CLP] = dlqr(1/rho*F, 1/rho*G, Q, R, N);
@@ -48,10 +49,11 @@ dt=2e-3;
 % abs(eig(F-G*K))
 % log(eig(F-G*K))/dt
 
+%% LQ
 Tsettling = 1.5;
 alpha = 5 / Tsettling;
-A = A_sys_V(pi);
-B = B_sys_V(pi);
+A = A_sys_V(0);
+B = B_sys_V(0);
 C_th_int = [1 0 0 0];
 A = [A  zeros(4, 1); -C_th_int 0];
 B = [B; 0];
@@ -63,6 +65,12 @@ R = 10;
 N = zeros(5,1);
 
 [K, S, CLP] = lqr(A+alpha*eye(5), B, Q, R, N);
+K
+real(eig(A))
+real(eig(A-B*K))
+
+
+K = [28.8076    6.2177  -27.3012    2.8533 -15];
 K
 real(eig(A))
 real(eig(A-B*K))

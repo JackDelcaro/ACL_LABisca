@@ -24,20 +24,29 @@ run('graphics_options.m');
 filename = string(filename)';
 Log_data = load(filename);
 
-%% FFT
-input = Log_data.theta_ref(1:154858);
-output = Log_data.theta(1:154858);
-t = Log_data.time(1:154858);
+%% Reshape data
+is_only_dynamic = input('(1: only dynamic exp, 0: complete test): \n');
+is_down = input('(1: pendulum down, 0: pendulum up): \n');
 
-freq_min = 0.4; % rad/s
-freq_max = 9;
+if is_only_dynamic == 1 
+    points_input = length(Log_data.time);
+else
+    if is_down == 1
+        points_input = 154858;
+    else
+        points_input = 129000;
+    end
+end
+
+%% FFT
+points_input = 130000;
+input = Log_data.theta_ref(1:points_input);
+output = Log_data.theta(1:points_input);
+t = Log_data.time(1:points_input);
 
 [magn_in, phase_in, freq_in] = my_fft(input, t);
 [magn_out, phase_out, freq_out] = my_fft(output, t);
 magn_tf = magn_out ./ magn_in;
-
-freq_in = freq_in *2*pi;
-freq_out = freq_out *2*pi;
 
 phase_in = phase_in * 180 / pi;
 phase_out = phase_out * 180 / pi;
@@ -49,6 +58,16 @@ phase_tf(phase_tf > 180) = phase_tf(phase_tf > 180) - 360;
 phase_tf(phase_tf < -180) = phase_tf(phase_tf < -180) + 360;
 
 %% Plot
+freq_in = freq_in *2*pi;
+freq_out = freq_out *2*pi;
+
+freq_min = 0.4;
+if is_down == 1
+    freq_max = 9;
+else
+    freq_max = 6;
+end
+
 figure
 hold on
 plot(t, input);

@@ -169,10 +169,10 @@ PARAMS.polyfit.time = (0:dt_control:(PARAMS.polyfit.window-1)*dt_control)';
 PARAMS.polyfit.time = PARAMS.polyfit.time - PARAMS.polyfit.time(PARAMS.polyfit.center_idx);
 PARAMS.polyfit.powers = PARAMS.polyfit.order:-1:0;
 for j = 1:(PARAMS.polyfit.order+1)
-    R(:, j) = (PARAMS.polyfit.time.^(PARAMS.polyfit.order - j + 1)) .* (PARAMS.polyfit.forgetting_factor.^((length(PARAMS.polyfit.time)-1):-1:0)');
+    Reg(:, j) = (PARAMS.polyfit.time.^(PARAMS.polyfit.order - j + 1)) .* (PARAMS.polyfit.forgetting_factor.^((length(PARAMS.polyfit.time)-1):-1:0)');
 end
-PARAMS.polyfit.pinvR = pinv(R);
-clearvars R;
+PARAMS.polyfit.pinvR = pinv(Reg);
+clearvars Reg;
 
 %% LYAPUNOV
 % Dovrebbe fare 3 oscillazioni e salire tenendo theta quasi a 0 (fig 98 2)
@@ -182,13 +182,17 @@ clearvars R;
 % poche aumentarlo (fattore 5x) (SE FUNZIONA la struct 1 prova
 % direttamente con questo)
 %(se non funge bene eventualmente aumenta o diminuisci del 10 K_ome)
-lyapunov_struct(1).k_th = 0.0042;
+% bastano 2 gradi di offset per tirarlo su, ma ci vorrà più tempo, tipo 15
+% sec, con 80 gradi di offset lo fa in una botta sola
+lyapunov_struct(1).k_th = 0.0042435;
 lyapunov_struct(1).k_delta = 9.7927e-05;
 lyapunov_struct(1).k_ome = 1.0446e-05;
 
 % Questo Lyapunov controlla poco theta ma lo tira su abbastanza veloce (fig 54 2). Per
-% risultati ancora pi� veloci abbassare k_delta (fino a 1/25 del valore
+% risultati ancora pi� veloci abbassare k_delta (fino a 1/25 del valore
 % nominale), attento che tende a spararlo su veloce
+% serve min 25 gradi di offset su theta per farlo partire, se non becca al
+% secondo swing non lo porterà mai su
 lyapunov_struct(2).k_th = 8.4870e-04;
 lyapunov_struct(2).k_delta = 1.9586e-05;
 lyapunov_struct(2).k_ome = 1.1751e-05;

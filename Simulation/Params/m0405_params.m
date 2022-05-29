@@ -173,3 +173,31 @@ for j = 1:(PARAMS.polyfit.order+1)
 end
 PARAMS.polyfit.pinvR = pinv(R);
 clearvars R;
+
+%% LYAPUNOV
+% Dovrebbe fare 3 oscillazioni e salire tenendo theta quasi a 0 (fig 98 2)
+% - se lo tira su ma oscilla un po' troppo lontano da pi, aumentare k_th,
+% se troppo veloce dimiuirlo (fattore 2.5x)
+% - se alpha fa troppe oscillazioni diminuire k_delta, se ne fa troppo
+% poche aumentarlo (fattore 5x) (SE FUNZIONA la struct 1 prova
+% direttamente con questo)
+%(se non funge bene eventualmente aumenta o diminuisci del 10 K_ome)
+lyapunov_struct(1).k_th = 0.0042;
+lyapunov_struct(1).k_delta = 9.7927e-05;
+lyapunov_struct(1).k_ome = 1.0446e-05;
+
+% Questo Lyapunov controlla poco theta ma lo tira su abbastanza veloce (fig 54 2). Per
+% risultati ancora più veloci abbassare k_delta (fino a 1/25 del valore
+% nominale), attento che tende a spararlo su veloce
+lyapunov_struct(2).k_th = 8.4870e-04;
+lyapunov_struct(2).k_delta = 1.9586e-05;
+lyapunov_struct(2).k_ome = 1.1751e-05;
+
+%        k_th: 3.3948e-05
+%     k_delta: 9.7927e-05
+%       k_ome: 1.3057e-05
+
+lypanuov_index = 1;
+PARAMS.k_th = lyapunov_struct(lypanuov_index).k_th;
+PARAMS.k_delta = lyapunov_struct(lypanuov_index).k_delta;
+PARAMS.k_ome = lyapunov_struct(lypanuov_index).k_ome;

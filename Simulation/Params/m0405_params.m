@@ -197,11 +197,19 @@ lyapunov_struct(2).k_th = 8.4870e-04;
 lyapunov_struct(2).k_delta = 1.9586e-05;
 lyapunov_struct(2).k_ome = 1.1751e-05;
 
-%        k_th: 3.3948e-05
-%     k_delta: 9.7927e-05
-%       k_ome: 1.3057e-05
+% Lyapunov tranquillo in circa 7 oscillazioni con theta abbastanza fermo
+% (fig 76 1)
+% modificare k_ome non cambia molto, abbassandolo fa meno oscillazioni per
+% salire
+% K_th può scendere fino a 25 volte ma è un filo più lento
+% aumentare delta fino a 2.5 crea una risposta ancora più lenta in alpha
+% (tipo picchi esponenziali)
+% cambiare la reference non cambia molto i risultati (quasi nulla)
+lyapunov_struct(3).k_th = 1.6974e-04;
+lyapunov_struct(3).k_delta = 2.2034e-04;
+lyapunov_struct(3).k_ome = 1.0446e-05;
 
-lypanuov_index = 1;
+lypanuov_index = 3;
 PARAMS.k_th = lyapunov_struct(lypanuov_index).k_th;
 PARAMS.k_delta = lyapunov_struct(lypanuov_index).k_delta;
 PARAMS.k_ome = lyapunov_struct(lypanuov_index).k_ome;

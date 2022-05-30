@@ -101,6 +101,10 @@ PARAMS.K_pp_al_th_pi_int_4 = [8.9949    2.8354  -57.2486   -4.3455  -11.6041];
 PARAMS.K_pp_al_th_pi_int_5 = [16.6630    5.7182  -98.9577   -7.7006  -15.2651]; % does not work, inputs are too high
 % Tsettling = 15; csi = 0.0001; red_contr; LMIs DT
 PARAMS.K_pp_al_th_pi_int_6 = [3.9670    2.3061  -61.6491   -4.5726   -1.6836];
+% same as K_pp_al_th_pi_int_3 and int tuned separately
+PARAMS.K_pp_al_th_pi_int_7 = [15.2679    4.0205  -71.4237   -5.4872  -7];
+% Tsettling = 3; csi = 0.65; red_contr; LMIs CT
+PARAMS.K_pp_al_th_pi_int_8 = [4.5802 1.8764 -46.2492 -3.6911 -4.3971];
 
 
 %LQ
@@ -132,14 +136,20 @@ PARAMS.K_LQ_int_down5 = -[13.1717    2.2966   -7.4566    0.5662  -27.6754];
 PARAMS.K_LQ_int_down6 = -[117.4679   10.6780   12.8370    6.0146 -409.5086];
 % same as K_LQ_down2 and int tuned separately
 PARAMS.K_LQ_int_down7 = [PARAMS.K_LQ_down2 13];
+% same as K_LQ_int_down5 and int tuned separately
+PARAMS.K_LQ_int_down8 = -[13.1717    2.2966   -7.4566    0.5662  -13];
 
 % Tsettling = 2; Q = diag([0.1 0.01 1 0.01 0.1]); R = 1;
 PARAMS.K_LQ_int_up1 = -[-9.8980   -2.7541   55.3324    4.4881   14.0087];
 % Tsettling = 1.5; Q = diag([1 0.01 1 0.01 0.0001]); R = 10;
 PARAMS.K_LQ_int_up2 = -[-19.2311 -4.5206 76.9661 6.3535 33.5411];
+% same as K_LQ_int_up2 and int tuned separately
+PARAMS.K_LQ_int_up3 = -[-19.2311 -4.5206 76.9661 6.3535 7];
+% Tsettling = 3; Q = diag([1 0.01 1 0.01 0.0001]); R = 10;
+PARAMS.K_LQ_int_up4 = -[-4.4341 -1.5359 40.0969 3.1656 4.7109];
 
-PARAMS.K_pp_state = PARAMS.K_pp_al_th_pi_3(1:4);
-PARAMS.K_pp_th_int = PARAMS.K_pp_al_th_pi_int_3(5);
+PARAMS.K_pp_state = PARAMS.K_LQ_int_up4(1:4);
+PARAMS.K_pp_th_int = PARAMS.K_LQ_int_up4(5);
 
 
 % KF

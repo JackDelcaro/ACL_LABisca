@@ -14,6 +14,8 @@ paths.parsed_data_folder = fullfile(string(paths.data_folder), "Parsed_Data");
 paths.resim_parsed_data_folder = fullfile(string(paths.data_folder), "Resim_Parsed_Data");
 paths.scripts_folder     = fullfile(string(paths.mainfolder_path), "Scripts");
 paths.simulation_folder  = fullfile(string(paths.mainfolder_path), "Simulation");
+paths.media_folder       = fullfile(string(paths.mainfolder_path), "Multimedia");
+paths.report_images_folder = fullfile(string(paths.media_folder), "Report_Images");
 addpath(genpath(paths.file_path        ));
 addpath(genpath(paths.data_folder      ));
 addpath(genpath(paths.scripts_folder   ));
@@ -70,13 +72,14 @@ end
 
 %% PLOTS
 
-reference_color = colors.grey(2);
-data_color = colors.orange_red(1);
-simulation_color = colors.yellow(1);
+reference_color = "#767676";
+data_color = colors.blue(4);
+simulation_color = colors.blue(1);
 
 for filename_idx = 1:length(filename)
-    figure;
-    sgtitle("Experiment: " + string(strrep(strrep(filename(filename_idx), ".mat", ""), "_", "\_")));
+    f(1) = figure;
+    title_label = string(strrep(strrep(strrep(strrep(filename(filename_idx), ".mat", ""), "static", "complete"), "dynamic", "complete"), "_RESIM", ""));
+    sgtitle("Experiment: " + strrep(title_label, "_", "\_"));
 
     sub(1) = subplot(3,2,1); hold on;
     title('Sine Sweep');
@@ -128,4 +131,6 @@ for filename_idx = 1:length(filename)
 
     linkaxes(sub, 'x');
     clearvars sub;
+    
+    saveas(f(1), fullfile(paths.report_images_folder, title_label + ".png"));
 end

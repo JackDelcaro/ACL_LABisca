@@ -4,9 +4,9 @@ PARAMS.angle_quantization = 0.00307;
 
 % Setup par
 PARAMS.th_0_cable = 0;
-PARAMS.th_0 = 10/180*pi;
+PARAMS.th_0 = 45/180*pi;
 PARAMS.th_dot_0 = 0;
-PARAMS.al_0 = 170/180*pi;
+PARAMS.al_0 = 0/180*pi;
 PARAMS.al_dot_0 = 0;
 PARAMS.g = 9.81;
 
@@ -20,7 +20,7 @@ PARAMS.Jm = 4e-6;
 PARAMS.l2 = (PARAMS.Lp/2 - PARAMS.Lp_offset);
 PARAMS.l1 = 0.5117*PARAMS.Lr/2;
 
-PARAMS.Jh = 8.009e-6 - PARAMS.Jm; % official inertia 6e-7
+PARAMS.Jh = (8.009e-6 - PARAMS.Jm); % official inertia 6e-7
 PARAMS.Cal = 2*6.494e-6;
 PARAMS.Cth = 0.94*3.660e-4;
 

@@ -37,6 +37,8 @@ run('m0405_fmincon_sim_init');
 save_output = 1;
 parallel_pool = 1;
 number_of_workers = 8;
+iteration_number = 1000;
+seed_number = 500;
 
 date_string = datestr(now, 'yyyymmdd_HHMM_');
 model_name = 's0405_fmincon';
@@ -44,7 +46,7 @@ model_name = 's0405_fmincon';
 %% OPTIMIZATION VARIABLES
 
 weights.theta = 0.5; % 0
-weights.alpha = 10; % 1
+weights.alpha = 5; % 1
 weights.theta_dot = 0.1; % 0.5
 weights.alpha_dot = 0.1; % 0.05
 
@@ -89,11 +91,11 @@ end
 % tun_pars_limits.K = [0.5, 2];
 tun_pars_limits.l1 = [0.5, 2];
 tun_pars_limits.l2 = [0.5, 2];
-tun_pars_limits.Cal = [0.5, 2];
-tun_pars_limits.Cth = [0.5, 2];
-% tun_pars_limits.Jh = [0.5, 2];
+tun_pars_limits.Cal = [0.1, 2];
+tun_pars_limits.Cth = [0.1, 2];
 tun_pars_limits.mp = [0.5, 2];
 tun_pars_limits.mr = [0.5, 2];
+
 tun_pars_labels = string(fields(tun_pars_limits));
 
 x_lb_fmincon = nan(size(tun_pars_labels));
@@ -103,8 +105,11 @@ x_0_fmincon = nan(size(tun_pars_labels));
 for i = 1:length(tun_pars_labels)
     x_lb_fmincon(i) = PARAMS.(tun_pars_labels(i))*tun_pars_limits.(tun_pars_labels(i))(1);
     x_ub_fmincon(i) = PARAMS.(tun_pars_labels(i))*tun_pars_limits.(tun_pars_labels(i))(2);
-%     x_0_fmincon(i)  = PARAMS.(tun_pars_labels(i))*(0.5+rand());
     x_0_fmincon(i)  = PARAMS.(tun_pars_labels(i));
+end
+
+for i = 1:length(tun_pars_labels)
+    opt_vars(i) =  optimizableVariable(tun_pars_labels(i), [x_lb_fmincon(i), x_ub_fmincon(i)], 'Type', 'real'); %#ok<SAGROW>
 end
 
 %% FUNCTION HANDLES
@@ -114,10 +119,26 @@ sim_handle = @(x) fmincon_simulate(x, tun_pars_labels, PARAMS, fmincon_cost_hand
 
 %% OPTIMIZATION
 
-options = optimoptions('fmincon','Display', 'iter', 'PlotFcn', ...
-                       {@optimplotx, @optimplotfunccount, @optimplotfval, @optimplotstepsize}, ...
-                       'UseParallel', logical(parallel_pool));
-x_opt = fmincon(sim_handle,x_0_fmincon,[],[],[],[],x_lb_fmincon,x_ub_fmincon,[],options);
+max_colorbar = inf;
+bayesopt_XTrace_clippedplot = @(results,state) bayesopt_XTrace_plot(results,state, max_colorbar);
+
+% Bayesian Optimization
+disp('-- OPTIMIZATION START --');
+tic;
+bayes_res = bayesopt(sim_handle, opt_vars, ...
+            'AcquisitionFunctionName', 'expected-improvement-plus', ...
+            'ExplorationRatio', 0.5, ...
+            'IsObjectiveDeterministic', true, ...
+            'MaxObjectiveEvaluations', iteration_number, ...
+            'NumSeedPoints', seed_number, ...
+            'UseParallel', parallel_pool, ...
+            'ParallelMethod', 'clipped-model-prediction', ...
+            'PlotFcn', {@plotObjective, bayesopt_XTrace_clippedplot}, ...
+            'Verbose', 1);
+elapsedTime = toc;
+disp('-- OPTIMIZATION END --');
+fprintf("\n");
+disp(['Elapsed Time: ', num2str(elapsedTime)]);
 
 %% SAVE VARIABLES
 
@@ -133,12 +154,12 @@ end
 
 if save_output == 1
     save(fullfile(paths.sim_data_folder, string(date_string) + "fmincon_opt_N" + num2str(length(x_0_fmincon))),...
-        'dataset_name', 'x_opt', 'x_0_fmincon', 'tun_pars_limits', 'x_lb_fmincon', 'x_ub_fmincon', ...
+        'dataset_name', 'bayes_res', 'opt_vars', 'x_0_fmincon', 'tun_pars_limits', 'x_lb_fmincon', 'x_ub_fmincon', ...
         'tun_pars_labels');
 end
 
 %% DISPLAY RESULTS
 run('m0405_params.m');
 for i = 1:length(tun_pars_labels)
-    fprintf(1, "%s simulator: %f  found: %f  percentage: %f\n", tun_pars_labels(i), PARAMS.(tun_pars_labels(i)), x_opt(i), x_opt(i)/PARAMS.(tun_pars_labels(i)));
+    fprintf(1, "%s simulator: %f  found: %f  percentage: %f\n", tun_pars_labels(i), PARAMS.(tun_pars_labels(i)), bayes_res.XAtMinObjective.(tun_pars_labels(i)), bayes_res.XAtMinObjective.(tun_pars_labels(i))/PARAMS.(tun_pars_labels(i)));
 end

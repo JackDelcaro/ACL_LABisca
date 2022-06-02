@@ -105,6 +105,8 @@ PARAMS.K_pp_al_th_pi_int_6 = [3.9670    2.3061  -61.6491   -4.5726   -1.6836];
 PARAMS.K_pp_al_th_pi_int_7 = [15.2679    4.0205  -71.4237   -5.4872  -7];
 % Tsettling = 3; csi = 0.65; red_contr; LMIs CT
 PARAMS.K_pp_al_th_pi_int_8 = [4.5802 1.8764 -46.2492 -3.6911 -4.3971];
+% Tsettling = 2; csi = 0.65; red_contr; LMIs CT and int tuned separately
+PARAMS.K_pp_al_th_pi_int_9 = [9.2218 2.9433 -60.5912 -4.9199 -7];
 
 
 %LQ
@@ -120,6 +122,8 @@ PARAMS.K_LQ_down4 = -[5.1799    1.7065  -11.0265    0.1152];
 
 %Q = diag([1 0.01 1 0.01]) R = 1; [K, S, CLP] = dlqr(1.01*F, 1.01*G, Q, R, N);
 PARAMS.K_LQ_up1 = -[3.7083    1.3043   -7.7097    0.0341];
+%Tsettling=1.5 Q = diag([1 0.01 1 0.01]) R = 10; [K, S, CLP] = dlqr(1.01*F, 1.01*G, Q, R, N);
+PARAMS.K_LQ_up2 = -[-5.4742    -2.1787   50.0101    4.0182];
 
 % LQ int
 % Tsettling = 2; Q = diag([0.1 0.01 1 0.01 0.1]); R = 1;
@@ -147,9 +151,11 @@ PARAMS.K_LQ_int_up2 = -[-19.2311 -4.5206 76.9661 6.3535 33.5411];
 PARAMS.K_LQ_int_up3 = -[-19.2311 -4.5206 76.9661 6.3535 7];
 % Tsettling = 3; Q = diag([1 0.01 1 0.01 0.0001]); R = 10;
 PARAMS.K_LQ_int_up4 = -[-4.4341 -1.5359 40.0969 3.1656 4.7109];
+% Tsettling = 2; Q = diag([1 0.01 1 0.01 0.0001]); R = 10;
+PARAMS.K_LQ_int_up5 = -[-9.8519 -2.7667 55.8715 4.5301 7];
 
-PARAMS.K_pp_state = PARAMS.K_LQ_int_up4(1:4);
-PARAMS.K_pp_th_int = PARAMS.K_LQ_int_up4(5);
+PARAMS.K_pp_state = PARAMS.K_pp_al_th_pi_3(1:4);
+PARAMS.K_pp_th_int = PARAMS.K_LQ_int_up5(5);
 
 
 % KF
@@ -198,6 +204,10 @@ lyapunov_struct(1).k_th = 0.0042435;
 lyapunov_struct(1).k_delta = 9.7927e-05;
 lyapunov_struct(1).k_ome = 1.0446e-05;
 
+lyapunov_struct(4).k_th = 0.0042435/5;
+lyapunov_struct(4).k_delta = 9.7927e-05/2;
+lyapunov_struct(4).k_ome = 1.1751e-05;
+
 % Questo Lyapunov controlla poco theta ma lo tira su abbastanza veloce (fig 54 2). Per
 % risultati ancora pi� veloci abbassare k_delta (fino a 1/25 del valore
 % nominale), attento che tende a spararlo su veloce
@@ -206,6 +216,11 @@ lyapunov_struct(1).k_ome = 1.0446e-05;
 lyapunov_struct(2).k_th = 8.4870e-04;
 lyapunov_struct(2).k_delta = 1.9586e-05;
 lyapunov_struct(2).k_ome = 1.1751e-05;
+
+
+lyapunov_struct(5).k_th = 8.4870e-04;
+lyapunov_struct(5).k_delta = 1.9586e-05*0.75;
+lyapunov_struct(5).k_ome = 1.1751e-05;
 
 % Lyapunov tranquillo in circa 7 oscillazioni con theta abbastanza fermo
 % (fig 76 1)
@@ -216,10 +231,10 @@ lyapunov_struct(2).k_ome = 1.1751e-05;
 % (tipo picchi esponenziali)
 % cambiare la reference non cambia molto i risultati (quasi nulla)
 lyapunov_struct(3).k_th = 1.6974e-04;
-lyapunov_struct(3).k_delta = 2.2034e-04;
-lyapunov_struct(3).k_ome = 1.0446e-05;
+lyapunov_struct(3).k_delta = 2.2034e-04*2;
+lyapunov_struct(3).k_ome = 1.0446e-05*0.75;
 
-lypanuov_index = 3;
+lypanuov_index = 2;
 PARAMS.k_th = lyapunov_struct(lypanuov_index).k_th;
 PARAMS.k_delta = lyapunov_struct(lypanuov_index).k_delta;
 PARAMS.k_ome = lyapunov_struct(lypanuov_index).k_ome;

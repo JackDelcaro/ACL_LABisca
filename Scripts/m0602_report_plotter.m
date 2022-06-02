@@ -82,6 +82,7 @@ zoomed_plot_handle = @(subplot_handles, title, dataset, start_time, end_time) zo
 for filename_idx = 1:length(filename)
     fprintf('Filename: %s\n', filename(filename_idx));
     save_figures = input('Would you like to save the figures [Y/N]: ', 's');
+    title_label = string(strrep(strrep(strrep(strrep(filename(filename_idx), ".mat", ""), "static", "complete"), "dynamic", "complete"), "_RESIM", ""));
     
     % FIGURE 1
     f(1) = figure;
@@ -89,21 +90,22 @@ for filename_idx = 1:length(filename)
     
     % FIGURE 2
     f(2) = figure;
+    sgtitle("Experiment: " + strrep(title_label, "_", "\_") + "\_zoomed");
     for i = 1:9
         sub(i) = subplot(3,3,i); %#ok<SAGROW>
     end
     zoomed_plot_handle([sub(1), sub(4), sub(7)], "Start Sinesweep", dynamic_dataset{filename_idx}, 5, 45);
     zoomed_plot_handle([sub(2), sub(5), sub(8)], "End Sinesweep", dynamic_dataset{filename_idx}, 298, 304);
     zoomed_plot_handle([sub(3), sub(6), sub(9)], "Single Step", static_dataset{filename_idx}, 44, 49);
+    subplot(sub(3));
+    legend('Position',[0.80906589365385,0.686662468927643,0.091662336339736,0.10204690470116]);
     
     if any(save_figures == ["Y", "Yes", "y", "YES", "yes"])
-        title_label = string(strrep(strrep(strrep(strrep(filename(filename_idx), ".mat", ""), "static", "complete"), "dynamic", "complete"), "_RESIM", ""));
         saveas(f(1), fullfile(paths.report_images_folder, title_label + ".png"));
         saveas(f(2), fullfile(paths.report_images_folder, title_label + "_zoomed.png"));
     end
     
 end
-
 
 function large_plot(figure_handle, filename_idx, filename, dynamic_dataset, static_dataset, reference_color, data_color, simulation_color)
 
@@ -187,13 +189,7 @@ end
 function zoomed_plot(subplot_handles, title_label, dataset, start_time, end_time, reference_color, data_color, simulation_color)
     
     range = dataset.time >= start_time & dataset.time <= end_time;
-    
-    tmp = get(subplot_handles(1), 'Position');
-    left_pos = tmp(1);
-    top_pos = tmp(2);
-    width = tmp(3);
-    height = tmp(4);
-    spacing = 0.025;
+   
     subplot(subplot_handles(1)); hold on;
     title(title_label);
     
@@ -223,6 +219,12 @@ function zoomed_plot(subplot_handles, title_label, dataset, start_time, end_time
     xlim([start_time, end_time]);
     drawnow;
     
+    tmp = get(subplot_handles(1), 'Position');
+    left_pos = tmp(1);
+    top_pos = tmp(2);
+    width = tmp(3);
+    height = tmp(4);
+    spacing = 0.025;
     set(subplot_handles(2), 'Position', [left_pos, top_pos-height-spacing, width, height]);
     set(subplot_handles(3), 'Position', [left_pos, top_pos-2*height-2*spacing, width, height]);
 end

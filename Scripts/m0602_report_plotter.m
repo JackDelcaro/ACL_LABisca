@@ -76,11 +76,41 @@ reference_color = "#767676";
 data_color = colors.blue(4);
 simulation_color = colors.blue(1);
 
+large_plot_handle = @(figure_handle, filename_index) large_plot(figure_handle, filename_index, filename, dynamic_dataset, static_dataset, reference_color, data_color, simulation_color);
+zoomed_plot_handle = @(subplot_handles, title, dataset, start_time, end_time) zoomed_plot(subplot_handles, title, dataset, start_time, end_time, reference_color, data_color, simulation_color);
+
 for filename_idx = 1:length(filename)
+    fprintf('Filename: %s\n', filename(filename_idx));
+    save_figures = input('Would you like to save the figures [Y/N]: ', 's');
+    
+    % FIGURE 1
     f(1) = figure;
+    large_plot_handle(f(1), filename_idx);
+    
+    % FIGURE 2
+    f(2) = figure;
+    for i = 1:9
+        sub(i) = subplot(3,3,i); %#ok<SAGROW>
+    end
+    zoomed_plot_handle([sub(1), sub(4), sub(7)], "Start Sinesweep", dynamic_dataset{filename_idx}, 5, 45);
+    zoomed_plot_handle([sub(2), sub(5), sub(8)], "End Sinesweep", dynamic_dataset{filename_idx}, 298, 304);
+    zoomed_plot_handle([sub(3), sub(6), sub(9)], "Single Step", static_dataset{filename_idx}, 44, 49);
+    
+    if any(save_figures == ["Y", "Yes", "y", "YES", "yes"])
+        title_label = string(strrep(strrep(strrep(strrep(filename(filename_idx), ".mat", ""), "static", "complete"), "dynamic", "complete"), "_RESIM", ""));
+        saveas(f(1), fullfile(paths.report_images_folder, title_label + ".png"));
+        saveas(f(2), fullfile(paths.report_images_folder, title_label + "_zoomed.png"));
+    end
+    
+end
+
+
+function large_plot(figure_handle, filename_idx, filename, dynamic_dataset, static_dataset, reference_color, data_color, simulation_color)
+
+    figure(figure_handle);
     title_label = string(strrep(strrep(strrep(strrep(filename(filename_idx), ".mat", ""), "static", "complete"), "dynamic", "complete"), "_RESIM", ""));
     sgtitle("Experiment: " + strrep(title_label, "_", "\_"));
-
+    
     sub(1) = subplot(3,2,1); hold on;
     title('Sine Sweep');
     if any(fields(dynamic_dataset{filename_idx}) == "theta_ref")
@@ -89,6 +119,7 @@ for filename_idx = 1:length(filename)
     plot(dynamic_dataset{filename_idx}.time, dynamic_dataset{filename_idx}.theta*180/pi, 'color', data_color, 'DisplayName', 'Real Data');
     plot(dynamic_dataset{filename_idx}.time, dynamic_dataset{filename_idx}.theta_sim*180/pi, '--', 'color', simulation_color, 'DisplayName', 'Simulation', 'LineWidth', 1.5);
     ylabel('$\theta\;[deg]$');
+    set(gca,'Xticklabel',[]);
 
     sub(2) = subplot(3,2,3);
     if any(fields(dynamic_dataset{filename_idx}) == "alpha_ref")
@@ -97,16 +128,16 @@ for filename_idx = 1:length(filename)
     plot(dynamic_dataset{filename_idx}.time, dynamic_dataset{filename_idx}.alpha*180/pi, 'color', data_color, 'DisplayName', 'Real Data');
     plot(dynamic_dataset{filename_idx}.time, dynamic_dataset{filename_idx}.alpha_sim*180/pi, '--', 'color', simulation_color, 'DisplayName', 'Simulation', 'LineWidth', 1.5);
     ylabel('$\alpha\;[deg]$');
-
+    set(gca,'Xticklabel',[]);
+    
     sub(3) = subplot(3,2,5);
     plot(dynamic_dataset{filename_idx}.time, dynamic_dataset{filename_idx}.voltage, 'color', data_color, 'DisplayName', 'Voltage'); hold on; grid on;
     ylabel('$Voltage\;[V]$');
     xlabel('$time\;[s]$');
-
     linkaxes(sub, 'x');
-    clearvars sub;
+    xlim([dynamic_dataset{filename_idx}.time(1), dynamic_dataset{filename_idx}.time(end)]);
     
-    sub(1) = subplot(3,2,2); hold on;
+    sub(4) = subplot(3,2,2); hold on;
     title('Steps');
     if any(fields(dynamic_dataset{filename_idx}) == "theta_ref")
         plot(static_dataset{filename_idx}.time, static_dataset{filename_idx}.theta_ref*180/pi, 'color', reference_color, 'DisplayName', 'Reference'); grid on;
@@ -115,22 +146,83 @@ for filename_idx = 1:length(filename)
     plot(static_dataset{filename_idx}.time, static_dataset{filename_idx}.theta_sim*180/pi, '--', 'color', simulation_color, 'DisplayName', 'Simulation', 'LineWidth', 1.5);
     ylabel('$\theta\;[deg]$');
     legend('Position',[0.856442789599488,0.819417203330112,0.091662336339736,0.10204690470116]);
+    set(gca,'Xticklabel',[]);
 
-    sub(2) = subplot(3,2,4);
+    sub(5) = subplot(3,2,4);
     if any(fields(static_dataset{filename_idx}) == "alpha_ref")
         plot(static_dataset{filename_idx}.time, static_dataset{filename_idx}.alpha_ref*180/pi, 'color', reference_color, 'DisplayName', 'Reference'); hold on; grid on;
     end
     plot(static_dataset{filename_idx}.time, static_dataset{filename_idx}.alpha*180/pi, 'color', data_color, 'DisplayName', 'Real Data');
     plot(static_dataset{filename_idx}.time, static_dataset{filename_idx}.alpha_sim*180/pi, '--', 'color', simulation_color, 'DisplayName', 'Simulation', 'LineWidth', 1.5);
     ylabel('$\alpha\;[deg]$');
+    set(gca,'Xticklabel',[]);
 
-    sub(3) = subplot(3,2,6);
+    sub(6) = subplot(3,2,6);
     plot(static_dataset{filename_idx}.time, static_dataset{filename_idx}.voltage, 'color', data_color, 'DisplayName', 'Voltage'); hold on; grid on;
     ylabel('$Voltage\;[V]$');
     xlabel('$time\;[s]$');
 
-    linkaxes(sub, 'x');
-    clearvars sub;
+    linkaxes(sub(4:6), 'x');
+    xlim([static_dataset{filename_idx}.time(1), static_dataset{filename_idx}.time(end)]);
+    drawnow;
     
-    saveas(f(1), fullfile(paths.report_images_folder, title_label + ".png"));
+    tmp = get(sub(1), 'Position');
+    left_pos = tmp(1);
+    top_pos = tmp(2);
+    width = tmp(3);
+    height = tmp(4);
+    spacing = 0.025;
+    set(sub(2), 'Position', [left_pos, top_pos-height-spacing, width, height]);
+    set(sub(3), 'Position', [left_pos, top_pos-2*height-2*spacing, width, height]);
+    tmp = get(sub(4), 'Position');
+    left_pos = tmp(1);
+    top_pos = tmp(2);
+    width = tmp(3);
+    height = tmp(4);
+    set(sub(5), 'Position', [left_pos, top_pos-height-spacing, width, height]);
+    set(sub(6), 'Position', [left_pos, top_pos-2*height-2*spacing, width, height]);
+    
+end
+
+function zoomed_plot(subplot_handles, title_label, dataset, start_time, end_time, reference_color, data_color, simulation_color)
+    
+    range = dataset.time >= start_time & dataset.time <= end_time;
+    
+    tmp = get(subplot_handles(1), 'Position');
+    left_pos = tmp(1);
+    top_pos = tmp(2);
+    width = tmp(3);
+    height = tmp(4);
+    spacing = 0.025;
+    subplot(subplot_handles(1)); hold on;
+    title(title_label);
+    
+    if any(fields(dataset) == "theta_ref")
+        plot(dataset.time(range), dataset.theta_ref(range)*180/pi, 'color', reference_color, 'DisplayName', 'Reference'); grid on;
+    end
+    plot(dataset.time(range), dataset.theta(range)*180/pi, 'color', data_color, 'DisplayName', 'Real Data');
+    plot(dataset.time(range), dataset.theta_sim(range)*180/pi, '--', 'color', simulation_color, 'DisplayName', 'Simulation', 'LineWidth', 1.5);
+    ylabel('$\theta\;[deg]$');
+    set(gca,'Xticklabel',[]);
+
+    subplot(subplot_handles(2));
+    if any(fields(dataset) == "alpha_ref")
+        plot(dataset.time(range), dataset.alpha_ref(range)*180/pi, 'color', reference_color, 'DisplayName', 'Reference'); hold on; grid on;
+    end
+    plot(dataset.time(range), dataset.alpha(range)*180/pi, 'color', data_color, 'DisplayName', 'Real Data');
+    plot(dataset.time(range), dataset.alpha_sim(range)*180/pi, '--', 'color', simulation_color, 'DisplayName', 'Simulation', 'LineWidth', 1.5);
+    ylabel('$\alpha\;[deg]$');
+    set(gca,'Xticklabel',[]);
+
+    subplot(subplot_handles(3));
+    plot(dataset.time(range), dataset.voltage(range), 'color', data_color, 'DisplayName', 'Voltage'); hold on; grid on;
+    ylabel('$Voltage\;[V]$');
+    xlabel('$time\;[s]$');
+    
+    linkaxes(subplot_handles, 'x');
+    xlim([start_time, end_time]);
+    drawnow;
+    
+    set(subplot_handles(2), 'Position', [left_pos, top_pos-height-spacing, width, height]);
+    set(subplot_handles(3), 'Position', [left_pos, top_pos-2*height-2*spacing, width, height]);
 end

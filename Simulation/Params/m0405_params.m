@@ -78,7 +78,7 @@ PARAMS.K_pp_al_th_pi_3 = [4.1265    1.8863  -44.4296   -3.3301];
 % Tsettling = 5/7; csi = 0.65; red_contr; LMIs CT
 PARAMS.K_pp_al_th_pi_4 = [20.048    5.5215  -88.2768   -7.3710];
 % Tsettling = 5/7; csi = 0.65; red_contr; LMIs CT
-PARAMS.K_pp_al_th_0_1 = [-19.432    -4.8652  34.1206   -1.5614];
+PARAMS.K_pp_al_th_0_0 = [-19.432    -4.8652  34.1206   -1.5614];
 % Tsettling = 1.5; csi = 0.65; red_contr; LMIs CT
 PARAMS.K_pp_al_th_0_2 = [-2.9639 -1.0897 12.9853 0.6530];
 % Tsettling = 1.5; csi = 0.65; red_contr; LMIs CT
@@ -154,8 +154,8 @@ PARAMS.K_LQ_int_up4 = -[-4.4341 -1.5359 40.0969 3.1656 4.7109];
 % Tsettling = 2; Q = diag([1 0.01 1 0.01 0.0001]); R = 10;
 PARAMS.K_LQ_int_up5 = -[-9.8519 -2.7667 55.8715 4.5301 7];
 
-PARAMS.K_pp_state = PARAMS.K_pp_al_th_pi_3(1:4);
-PARAMS.K_pp_th_int = PARAMS.K_LQ_int_up5(5);
+PARAMS.K_pp_state = PARAMS.K_pp_al_th_0_0(1:4);
+PARAMS.K_pp_th_int = PARAMS.K_pp_al_th_0_int_3(5);
 
 
 % KF
@@ -238,3 +238,23 @@ lypanuov_index = 2;
 PARAMS.k_th = lyapunov_struct(lypanuov_index).k_th;
 PARAMS.k_delta = lyapunov_struct(lypanuov_index).k_delta;
 PARAMS.k_ome = lyapunov_struct(lypanuov_index).k_ome;
+
+
+%% DERIVATIVE FILTER
+
+s = tf('s');
+freq_der_filter = 15;
+der_filt = s/(s/(2*pi*freq_der_filter)+1);
+[num_der_filter, den_der_filter] = tfdata(c2d(der_filt, dt_control), 'v');
+
+%% FILTER
+
+freq_filter = 15;
+filt = 1/(s/(2*pi*freq_filter)+1);
+[num_filter, den_filter] = tfdata(c2d(filt, dt_control), 'v');
+
+%% REF FILTER
+
+freq_ref_filter = 3;
+ref_filt = 1/(s/(2*pi*freq_ref_filter)+1);
+[num_ref_filter, den_ref_filter] = tfdata(c2d(ref_filt, dt_control), 'v');

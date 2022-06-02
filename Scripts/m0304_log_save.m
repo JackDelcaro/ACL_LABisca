@@ -62,6 +62,18 @@ function log_save()
         if size(log_var, 1) >= 6
             Log_data.alpha_ref = log_var(6, :)';
         end
+        if size(log_var, 1) >= 7
+            Log_data.controller_switch = log_var(7, :)';
+        end
+        if size(log_var, 1) >= 8
+            Log_data.k_th = log_var(8, :)';
+        end
+        if size(log_var, 1) >= 9
+            Log_data.k_delta = log_var(9, :)';
+        end
+        if size(log_var, 1) >= 10
+            Log_data.k_ome = log_var(10, :)';
+        end
 
         if enable_time_selection
             figure;
@@ -82,6 +94,9 @@ function log_save()
             sub(3) = subplot(3,1,3);
             if size(log_var, 1) >= 6
                 plot(Log_data.time, Log_data.alpha_ref*180/pi, 'color', colors(2), 'DisplayName', 'reference'); hold on; grid on;
+            end
+            if size(log_var, 1) >= 7
+                plot(Log_data.time, Log_data.controller_switch*45, 'color', colors(3), 'DisplayName', 'switch'); hold on; grid on;
             end
             plot(Log_data.time, Log_data.alpha*180/pi, 'color', colors(1), 'DisplayName', 'data');
             legend;
@@ -105,6 +120,18 @@ function log_save()
         end
         if size(log_var, 1) >= 6
             Log_data.alpha_ref   = Log_data.alpha_ref(Log_data.time >= inf_time_th & Log_data.time <= sup_time_th);
+        end
+        if size(log_var, 1) >= 7
+            Log_data.controller_switch   = Log_data.controller_switch(Log_data.time >= inf_time_th & Log_data.time <= sup_time_th);
+        end
+        if size(log_var, 1) >= 8
+             Log_data.k_th   = Log_data.k_th(Log_data.time >= inf_time_th & Log_data.time <= sup_time_th);
+        end
+        if size(log_var, 1) >= 9
+            Log_data.k_delta   = Log_data.k_delta(Log_data.time >= inf_time_th & Log_data.time <= sup_time_th);
+        end
+        if size(log_var, 1) >= 10
+            Log_data.k_ome   = Log_data.k_ome(Log_data.time >= inf_time_th & Log_data.time <= sup_time_th);
         end
         Log_data.time    = Log_data.time(Log_data.time >= inf_time_th & Log_data.time <= sup_time_th);
         Log_data.time    = Log_data.time - Log_data.time(1);

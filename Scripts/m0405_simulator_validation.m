@@ -24,16 +24,17 @@ run('graphics_options.m');
 %% INITIALIZATION
 
 dt = 2e-4;
-run('m0405_params.m');
+% run('m0405_params.m');
 dt_control = 2e-3;
 
 %% INPUT EXPERIMENT
 
 % dataset_name = '20220321_1748_ol_full_pendulum_swing_90';
-dataset_name = '20220314_1650_sinesweep_0p75V_exp07'; % optimization
+% dataset_name = '20220314_1650_sinesweep_0p75V_exp07'; % optimization
 % dataset_name = '20220314_1640_varin_exp07';
 % dataset_name = '20220314_1640_varin_exp07_cut_ramps';
 % dataset_name = '20220314_1640_varin_exp07_cut_squarewaves_ramps';
+dataset_name = '20220411_1533_ol_sinesweep_0p75_8';
 dataset = load(dataset_name); % validation
 run('m0405_fmincon_sim_init');
 

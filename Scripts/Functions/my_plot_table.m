@@ -11,7 +11,8 @@ function [f_handle, graphs_handles, subplot_handles] = my_plot_table(X, varargin
     is_cell_title = @(x) cellfun(@(y)(isstring(y)||ischar(y)) && contains(y, {'title', 'Title'}),x,'UniformOutput',1);
     if any(is_cell_title(varargin))
         title_index = find(is_cell_title(varargin)) + 1;
-        sgtitle(varargin(title_index));
+        title_label = varargin(title_index);
+        sgtitle(title_label{1});
         varargin(title_index-1:title_index) = [];
     end
     

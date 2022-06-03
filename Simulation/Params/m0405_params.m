@@ -154,7 +154,7 @@ PARAMS.K_LQ_int_up4 = -[-4.4341 -1.5359 40.0969 3.1656 4.7109];
 % Tsettling = 2; Q = diag([1 0.01 1 0.01 0.0001]); R = 10;
 PARAMS.K_LQ_int_up5 = -[-9.8519 -2.7667 55.8715 4.5301 7];
 
-PARAMS.K_pp_state = PARAMS.K_pp_al_th_0_0(1:4);
+PARAMS.K_pp_state = PARAMS.K_pp_al_th_0_2(1:4);
 PARAMS.K_pp_th_int = PARAMS.K_pp_al_th_0_int_3(5);
 
 

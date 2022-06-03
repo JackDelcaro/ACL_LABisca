@@ -94,18 +94,47 @@ for filename_idx = 1:length(filename)
     for i = 1:9
         sub(i) = subplot(3,3,i); %#ok<SAGROW>
     end
+    % zoomed_plot_handle(subplot_handles, title, dataset, start_time, end_time)
     zoomed_plot_handle([sub(1), sub(4), sub(7)], "Start Sinesweep", dynamic_dataset{filename_idx}, 5, 45);
     zoomed_plot_handle([sub(2), sub(5), sub(8)], "End Sinesweep", dynamic_dataset{filename_idx}, 298, 304);
     zoomed_plot_handle([sub(3), sub(6), sub(9)], "Single Step", static_dataset{filename_idx}, 44, 49);
     subplot(sub(3));
     legend('Position',[0.80906589365385,0.686662468927643,0.091662336339736,0.10204690470116]);
+    clearvars sub;
+    
+    % FIGURE 3
+    f(3) = figure;
+    sgtitle("Experiment: " + strrep(title_label, "_", "\_") + "\_zoomed");
+    for i = 1:3
+        sub(i) = subplot(3,1,i);
+    end
+    % zoomed_plot_handle(subplot_handles, title, dataset, start_time, end_time)
+    zoomed_plot_handle([sub(1), sub(2), sub(3)], "Start Sinesweep", dynamic_dataset{filename_idx}, 3, inf);
+    subplot(sub(1));
+    legend('Position',[0.843716678710699,0.835916200270927,0.091662336339736,0.10204690470116]);
+    clearvars sub;
+    
+    % FIGURE 4
+    f(4) = figure;
+    sgtitle("Experiment: " + strrep(title_label, "_", "\_") + "\_zoomed");
+    for i = 1:3
+        sub(i) = subplot(3,1,i);
+    end
+    % zoomed_plot_handle(subplot_handles, title, dataset, start_time, end_time)
+    zoomed_plot_handle([sub(1), sub(2), sub(3)], "Start Sinesweep", static_dataset{filename_idx}, 3, inf);
+    subplot(sub(1));
+    legend('Position',[0.843716678710699,0.835916200270927,0.091662336339736,0.10204690470116]);
     
     if any(save_figures == ["Y", "Yes", "y", "YES", "yes"])
         saveas(f(1), fullfile(paths.report_images_folder, title_label + ".png"));
         saveas(f(2), fullfile(paths.report_images_folder, title_label + "_zoomed.png"));
+        saveas(f(3), fullfile(paths.report_images_folder, title_label + "_only_sinesweep.png"));
+        saveas(f(4), fullfile(paths.report_images_folder, title_label + "_only_steps.png"));
     end
     
 end
+
+%% FUNCTIONS
 
 function large_plot(figure_handle, filename_idx, filename, dynamic_dataset, static_dataset, reference_color, data_color, simulation_color)
 
@@ -227,4 +256,5 @@ function zoomed_plot(subplot_handles, title_label, dataset, start_time, end_time
     spacing = 0.025;
     set(subplot_handles(2), 'Position', [left_pos, top_pos-height-spacing, width, height]);
     set(subplot_handles(3), 'Position', [left_pos, top_pos-2*height-2*spacing, width, height]);
+    
 end

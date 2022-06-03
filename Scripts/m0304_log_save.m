@@ -85,20 +85,20 @@ function log_save()
 
             sub(2) = subplot(3,1,2);
             if size(log_var, 1) >= 5
-                plot(Log_data.time, Log_data.theta_ref*180/pi, 'color', colors(2), 'DisplayName', 'reference'); hold on; grid on;
+                plot(Log_data.time, Log_data.theta_ref*180/pi, 'color', colors.matlab(2), 'DisplayName', 'reference'); hold on; grid on;
             end
-            plot(Log_data.time, Log_data.theta*180/pi, 'color', colors(1), 'DisplayName', 'data'); hold on; grid on;
+            plot(Log_data.time, Log_data.theta*180/pi, 'color', colors.matlab(1), 'DisplayName', 'data'); hold on; grid on;
             ylabel('$\theta\;[deg]$');
             legend;
             
             sub(3) = subplot(3,1,3);
             if size(log_var, 1) >= 6
-                plot(Log_data.time, Log_data.alpha_ref*180/pi, 'color', colors(2), 'DisplayName', 'reference'); hold on; grid on;
+                plot(Log_data.time, Log_data.alpha_ref*180/pi, 'color', colors.matlab(2), 'DisplayName', 'reference'); hold on; grid on;
             end
             if size(log_var, 1) >= 7
-                plot(Log_data.time, Log_data.controller_switch*45, 'color', colors(3), 'DisplayName', 'switch'); hold on; grid on;
+                plot(Log_data.time, Log_data.controller_switch*45, 'color', colors.matlab(3), 'DisplayName', 'switch'); hold on; grid on;
             end
-            plot(Log_data.time, Log_data.alpha*180/pi, 'color', colors(1), 'DisplayName', 'data');
+            plot(Log_data.time, Log_data.alpha*180/pi, 'color', colors.matlab(1), 'DisplayName', 'data');
             legend;
             ylabel('$\alpha\;[deg]$');
             xlabel('$time\;[s]$');

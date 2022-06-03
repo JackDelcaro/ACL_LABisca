@@ -1,7 +1,7 @@
 
 clc;
 clearvars;
-% close all;
+close all;
 
 %% PATHS
 

@@ -164,6 +164,7 @@ function large_plot(figure_handle, filename_idx, filename, dynamic_dataset, stat
     sub(3) = subplot(3,2,5);
     plot(dynamic_dataset{filename_idx}.time, dynamic_dataset{filename_idx}.voltage, 'color', data_color, 'DisplayName', 'Voltage'); hold on; grid on;
     ylabel('$Voltage\;[V]$');
+    ylim([-10 10]);
     xlabel('$time\;[s]$');
     linkaxes(sub, 'x');
     xlim([dynamic_dataset{filename_idx}.time(1), dynamic_dataset{filename_idx}.time(end)]);
@@ -191,6 +192,7 @@ function large_plot(figure_handle, filename_idx, filename, dynamic_dataset, stat
     sub(6) = subplot(3,2,6);
     plot(static_dataset{filename_idx}.time, static_dataset{filename_idx}.voltage, 'color', data_color, 'DisplayName', 'Voltage'); hold on; grid on;
     ylabel('$Voltage\;[V]$');
+    ylim([-10 10]);
     xlabel('$time\;[s]$');
 
     linkaxes(sub(4:6), 'x');
@@ -242,6 +244,7 @@ function zoomed_plot(subplot_handles, title_label, dataset, start_time, end_time
     subplot(subplot_handles(3));
     plot(dataset.time(range), dataset.voltage(range), 'color', data_color, 'DisplayName', 'Voltage'); hold on; grid on;
     ylabel('$Voltage\;[V]$');
+    ylim([-10 10]);
     xlabel('$time\;[s]$');
     
     linkaxes(subplot_handles, 'x');

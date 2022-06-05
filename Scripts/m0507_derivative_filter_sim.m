@@ -24,8 +24,8 @@ run('m0507_derivative_filter_tests_init.m');
 
 %% OVERWRITE PARAMETERS
 
-PARAMS.polyfit.order = 1;
-PARAMS.polyfit.window = 250;
+PARAMS.polyfit.order = 2;
+PARAMS.polyfit.window = 120;    
 PARAMS.polyfit.forgetting_factor = (10^-3)^(1/PARAMS.polyfit.window);
 PARAMS.polyfit.center_idx = floor(PARAMS.polyfit.window/2);
 PARAMS.polyfit.time = (0:dt_control:(PARAMS.polyfit.window-1)*dt_control)';
@@ -36,6 +36,10 @@ for j = 1:(PARAMS.polyfit.order+1)
 end
 PARAMS.polyfit.pinvR = pinv(R);
 clearvars R;
+
+%% SiL PARAMETERS
+k_theta = 1.5;
+k_alpha = 1;
 
 %% SIMULATION
 simout = sim('s0506_polynomial_filter');
@@ -72,4 +76,188 @@ legend('show', 'Location', 'eastoutside');
 ylabel('$\dot{\alpha}\;[deg/s]$');
 xlabel('$time\;[s]$');
 linkaxes(sub, 'x');
-    
+
+%% PLOTS
+
+figure;
+
+sub(1) = subplot(1,2,1);
+start_time = 79;
+end_time = 84;
+
+plot(dataset.time, dataset.alpha*180/pi, 'Color', colors.matlab(1), 'DisplayName', 'Reconstructed');
+ylabel('$\alpha\;[deg]$');
+xlabel('$time\;[s]$')
+xlim([start_time, end_time]);
+
+sub(2) = subplot(1,2,2);
+
+start_time = 133;
+end_time = 140;
+
+plot(dataset.time, dataset.alpha*180/pi, 'Color', colors.matlab(1), 'DisplayName', 'Reconstructed');
+ylabel('$\alpha\;[deg]$');
+xlabel('$time\;[s]$')
+xlim([start_time, end_time]);
+
+%%
+figure;
+
+sub(1) = subplot(1,2,1);
+start_time = 79;
+end_time = 84;
+
+plot(dataset.time, dataset.alpha*180/pi, 'Color', colors.matlab(1), 'DisplayName', 'Reconstructed'); hold on; grid on;
+plot(simout.poly_alpha.Time, simout.poly_alpha.Data*180/pi, 'Color', colors.matlab(3), 'DisplayName', 'Polyfit');
+ylabel('$\alpha\;[deg]$');
+xlabel('$time\;[s]$')
+xlim([start_time, end_time]);
+
+sub(2) = subplot(1,2,2);
+
+start_time = 133;
+end_time = 140;
+
+plot(dataset.time, dataset.alpha*180/pi, 'Color', colors.matlab(1), 'DisplayName', 'Reconstructed'); hold on; grid on;
+plot(simout.poly_alpha.Time, simout.poly_alpha.Data*180/pi, 'Color', colors.matlab(3), 'DisplayName', 'Polyfit');
+ylabel('$\alpha\;[deg]$');
+xlabel('$time\;[s]$')
+legend;
+xlim([start_time, end_time]);
+
+%%
+
+figure;
+
+sub(1) = subplot(1,2,1);
+start_time = 79;
+end_time = 84;
+
+plot(simout.der_alpha.Time, simout.der_alpha.Data*180/pi, 'Color', colors.matlab(2), 'DisplayName', 'Filtered Derivative'); hold on; grid on;
+plot(dataset.time, dataset.alpha_dot*180/pi, 'Color', colors.matlab(1), 'DisplayName', 'Reconstructed');
+ylabel('$\dot{\alpha}\;[deg/s]$');
+xlabel('$time\;[s]$')
+xlim([start_time, end_time]);
+
+sub(2) = subplot(1,2,2);
+
+start_time = 133;
+end_time = 140;
+
+plot(simout.der_alpha.Time, simout.der_alpha.Data*180/pi, 'Color', colors.matlab(2), 'DisplayName', 'Filtered Derivative'); hold on; grid on;
+plot(dataset.time, dataset.alpha_dot*180/pi, 'Color', colors.matlab(1), 'DisplayName', 'Reconstructed');
+ylabel('$\dot{\alpha}\;[deg/s]$');
+xlabel('$time\;[s]$')
+legend;
+xlim([start_time, end_time]);
+
+%%
+
+figure;
+
+sub(1) = subplot(1,2,1);
+start_time = 79;
+end_time = 84;
+
+plot(simout.der_alpha.Time, simout.der_alpha.Data*180/pi, 'Color', colors.matlab(2), 'DisplayName', 'Filtered Derivative'); hold on; grid on;
+plot(dataset.time, dataset.alpha_dot*180/pi, 'Color', colors.matlab(1), 'DisplayName', 'Reconstructed');
+plot(simout.poly_der_alpha.Time, simout.poly_der_alpha.Data*180/pi, 'Color', colors.matlab(3), 'DisplayName', 'Polyfit derivative');
+ylabel('$\dot{\alpha}\;[deg/s]$');
+xlabel('$time\;[s]$')
+xlim([start_time, end_time]);
+
+sub(2) = subplot(1,2,2);
+
+start_time = 133;
+end_time = 140;
+
+plot(simout.der_alpha.Time, simout.der_alpha.Data*180/pi, 'Color', colors.matlab(2), 'DisplayName', 'Filtered Derivative'); hold on; grid on;
+plot(dataset.time, dataset.alpha_dot*180/pi, 'Color', colors.matlab(1), 'DisplayName', 'Reconstructed');
+plot(simout.poly_der_alpha.Time, simout.poly_der_alpha.Data*180/pi, 'Color', colors.matlab(3), 'DisplayName', 'Polyfit derivative');
+ylabel('$\dot{\alpha}\;[deg/s]$');
+xlabel('$time\;[s]$')
+legend;
+xlim([start_time, end_time]);
+
+%%
+
+figure;
+
+sub(1) = subplot(1,2,1);
+start_time = 79;
+end_time = 84;
+
+plot(simout.der_alpha.Time, simout.der_alpha.Data*180/pi, 'Color', colors.matlab(2), 'DisplayName', 'Filtered Derivative'); hold on; grid on;
+plot(dataset.time, dataset.alpha_dot*180/pi, 'Color', colors.matlab(1), 'DisplayName', 'Reconstructed');
+plot(simout.KF_alpha_dot.Time, simout.KF_alpha_dot.Data*180/pi, 'Color', colors.matlab(4), 'DisplayName', 'KF');
+ylabel('$\dot{\alpha}\;[deg/s]$');
+xlabel('$time\;[s]$')
+xlim([start_time, end_time]);
+
+sub(2) = subplot(1,2,2);
+
+start_time = 133;
+end_time = 140;
+
+plot(simout.der_alpha.Time, simout.der_alpha.Data*180/pi, 'Color', colors.matlab(2), 'DisplayName', 'Filtered Derivative'); hold on; grid on;
+plot(dataset.time, dataset.alpha_dot*180/pi, 'Color', colors.matlab(1), 'DisplayName', 'Reconstructed');
+plot(simout.KF_alpha_dot.Time, simout.KF_alpha_dot.Data*180/pi, 'Color', colors.matlab(4), 'DisplayName', 'KF');
+ylabel('$\dot{\alpha}\;[deg/s]$');
+xlabel('$time\;[s]$')
+legend;
+xlim([start_time, end_time]);
+
+%% 
+figure;
+
+sub(1) = subplot(1,2,1);
+start_time = 79;
+end_time = 84;
+
+plot(simout.der_alpha.Time, simout.der_alpha.Data*180/pi, 'Color', colors.matlab(2), 'DisplayName', 'Filtered Derivative'); hold on; grid on;
+plot(dataset.time, dataset.alpha_dot*180/pi, 'Color', colors.matlab(1), 'DisplayName', 'Reconstructed');
+plot(simout.KF_alpha_dot.Time, simout.KFct_alpha_dot.Data*180/pi, 'Color', colors.matlab(4), 'DisplayName', 'KF');
+ylabel('$\dot{\alpha}\;[deg/s]$');
+xlabel('$time\;[s]$')
+xlim([start_time, end_time]);
+
+sub(2) = subplot(1,2,2);
+
+start_time = 133;
+end_time = 140;
+
+plot(simout.der_alpha.Time, simout.der_alpha.Data*180/pi, 'Color', colors.matlab(2), 'DisplayName', 'Filtered Derivative'); hold on; grid on;
+plot(dataset.time, dataset.alpha_dot*180/pi, 'Color', colors.matlab(1), 'DisplayName', 'Reconstructed');
+plot(simout.KF_alpha_dot.Time, simout.KFct_alpha_dot.Data*180/pi, 'Color', colors.matlab(4), 'DisplayName', 'KF');
+ylabel('$\dot{\alpha}\;[deg/s]$');
+xlabel('$time\;[s]$')
+legend;
+xlim([start_time, end_time]);
+
+
+%% 
+figure;
+
+sub(1) = subplot(1,2,1);
+start_time = 79;
+end_time = 84;
+
+plot(simout.der_alpha.Time, simout.der_alpha.Data*180/pi, 'Color', colors.matlab(2), 'DisplayName', 'Filtered Derivative'); hold on; grid on;
+plot(dataset.time, dataset.alpha_dot*180/pi, 'Color', colors.matlab(1), 'DisplayName', 'Reconstructed');
+plot(simout.KF_alpha_dot.Time, simout.KFct_alpha_dot.Data*180/pi, 'Color', colors.matlab(4), 'DisplayName', 'KF');
+ylabel('$\dot{\alpha}\;[deg/s]$');
+xlabel('$time\;[s]$')
+xlim([start_time, end_time]);
+
+sub(2) = subplot(1,2,2);
+
+start_time = 133;
+end_time = 140;
+
+plot(simout.der_alpha.Time, simout.der_alpha.Data*180/pi, 'Color', colors.matlab(2), 'DisplayName', 'Filtered Derivative'); hold on; grid on;
+plot(dataset.time, dataset.alpha_dot*180/pi, 'Color', colors.matlab(1), 'DisplayName', 'Reconstructed');
+plot(simout.KF_alpha_dot.Time, simout.KFct_alpha_dot.Data*180/pi, 'Color', colors.matlab(3), 'DisplayName', 'KF');
+ylabel('$\dot{\alpha}\;[deg/s]$');
+xlabel('$time\;[s]$')
+legend;
+xlim([start_time, end_time]);

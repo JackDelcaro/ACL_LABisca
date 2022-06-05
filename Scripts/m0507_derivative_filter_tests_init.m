@@ -45,6 +45,7 @@ clearvars R;
 %% LOAD DATASET
 
 dataset = load('20220401_1141_cl_LQ_alpha_theta_pi_int_varin_C1');
+% dataset = load('20220530_1806_Lyapunov_pt5_st_99_end_101_th_0p8_delta_0p8_ome_1_ref_m45');
 dt_dataset = mean(diff(dataset.time));
 
 tmp = sgolayfilt(dataset.theta, 1, 51);
@@ -56,6 +57,9 @@ dataset.alpha_filtered = sgolayfilt(tmp, 1, 25);
 dataset.theta_dot = gradient(dataset.theta_filtered, dataset.time);
 dataset.alpha_dot = gradient(dataset.alpha_filtered, dataset.time);
 
+PARAMS.al_0 = dataset.alpha(1);
+PARAMS.th_0 = -dataset.theta(1);
+
 %% DERIVATIVE FILTER
 
 s = tf('s');
@@ -66,5 +70,8 @@ der_filt = s/(s/(2*pi*freq_der_filter)+1);
 %% SIMULATION
 
 simin.alpha = [dataset.time, dataset.alpha];
+simin.alpha_ref = [dataset.time, dataset.alpha_ref];
 simin.theta = [dataset.time, dataset.theta];
+simin.theta_ref = [dataset.time, dataset.theta_ref];
+simin.voltage = [dataset.time, dataset.voltage];
 T_sim = dataset.time(end);

@@ -271,4 +271,19 @@ legend;
 
 % Decisione finale: teniamo C identificato ora, K identificato ora e J
 % precedentemente identificato
-  
+
+%% VALIDATION PLOT
+
+figure;
+plot(time, theta*180/pi, 'Color', colors.blue(4)); hold on; grid on;
+ylabel('$\theta\;[deg]$');
+PARAMS.Dth = 0.55*7.9e-4;
+
+G_tau_th = 1/(Jtot_theoretical*s^2 + C_th_id*s + K_id);
+Gel = PARAMS.ki/(PARAMS.Lm*s + PARAMS.Rm);
+G_V_th = G_tau_th*Gel/(1+PARAMS.kv*s*G_tau_th*Gel);
+
+v_f = voltage-PARAMS.Rm/PARAMS.ki*PARAMS.Dth*(1-exp(-abs(theta_dot*15))).*sign(theta_dot*15);
+plot(time, lsim(G_V_th, v_f, time)*180/pi, 'Color', colors.blue(1));
+legend('data', 'simulated');
+xlim([220 300]);

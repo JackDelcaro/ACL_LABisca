@@ -74,10 +74,10 @@ G_al_tau = ome_n^2/(s^2 + 2*csi*ome_n*s + ome_n^2);
 
 al_sim = free_res_in_cond(G_al_tau, time, x0);
 figure
-plot(time, alpha_filtered(log.time > init & log.time < fin)*180/pi); hold on; grid on;
+plot(time, alpha_filtered(log.time > init & log.time < fin)*180/pi, 'Color', colors.blue(4)); hold on; grid on;
 ylabel('$\alpha\;[deg]$');
 xlabel('$time\;[s]$');
-plot(time, al_sim(1,:));
+plot(time, al_sim(1,:), '--', 'Color', colors.blue(1));
 legend('data', 'simulated');
 
 PARAMS.Lp/2-PARAMS.Lp_offset-L

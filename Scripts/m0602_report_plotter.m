@@ -97,7 +97,8 @@ for filename_idx = 1:length(filename)
     % zoomed_plot_handle(subplot_handles, title, dataset, start_time, end_time)
     zoomed_plot_handle([sub(1), sub(4), sub(7)], "Start Sinesweep", dynamic_dataset{filename_idx}, 5, 45);
     zoomed_plot_handle([sub(2), sub(5), sub(8)], "End Sinesweep", dynamic_dataset{filename_idx}, 298, 304);
-    zoomed_plot_handle([sub(3), sub(6), sub(9)], "Single Step", static_dataset{filename_idx}, 44, 49);
+    zoomed_plot_handle([sub(3), sub(6), sub(9)], "Single Step", static_dataset{filename_idx}, 349, 354);
+    % 44-49 per non completo
     subplot(sub(3));
     legend('Position',[0.80906589365385,0.686662468927643,0.091662336339736,0.10204690470116]);
     clearvars sub;
@@ -192,7 +193,7 @@ function large_plot(figure_handle, filename_idx, filename, dynamic_dataset, stat
     sub(6) = subplot(3,2,6);
     plot(static_dataset{filename_idx}.time, static_dataset{filename_idx}.voltage, 'color', data_color, 'DisplayName', 'Voltage'); hold on; grid on;
     ylabel('$Voltage\;[V]$');
-    ylim([-10 10]);
+%     ylim([-10 10]);
     xlabel('$time\;[s]$');
 
     linkaxes(sub(4:6), 'x');
@@ -244,7 +245,7 @@ function zoomed_plot(subplot_handles, title_label, dataset, start_time, end_time
     subplot(subplot_handles(3));
     plot(dataset.time(range), dataset.voltage(range), 'color', data_color, 'DisplayName', 'Voltage'); hold on; grid on;
     ylabel('$Voltage\;[V]$');
-    ylim([-10 10]);
+    ylim([-2 2]);
     xlabel('$time\;[s]$');
     
     linkaxes(subplot_handles, 'x');

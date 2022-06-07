@@ -21,6 +21,7 @@ addpath(genpath(paths.simulation_folder));
 
 %% SETTINGS
 run('graphics_options.m');
+reference_color = "#767676";
 data_color = colors.blue(4);
 simulation_color = colors.blue(1);
 
@@ -43,6 +44,13 @@ else
     end
 end
 
+freq_min = 0.4;
+if is_down == 1
+    freq_max = 9;
+else
+    freq_max = 6;
+end
+
 %% FFT
 input_real = Log_data_real.theta_ref(1:points_input);
 output_real = Log_data_real.theta(1:points_input);
@@ -60,29 +68,17 @@ magn_tf_real = 20*log10(magn_tf_real);
 phase_tf_real = phase_out_real - phase_in_real;
 phase_tf_real(phase_tf_real > 180) = phase_tf_real(phase_tf_real > 180) - 360;
 phase_tf_real(phase_tf_real < -180) = phase_tf_real(phase_tf_real < -180) + 360;
+phase_tf_real = phase_tf_real * pi / 180;
+phase_tf_real = unwrap(phase_tf_real) * 180 / pi;
 
 %% RESIM DATASET SELECTION
 [filename_resim, path] = uigetfile(paths.resim_parsed_data_folder);
 filename_resim = string(filename_resim)';
 Log_data_resim = load(filename_resim);
 
-% %% Reshape data
-% is_only_dynamic = input('(1: only dynamic exp, 0: complete test): \n');
-% is_down = input('(1: pendulum down, 0: pendulum up): \n');
-% 
-% if is_only_dynamic == 1 
-%     points_input = length(Log_data_resim.time);
-% else
-%     if is_down == 1
-%         points_input = 154858;
-%     else
-%         points_input = 129000;
-%     end
-% end
-
 %% FFT
 input_resim = Log_data_resim.theta_ref(1:points_input);
-output_resim = Log_data_resim.theta(1:points_input);
+output_resim = Log_data_resim.theta_sim(1:points_input);
 t_resim = Log_data_resim.time(1:points_input);
 
 [magn_in_resim, phase_in_resim, freq_in_resim] = my_fft(input_resim, t_resim);
@@ -98,18 +94,34 @@ phase_tf_resim = phase_out_resim - phase_in_resim;
 phase_tf_resim(phase_tf_resim > 180) = phase_tf_resim(phase_tf_resim > 180) - 360;
 phase_tf_resim(phase_tf_resim < -180) = phase_tf_resim(phase_tf_resim < -180) + 360;
 
-%% Plot
+%% Bode reference
+freq_vector = linspace(freq_min, freq_max, 77429);
+% tf_ref = tf([6 20], [0.005, 1, 6, 20]); % PD
+% tf_ref = tf([7 7*1.5*2 7*1.5*1.5], [0 0 7 7*1.5*2 7*1.5*1.5]+[1/70 1 0 0 0]); %PID
+% tf_ref = tf([346.8 23.42 4.654e04], [1 56.58 1265 1.195e04 4.76e04]); % PP_down_0 HP
+% tf_ref = tf([52.9 3.571 7099], [1 35.16 528.2 2890 8160]); % PP_down_2 LP
+% tf_ref = tf([167.4 136.2 2.247e04 1.677e04], [1 43.29 791 5788 2.354e04 1.677e04]); % PP_int_down_2
+% tf_ref = tf([92.45 6.242 1.241e04], [1 30.22 527.9 4370 1.347e04]); % LQ_down_4
+tf_ref = tf([235.1 247.9 3.156e04 3.114e04], [1 31.39 597.1 6025 3.262e04 3.114e04]); % LQ_int_down_8
+[magn_bode_ref_unshaped, phase_bode_ref_unshaped, ~] = bode(tf_ref, freq_vector);
+
+%dB conversion
+magn_bode_ref(:) = magn_bode_ref_unshaped(1, 1, :);
+magn_bode_ref = magn_bode_ref';
+magn_bode_ref = 20*log10(magn_bode_ref);
+
+phase_bode_ref(:) = phase_bode_ref_unshaped(1,1,:);
+phase_bode_ref = phase_bode_ref';
+phase_bode_ref(phase_bode_ref > 180) = phase_bode_ref(phase_bode_ref > 180) - 360;
+phase_bode_ref(phase_bode_ref < -180) = phase_bode_ref(phase_bode_ref < -180) + 360;
+
+%% Frequencies
 freq_in_real = freq_in_real *2*pi;
 freq_out_real = freq_out_real *2*pi;
 freq_in_resim = freq_in_resim *2*pi;
 freq_out_resim = freq_out_resim *2*pi;
 
-freq_min = 0.4;
-if is_down == 1
-    freq_max = 9;
-else
-    freq_max = 6;
-end
+%% Plot
 
 %REAL
 figure
@@ -163,6 +175,16 @@ xlabel('Frequency [rad/s]');
 grid on
 xlim([freq_min, freq_max]);
 
+% Comparison
+figure
+hold on
+plot(t_real, output_real);
+plot(t_real, output_resim);
+title('Theta (REAL) vs Theta (RESIM)')
+hold off
+legend('$\theta_{real}$', '$\theta_{resim}$', 'Interpreter', 'latex');
+xlabel('Time [s]');
+
 % BODE
 f(1) = figure;
 subplot(2,1,1)
@@ -170,7 +192,8 @@ hold on
 sgtitle("Experiment: " + string(strrep(strrep(filename_real, ".mat", ""), "_", "\_")));
 semilogx(freq_out_real, magn_tf_real, 'LineWidth', 2.0, 'Color', data_color);
 semilogx(freq_out_resim, magn_tf_resim, 'LineWidth', 1.5, 'Color', simulation_color);
-legend('TF real', 'TF simulated', 'Interpreter', 'latex');
+plot(freq_vector, magn_bode_ref, 'LineWidth', 1.5, 'Color', reference_color);
+legend('$G_{\theta_{ref}-\theta}$ real', '$G_{\theta_{ref}-\theta}$ simulated', '$G_{\theta_{ref}-\theta}$ reference', 'Interpreter', 'latex');
 hold off
 ylabel('Magnitude [dB]');
 xlim([freq_min, freq_max]);
@@ -180,6 +203,7 @@ subplot(2,1,2)
 hold on
 semilogx(freq_out_real, phase_tf_real, 'LineWidth', 2.0, 'Color', data_color);
 semilogx(freq_out_resim, phase_tf_resim, 'LineWidth', 1.5, 'Color', simulation_color);
+plot(freq_vector, phase_bode_ref, 'LineWidth', 1.5, 'Color', reference_color);
 hold off
 xlim([freq_min, freq_max]);
 xlabel('Frequency [rad/s]');

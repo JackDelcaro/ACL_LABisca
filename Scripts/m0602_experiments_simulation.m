@@ -19,7 +19,6 @@ addpath(genpath(paths.data_folder      ));
 addpath(genpath(paths.scripts_folder   ));
 addpath(genpath(paths.simulation_folder));
 
-
 %% SETTINGS
 
 run('graphics_options.m');
@@ -40,7 +39,7 @@ run('m0405_params.m');
 
 T_sim = log_data.time(end);
 simin.theta_ref = [log_data.time, log_data.theta_ref];
-simin.alpha_ref = 0;
+simin.alpha_ref = pi;
 PARAMS.th_0 = -log_data.theta(1);
 PARAMS.al_0 = log_data.alpha(1);
 

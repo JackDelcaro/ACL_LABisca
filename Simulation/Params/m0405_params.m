@@ -4,9 +4,9 @@ PARAMS.angle_quantization = 0.00307;
 
 % Setup par
 PARAMS.th_0_cable = 0;
-PARAMS.th_0 = 45/180*pi;
+PARAMS.th_0 = 0/180*pi;
 PARAMS.th_dot_0 = 0;
-PARAMS.al_0 = 0/180*pi;
+PARAMS.al_0 = 175/180*pi;
 PARAMS.al_dot_0 = 0;
 PARAMS.g = 9.81;
 
@@ -109,7 +109,7 @@ PARAMS.K_pp_al_th_pi_int_7 = [15.2679    4.0205  -71.4237   -5.4872  -7];
 % Tsettling = 3; csi = 0.65; red_contr; LMIs CT
 PARAMS.K_pp_al_th_pi_int_8 = [4.5802 1.8764 -46.2492 -3.6911 -4.3971];
 % Tsettling = 2; csi = 0.65; red_contr; LMIs CT and int tuned separately
-PARAMS.K_pp_al_th_pi_int_9 = [9.2218 2.9433 -60.5912 -4.9199 -7];
+PARAMS.K_pp_al_th_pi_int_9 = [9.2218 2.9433 -60.5912 -4.9199 -11.83];
 
 
 %LQ
@@ -157,8 +157,8 @@ PARAMS.K_LQ_int_up4 = -[-4.4341 -1.5359 40.0969 3.1656 4.7109];
 % Tsettling = 2; Q = diag([1 0.01 1 0.01 0.0001]); R = 10;
 PARAMS.K_LQ_int_up5 = -[-9.8519 -2.7667 55.8715 4.5301 7];
 
-PARAMS.K_pp_state = PARAMS.K_LQ_down4(1:4);
-PARAMS.K_pp_th_int = PARAMS.K_pp_al_th_0_int_2(5);
+PARAMS.K_pp_state = PARAMS.K_pp_al_th_pi_int_9(1:4);
+PARAMS.K_pp_th_int = PARAMS.K_pp_al_th_pi_int_9(5);
 
 
 % KF

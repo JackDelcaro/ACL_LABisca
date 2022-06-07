@@ -27,7 +27,7 @@ run('graphics_options.m');
 
 %% DATASET SELECTION
 
-[filename, path] = uigetfile(fullfile(paths.resim_parsed_data_folder, "*Lyapunov_pt*"), 'MultiSelect', 'on');
+[filename, path] = uigetfile(fullfile(paths.parsed_data_folder, "*bangbang*"), 'MultiSelect', 'on');
 filename = string(filename)';
 
 %% PLOTS
@@ -50,10 +50,9 @@ for filename_idx = 1:length(filename)
     for i = 1:3
         sub(i) = subplot(3,1,i); %#ok<SAGROW>
     end
-    % zoomed_plot_handle(subplot_handles, title, dataset, start_time, end_time)
-    plot_handle([sub(1), sub(2), sub(3)], "Lyapunov Swing up", log_vars, 0, inf);
+    plot_handle([sub(1), sub(2), sub(3)], "Bang-Bang Swing up", log_vars, 0, inf);
     subplot(sub(1));
-    legend('Position',[0.785097288526719,0.830062075365859,0.210693231403036,0.166024755611708]);
+    legend('Position',[0.718734111846403,0.846680462918935,0.276090746904487,0.10204690470116]);
     clearvars sub;
     
     if any(save_figures == ["Y", "Yes", "y", "YES", "yes"])
@@ -72,7 +71,6 @@ function zoomed_plot(subplot_handles, title_label, dataset, start_time, end_time
     title(title_label);
     
     plot(dataset.time(range), dataset.theta(range)*180/pi, 'color', data_color, 'DisplayName', 'Real Data');
-    plot(dataset.time(range), dataset.theta_sim(range)*180/pi, '--', 'color', simulation_color, 'DisplayName', 'Simulation', 'LineWidth', 1.5);
     ylabel('$\theta\;[deg]$');
     set(gca,'Xticklabel',[]);
 
@@ -80,30 +78,25 @@ function zoomed_plot(subplot_handles, title_label, dataset, start_time, end_time
     plot(dataset.time(range), ones(size(dataset.time(range)))*180, 'color', reference_color, 'DisplayName', 'Reference'); hold on; grid on;
     plot(dataset.time(range), -ones(size(dataset.time(range)))*180, 'color', reference_color, 'HandleVisibility', 'off');
     plot(dataset.time(range), dataset.alpha(range)*180/pi, 'color', data_color, 'DisplayName', 'Real Data');
-    plot(dataset.time(range), dataset.alpha_sim(range)*180/pi, '--', 'color', simulation_color, 'DisplayName', 'Simulation', 'LineWidth', 1.5);
     ylabel('$\alpha\;[deg]$');
     set(gca,'Xticklabel',[]);
 
     subplot(subplot_handles(3));
     plot(dataset.time(range), dataset.voltage(range), 'color', data_color, 'DisplayName', 'Voltage'); hold on; grid on;
-    plot(dataset.time(range), dataset.voltage_sim(range), '--', 'color', simulation_color, 'DisplayName', 'Voltage'); hold on; grid on;
     ylabel('$Voltage\;[V]$');
     xlabel('$time\;[s]$');
     
-    switch_to_lyap_time = dataset.time(find(dataset.controller_switch(range) == 1, 1, 'first'));
-    switch_to_up_time = dataset.time(find(dataset.controller_switch(range) == 1, 1, 'last') + 1);
-    if ~isempty(find(dataset.controller_switch_sim(range) == 2, 1, 'first'))
-        switch_to_up_sim_time = dataset.time(find(dataset.controller_switch_sim(range) == 1, 1, 'last') + 1);
-    else
-        switch_to_up_sim_time = Inf;
-    end
+    const_voltage_value = mode(abs(dataset.voltage(range)));
+    switch_to_bb_idx = find(abs(dataset.voltage(range)) == const_voltage_value, 1, 'first');
+    switch_to_up_idx = find(abs(dataset.voltage(range)) == const_voltage_value, 1, 'last') + 1;
+    switch_to_bb_time = dataset.time(range(switch_to_bb_idx));
+    switch_to_up_time = dataset.time(range(switch_to_up_idx));
     
     for i = 1:3
         subplot(subplot_handles(i));
         y_lims = ylim;
-        plot([switch_to_lyap_time, switch_to_lyap_time], y_lims, '--', 'color', 'r', 'DisplayName', 'Controller Switch', 'LineWidth', 1.5);
+        plot([switch_to_bb_time, switch_to_bb_time], y_lims, '--', 'color', 'r', 'DisplayName', 'Controller Switch', 'LineWidth', 1.5);
         plot([switch_to_up_time, switch_to_up_time], y_lims, '--', 'color', 'r', 'HandleVisibility', 'off', 'LineWidth', 1.5);
-        plot([switch_to_up_sim_time, switch_to_up_sim_time], y_lims, '--', 'color', colors.yellow(2), 'DisplayName', 'Simulated Switch', 'LineWidth', 1.5);
         ylim(y_lims);
     end
     

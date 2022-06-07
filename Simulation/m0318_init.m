@@ -174,3 +174,12 @@ T_sim = simin.theta_ref(end, 1);
 % ylabel('$\dot{\alpha}\;[deg/s]$');
 % xlabel('$time\;[s]$');
 % linkaxes(sub, 'x');
+
+
+% 
+% dataset.time = simout.theta.Time;
+% dataset.theta = interp1(simout.theta.Time, simout.theta.Data, simout.theta.Time);
+% dataset.theta_ref = interp1(simout.theta_ref.Time, simout.theta_ref.Data, simout.theta.Time);
+% dataset.alpha = interp1(simout.alpha.Time, simout.alpha.Data, simout.theta.Time);
+% dataset.alpha_ref = interp1(simout.alpha_ref.Time, simout.alpha_ref.Data, simout.theta.Time);
+% dataset.voltage = interp1(simout.voltage.Time, simout.voltage.Data, simout.theta.Time);

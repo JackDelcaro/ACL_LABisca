@@ -6,7 +6,7 @@ PARAMS.angle_quantization = 0.00307;
 PARAMS.th_0_cable = 0;
 PARAMS.th_0 = 0/180*pi;
 PARAMS.th_dot_0 = 0;
-PARAMS.al_0 = 175/180*pi;
+PARAMS.al_0 = 0*175/180*pi;
 PARAMS.al_dot_0 = 0;
 PARAMS.g = 9.81;
 
@@ -45,7 +45,9 @@ PARAMS.V_sat = 10;
 % Loop Parameters
 
 PARAMS.mu_V_theta_dot = PARAMS.ki /((PARAMS.mp + PARAMS.mr/3) * PARAMS.Lr^2 + ...
-                                     PARAMS.Jm + PARAMS.Jh) / PARAMS.Rm;
+                                     + PARAMS.Jm + PARAMS.Jh) / PARAMS.Rm;
+PARAMS.mu_V_theta_dot_new = PARAMS.ki /((PARAMS.mp + PARAMS.mr/12) * PARAMS.Lr^2 + ...
+                                     + PARAMS.mr*PARAMS.l1^2 + PARAMS.Jm + PARAMS.Jh) / PARAMS.Rm;
                                  
 PARAMS.A_pi_CT = [0       1       0        0;
                   -7.9065 -2.056  53.5758  -0.027;
@@ -80,6 +82,8 @@ PARAMS.K_pp_al_th_pi_2 = [4.1265    1.8863  -44.4296   -3.3301];
 PARAMS.K_pp_al_th_pi_3 = [4.1265    1.8863  -44.4296   -3.3301];
 % Tsettling = 5/7; csi = 0.65; red_contr; LMIs CT
 PARAMS.K_pp_al_th_pi_4 = [20.048    5.5215  -88.2768   -7.3710];
+% Tsettling = 2; csi = 0.65; red_contr; LMIs CT
+PARAMS.K_pp_al_th_pi_5 = [2.4575    1.3584  -39.3144   -3.0921];
 % Tsettling = 5/7; csi = 0.65; red_contr; LMIs CT
 PARAMS.K_pp_al_th_0_0 = [-19.432    -4.8652  34.1206   -1.5614];
 % Tsettling = 1.5; csi = 0.65; red_contr; LMIs CT
@@ -127,6 +131,8 @@ PARAMS.K_LQ_down4 = -[5.1799    1.7065  -11.0265    0.1152];
 PARAMS.K_LQ_up1 = -[3.7083    1.3043   -7.7097    0.0341];
 %Tsettling=1.5 Q = diag([1 0.01 1 0.01]) R = 10; [K, S, CLP] = dlqr(1.01*F, 1.01*G, Q, R, N);
 PARAMS.K_LQ_up2 = -[-5.4742    -2.1787   50.0101    4.0182];
+%Tsettling=2 Q = diag([1 0.01 1 0.01]) R = 10;
+PARAMS.K_LQ_up3 = -[-3.2114   -1.4433   40.0155    3.1511];
 
 % LQ int
 % Tsettling = 2; Q = diag([0.1 0.01 1 0.01 0.1]); R = 1;

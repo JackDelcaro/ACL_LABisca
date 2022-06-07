@@ -109,7 +109,7 @@ PARAMS.K_pp_al_th_pi_int_7 = [15.2679    4.0205  -71.4237   -5.4872  -7];
 % Tsettling = 3; csi = 0.65; red_contr; LMIs CT
 PARAMS.K_pp_al_th_pi_int_8 = [4.5802 1.8764 -46.2492 -3.6911 -4.3971];
 % Tsettling = 2; csi = 0.65; red_contr; LMIs CT and int tuned separately
-PARAMS.K_pp_al_th_pi_int_9 = [9.2218 2.9433 -60.5912 -4.9199 -11.83];
+PARAMS.K_pp_al_th_pi_int_9 = [9.2218 2.9433 -60.5912 -4.9199 -7];
 
 
 %LQ

@@ -102,7 +102,9 @@ freq_vector = linspace(freq_min, freq_max, 77429);
 % tf_ref = tf([52.9 3.571 7099], [1 35.16 528.2 2890 8160]); % PP_down_2 LP
 % tf_ref = tf([167.4 136.2 2.247e04 1.677e04], [1 43.29 791 5788 2.354e04 1.677e04]); % PP_int_down_2
 % tf_ref = tf([92.45 6.242 1.241e04], [1 30.22 527.9 4370 1.347e04]); % LQ_down_4
-tf_ref = tf([235.1 247.9 3.156e04 3.114e04], [1 31.39 597.1 6025 3.262e04 3.114e04]); % LQ_int_down_8
+% tf_ref = tf([235.1 247.9 3.156e04 3.114e04], [1 31.39 597.1 6025 3.262e04 3.114e04]); % LQ_int_down_8
+tf_ref =tf([-164.6 -222.2 2.207e04 2.833e04], [1 51.73 900.9 6552 2.101e04 2.833e04]); % PP_int_up_9
+% tf_ref =tf([-79.14 -89.42 1.061e04 1.128e04], [1 40.44 562.7 3314 9554 1.128e04]); % LQ_int_up_4 LP
 [magn_bode_ref_unshaped, phase_bode_ref_unshaped, ~] = bode(tf_ref, freq_vector);
 
 %dB conversion

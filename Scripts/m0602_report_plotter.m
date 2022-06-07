@@ -90,14 +90,17 @@ for filename_idx = 1:length(filename)
     
     % FIGURE 2
     f(2) = figure;
-    sgtitle("Experiment: " + strrep(title_label, "_", "\_") + "\_zoomed");
+%     sgtitle("Experiment: " + strrep(title_label, "_", "\_") + "\_zoomed");
     for i = 1:9
         sub(i) = subplot(3,3,i); %#ok<SAGROW>
     end
     % zoomed_plot_handle(subplot_handles, title, dataset, start_time, end_time)
     zoomed_plot_handle([sub(1), sub(4), sub(7)], "Start Sinesweep", dynamic_dataset{filename_idx}, 5, 45);
     zoomed_plot_handle([sub(2), sub(5), sub(8)], "End Sinesweep", dynamic_dataset{filename_idx}, 298, 304);
-    zoomed_plot_handle([sub(3), sub(6), sub(9)], "Single Step", static_dataset{filename_idx}, 349, 354);
+    max_step = max(static_dataset{filename_idx}.theta_ref);
+    start_step = static_dataset{filename_idx}.time(find(static_dataset{filename_idx}.theta_ref == max_step, 1, 'first')) - 1;
+    end_step = static_dataset{filename_idx}.time(find(static_dataset{filename_idx}.theta_ref == max_step, 1, 'last')) + 1;
+    zoomed_plot_handle([sub(3), sub(6), sub(9)], "Single Step", static_dataset{filename_idx}, start_step, end_step);
     % 44-49 per non completo
     subplot(sub(3));
     legend('Position',[0.80906589365385,0.686662468927643,0.091662336339736,0.10204690470116]);
@@ -110,7 +113,7 @@ for filename_idx = 1:length(filename)
         sub(i) = subplot(3,1,i);
     end
     % zoomed_plot_handle(subplot_handles, title, dataset, start_time, end_time)
-    zoomed_plot_handle([sub(1), sub(2), sub(3)], "Start Sinesweep", dynamic_dataset{filename_idx}, 3, inf);
+    zoomed_plot_handle([sub(1), sub(2), sub(3)], "Sinesweep", dynamic_dataset{filename_idx}, 3, inf);
     subplot(sub(1));
     legend('Position',[0.843716678710699,0.835916200270927,0.091662336339736,0.10204690470116]);
     clearvars sub;
@@ -122,15 +125,34 @@ for filename_idx = 1:length(filename)
         sub(i) = subplot(3,1,i);
     end
     % zoomed_plot_handle(subplot_handles, title, dataset, start_time, end_time)
-    zoomed_plot_handle([sub(1), sub(2), sub(3)], "Start Sinesweep", static_dataset{filename_idx}, 3, inf);
+    zoomed_plot_handle([sub(1), sub(2), sub(3)], "Steps", static_dataset{filename_idx}, 3, inf);
     subplot(sub(1));
     legend('Position',[0.843716678710699,0.835916200270927,0.091662336339736,0.10204690470116]);
+    clearvars sub;
+    
+    % FIGURE 5
+    f(5) = figure;
+%     sgtitle("Experiment: " + strrep(title_label, "_", "\_") + "\_zoomed");
+    for i = 1:6
+        sub(i) = subplot(3,2,i);
+    end
+    % zoomed_plot_handle(subplot_handles, title, dataset, start_time, end_time)
+    tmp = dynamic_dataset{filename_idx}.time > dynamic_dataset{filename_idx}.time(floor(end/2)) - 3;
+    sweep_cut_start = dynamic_dataset{filename_idx}.time(find(dynamic_dataset{filename_idx}.theta_ref>0 & [0; dynamic_dataset{filename_idx}.theta_ref(1:end-1)]<0 & tmp, 1, 'first')) - 0.25;
+    sweep_cut_end = dynamic_dataset{filename_idx}.time(find(dynamic_dataset{filename_idx}.theta_ref>0 & [0; dynamic_dataset{filename_idx}.theta_ref(1:end-1)]<0 & tmp, 3, 'first')) + 0.25;
+    sweep_cut_end = sweep_cut_end(end);
+    zoomed_plot_handle([sub(1), sub(3), sub(5)], "Central sweep", dynamic_dataset{filename_idx},  sweep_cut_start, sweep_cut_end);
+    zoomed_plot_handle([sub(2), sub(4), sub(6)], "Step", static_dataset{filename_idx}, start_step, end_step);
+    subplot(sub(2));
+    legend('Position',[0.807457262010798,0.896778190506497,0.191299813807336,0.103035518417318]);
+    clearvars sub;
     
     if any(save_figures == ["Y", "Yes", "y", "YES", "yes"])
-        saveas(f(1), fullfile(paths.report_images_folder, title_label + ".png"));
-        saveas(f(2), fullfile(paths.report_images_folder, title_label + "_zoomed.png"));
-        saveas(f(3), fullfile(paths.report_images_folder, title_label + "_only_sinesweep.png"));
-        saveas(f(4), fullfile(paths.report_images_folder, title_label + "_only_steps.png"));
+%         saveas(f(1), fullfile(paths.report_images_folder, title_label + ".png"));
+%         saveas(f(2), fullfile(paths.report_images_folder, title_label + "_zoomed.png"));
+%         saveas(f(3), fullfile(paths.report_images_folder, title_label + "_only_sinesweep.png"));
+%         saveas(f(4), fullfile(paths.report_images_folder, title_label + "_only_steps.png"));
+%         saveas(f(4), fullfile(paths.report_images_folder, title_label + "_zoomed_half.png"));
     end
     
 end
@@ -141,7 +163,7 @@ function large_plot(figure_handle, filename_idx, filename, dynamic_dataset, stat
 
     figure(figure_handle);
     title_label = string(strrep(strrep(strrep(strrep(filename(filename_idx), ".mat", ""), "static", "complete"), "dynamic", "complete"), "_RESIM", ""));
-    sgtitle("Experiment: " + strrep(title_label, "_", "\_"));
+%     sgtitle("Experiment: " + strrep(title_label, "_", "\_"));
     
     sub(1) = subplot(3,2,1); hold on;
     title('Sine Sweep');
@@ -155,7 +177,15 @@ function large_plot(figure_handle, filename_idx, filename, dynamic_dataset, stat
 
     sub(2) = subplot(3,2,3);
     if any(fields(dynamic_dataset{filename_idx}) == "alpha_ref")
-        plot(dynamic_dataset{filename_idx}.time, dynamic_dataset{filename_idx}.alpha_ref*180/pi, 'color', reference_color, 'DisplayName', 'Reference'); hold on; grid on;
+        alpha_ref = dynamic_dataset{filename_idx}.alpha_ref;
+        while abs(alpha_ref(1) - dynamic_dataset{filename_idx}.alpha(1)) > pi
+            if alpha_ref(1) - dynamic_dataset{filename_idx}.alpha(1) > pi
+                alpha_ref = alpha_ref - 2*pi;
+            else
+                alpha_ref = alpha_ref + 2*pi;
+            end
+        end
+        plot(dynamic_dataset{filename_idx}.time, alpha_ref*180/pi, 'color', reference_color, 'DisplayName', 'Reference'); hold on; grid on;
     end
     plot(dynamic_dataset{filename_idx}.time, dynamic_dataset{filename_idx}.alpha*180/pi, 'color', data_color, 'DisplayName', 'Real Data');
     plot(dynamic_dataset{filename_idx}.time, dynamic_dataset{filename_idx}.alpha_sim*180/pi, '--', 'color', simulation_color, 'DisplayName', 'Simulation', 'LineWidth', 1.5);
@@ -183,7 +213,15 @@ function large_plot(figure_handle, filename_idx, filename, dynamic_dataset, stat
 
     sub(5) = subplot(3,2,4);
     if any(fields(static_dataset{filename_idx}) == "alpha_ref")
-        plot(static_dataset{filename_idx}.time, static_dataset{filename_idx}.alpha_ref*180/pi, 'color', reference_color, 'DisplayName', 'Reference'); hold on; grid on;
+        alpha_ref = static_dataset{filename_idx}.alpha_ref;
+        while abs(alpha_ref(1) - static_dataset{filename_idx}.alpha(1)) > pi
+            if alpha_ref(1) - static_dataset{filename_idx}.alpha(1) > pi
+                alpha_ref = alpha_ref - 2*pi;
+            else
+                alpha_ref = alpha_ref + 2*pi;
+            end
+        end
+        plot(static_dataset{filename_idx}.time, alpha_ref*180/pi, 'color', reference_color, 'DisplayName', 'Reference'); hold on; grid on;
     end
     plot(static_dataset{filename_idx}.time, static_dataset{filename_idx}.alpha*180/pi, 'color', data_color, 'DisplayName', 'Real Data');
     plot(static_dataset{filename_idx}.time, static_dataset{filename_idx}.alpha_sim*180/pi, '--', 'color', simulation_color, 'DisplayName', 'Simulation', 'LineWidth', 1.5);
@@ -235,7 +273,15 @@ function zoomed_plot(subplot_handles, title_label, dataset, start_time, end_time
 
     subplot(subplot_handles(2));
     if any(fields(dataset) == "alpha_ref")
-        plot(dataset.time(range), dataset.alpha_ref(range)*180/pi, 'color', reference_color, 'DisplayName', 'Reference'); hold on; grid on;
+        alpha_ref = dataset.alpha_ref;
+        while abs(alpha_ref(1) - dataset.alpha(1)) > pi
+            if alpha_ref(1) - dataset.alpha(1) > pi
+                alpha_ref = alpha_ref - 2*pi;
+            else
+                alpha_ref = alpha_ref + 2*pi;
+            end
+        end
+        plot(dataset.time(range), alpha_ref(range)*180/pi, 'color', reference_color, 'DisplayName', 'Reference'); hold on; grid on;
     end
     plot(dataset.time(range), dataset.alpha(range)*180/pi, 'color', data_color, 'DisplayName', 'Real Data');
     plot(dataset.time(range), dataset.alpha_sim(range)*180/pi, '--', 'color', simulation_color, 'DisplayName', 'Simulation', 'LineWidth', 1.5);
@@ -245,7 +291,7 @@ function zoomed_plot(subplot_handles, title_label, dataset, start_time, end_time
     subplot(subplot_handles(3));
     plot(dataset.time(range), dataset.voltage(range), 'color', data_color, 'DisplayName', 'Voltage'); hold on; grid on;
     ylabel('$Voltage\;[V]$');
-    ylim([-2 2]);
+    ylim([-10 10]);
     xlabel('$time\;[s]$');
     
     linkaxes(subplot_handles, 'x');

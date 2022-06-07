@@ -38,9 +38,17 @@ clearvars -except colors paths A B C;
 
 %% YALMIP OPTIMIZATION
 
-K = -[13.1717    2.2966   -7.4566    0.5662  -13];
+K = -[-4.4341 -1.5359 40.0969 3.1656 4.7109];
 eig_ct = eig(A+B*K);
 
 sys_cl = ss(A+B*K, [-B(1:4)*K(1); 1], [1 0 0 0 0], 0);
 cl_tf = tf(sys_cl);
 bode(cl_tf);
+
+%% Loop
+% s = tf('s');
+% sys_cl_loop = ss(A(1:4, 1:4) + B(1:4)*K(1:4), -B(1:4)*K(1), [1 0 0 0], 0);
+% cl_tf_loop = tf(sys_cl_loop);
+% cl_tf_loop = cl_tf_loop * 15.6933/ s;
+% cl_tf_loop = cl_tf/(1-cl_tf);
+% bode(cl_tf_loop);

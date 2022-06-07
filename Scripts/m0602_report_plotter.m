@@ -34,7 +34,7 @@ for filename_idx = 1:length(filename)
     if contains(filename(filename_idx), "complete")
         complete_dataset = load(filename(filename_idx));
 
-        if contains(filename(filename_idx), "down")
+        if contains(filename(filename_idx), "down") || contains(filename(filename_idx), "PID") || contains(filename(filename_idx), "PD")
             points_input = 154858;
         elseif contains(filename(filename_idx), "up")
             points_input = 129000;
@@ -148,11 +148,11 @@ for filename_idx = 1:length(filename)
     clearvars sub;
     
     if any(save_figures == ["Y", "Yes", "y", "YES", "yes"])
-%         saveas(f(1), fullfile(paths.report_images_folder, title_label + ".png"));
-%         saveas(f(2), fullfile(paths.report_images_folder, title_label + "_zoomed.png"));
-%         saveas(f(3), fullfile(paths.report_images_folder, title_label + "_only_sinesweep.png"));
-%         saveas(f(4), fullfile(paths.report_images_folder, title_label + "_only_steps.png"));
-%         saveas(f(4), fullfile(paths.report_images_folder, title_label + "_zoomed_half.png"));
+        saveas(f(1), fullfile(paths.report_images_folder, title_label + ".png"));
+        saveas(f(2), fullfile(paths.report_images_folder, title_label + "_zoomed.png"));
+        saveas(f(3), fullfile(paths.report_images_folder, title_label + "_only_sinesweep.png"));
+        saveas(f(4), fullfile(paths.report_images_folder, title_label + "_only_steps.png"));
+        saveas(f(4), fullfile(paths.report_images_folder, title_label + "_zoomed_half.png"));
     end
     
 end

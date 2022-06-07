@@ -62,12 +62,12 @@ standby_duration = 5; % [s]
 steps_duration = 5; % [s]
 
 % Pendulum down
-% steps_amplitude = [1/3 2/3 1];
-% sweep_params = [0.4/2/pi 9/2/pi 300]; % [ initial_frequency [Hz], final_frequency [Hz], duration [s] ]
+steps_amplitude = [1/3 2/3 1];
+sweep_params = [0.4/2/pi 9/2/pi 300]; % [ initial_frequency [Hz], final_frequency [Hz], duration [s] ]
 
 % Pendulum up
-steps_amplitude = [0.75/2 0.75];
-sweep_params = [0.4/2/pi 6/2/pi 250]; % [ initial_frequency [Hz], final_frequency [Hz], duration [s] ]
+% steps_amplitude = [0.75/2 0.75];
+% sweep_params = [0.4/2/pi 6/2/pi 250]; % [ initial_frequency [Hz], final_frequency [Hz], duration [s] ]
                 
 [sim_time_th, experiment_th] = input_generator(dt, standby_duration,...
                                 'sweep', sweep_params, 'exponential',...
@@ -92,34 +92,37 @@ sweep_params = [0.4/2/pi 6/2/pi 250]; % [ initial_frequency [Hz], final_frequenc
 
 % dataset = load('20220321_1748_ol_full_pendulum_swing_90');
 % dataset = load('20220314_1650_sinesweep_0p75V_exp07');
-dataset = load('20220314_1640_varin_exp07'); % validation
-
-dt_dataset = mean(diff(dataset.time));
-omega_cut_1 = 15*2*pi;
-omega_cut_2 = 20*2*pi;
-s = tf('s');
-filter = 1/(1+s/omega_cut_1)/(1+s/omega_cut_2);
-[num,den] = tfdata(c2d(filter, dt_dataset), 'v');
-
-dataset.theta_filtered = filtfilt(num, den, dataset.theta);
-dataset.alpha_filtered = filtfilt(num, den, dataset.alpha);
-
-dataset.theta_dot = gradient(dataset.theta_filtered, dataset.time);
-dataset.alpha_dot = gradient(dataset.alpha_filtered, dataset.time);
-
-
-simin.voltage = [dataset.time, dataset.voltage];
-simin.theta = [dataset.time, dataset.theta];
-simin.theta_dot = [dataset.time, dataset.theta_dot];
+dataset = load('20220530_1655_complete_PID_7_5_10.mat'); % validation
+PARAMS.th_0 = -dataset.theta(1);
+PARAMS.al_0 = dataset.alpha(1);
+clearvars dataset;
+% 
+% dt_dataset = mean(diff(dataset.time));
+% omega_cut_1 = 15*2*pi;
+% omega_cut_2 = 20*2*pi;
+% s = tf('s');
+% filter = 1/(1+s/omega_cut_1)/(1+s/omega_cut_2);
+% [num,den] = tfdata(c2d(filter, dt_dataset), 'v');
+% 
+% dataset.theta_filtered = filtfilt(num, den, dataset.theta);
+% dataset.alpha_filtered = filtfilt(num, den, dataset.alpha);
+% 
+% dataset.theta_dot = gradient(dataset.theta_filtered, dataset.time);
+% dataset.alpha_dot = gradient(dataset.alpha_filtered, dataset.time);
+% 
+% 
+% simin.voltage = [dataset.time, dataset.voltage];
+% simin.theta = [dataset.time, dataset.theta];
+% simin.theta_dot = [dataset.time, dataset.theta_dot];
 % PARAMS.al_0 = dataset.alpha(1);
 % PARAMS.th_0 = dataset.theta(1);
 
 
 % Pendulum down
-% simin.theta_ref = [sim_time_th, pi/2*experiment_th];
+simin.theta_ref = [sim_time_th, pi/2*experiment_th];
 
 % Pendulum up
-simin.theta_ref = [sim_time_th, pi/3*experiment_th];
+% simin.theta_ref = [sim_time_th, pi/3*experiment_th];
 figure;
 plot(sim_time_th,experiment_th); grid on;
 T_sim = simin.theta_ref(end, 1);
@@ -177,9 +180,9 @@ T_sim = simin.theta_ref(end, 1);
 
 
 % 
-% dataset.time = simout.theta.Time;
-% dataset.theta = interp1(simout.theta.Time, simout.theta.Data, simout.theta.Time);
-% dataset.theta_ref = interp1(simout.theta_ref.Time, simout.theta_ref.Data, simout.theta.Time);
-% dataset.alpha = interp1(simout.alpha.Time, simout.alpha.Data, simout.theta.Time);
-% dataset.alpha_ref = interp1(simout.alpha_ref.Time, simout.alpha_ref.Data, simout.theta.Time);
-% dataset.voltage = interp1(simout.voltage.Time, simout.voltage.Data, simout.theta.Time);
+dataset.time = simout.theta.Time;
+dataset.theta = interp1(simout.theta.Time, simout.theta.Data, simout.theta.Time);
+dataset.theta_ref = interp1(simout.theta_ref.Time, simout.theta_ref.Data, simout.theta.Time);
+dataset.alpha = interp1(simout.alpha.Time, simout.alpha.Data, simout.theta.Time);
+dataset.alpha_ref = interp1(simout.alpha_ref.Time, simout.alpha_ref.Data, simout.theta.Time);
+dataset.voltage = interp1(simout.voltage.Time, simout.voltage.Data, simout.theta.Time);

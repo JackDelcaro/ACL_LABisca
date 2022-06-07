@@ -19,10 +19,22 @@ PARAMS.Lr = 8.5e-2;
 PARAMS.Jm = 4e-6;
 PARAMS.l2 = (PARAMS.Lp/2 - PARAMS.Lp_offset);
 PARAMS.l1 = 0.5117*PARAMS.Lr/2;
-
 PARAMS.Jh = (8.009e-6 - PARAMS.Jm); % official inertia 6e-7
 PARAMS.Cal = 2*6.494e-6;
 PARAMS.Cth = 0.94*3.660e-4;
+
+% PARAMS.Lp_offset = 0.85e-2;
+% PARAMS.mp = 2.4e-2*1.14;
+% PARAMS.Lp = 1.29e-1 - PARAMS.Lp_offset;
+% PARAMS.mr = 9.5e-2*.82;
+% PARAMS.Lr = 8.5e-2;
+% PARAMS.Jm = 4e-6;
+% PARAMS.l2 = (PARAMS.Lp/2 - PARAMS.Lp_offset)*0.87;
+% PARAMS.l1 = 0.5117*PARAMS.Lr/2*1.38;
+% PARAMS.Jh = (8.009e-6 - PARAMS.Jm); % official inertia 6e-7
+% PARAMS.Cal = 2*6.494e-6*0.58;
+% PARAMS.Cth = 0.94*3.660e-4*0.52;
+
 
 % PARAMS.K = 2.215e-3*0.7;
 % PARAMS.Sth = 8.2209e-04;  % static friction
@@ -163,8 +175,8 @@ PARAMS.K_LQ_int_up4 = -[-4.4341 -1.5359 40.0969 3.1656 4.7109];
 % Tsettling = 2; Q = diag([1 0.01 1 0.01 0.0001]); R = 10;
 PARAMS.K_LQ_int_up5 = -[-9.8519 -2.7667 55.8715 4.5301 7];
 
-PARAMS.K_pp_state = PARAMS.K_pp_al_th_pi_int_9(1:4);
-PARAMS.K_pp_th_int = PARAMS.K_pp_al_th_pi_int_9(5);
+PARAMS.K_pp_state = PARAMS.K_LQ_int_up3(1:4);
+PARAMS.K_pp_th_int = PARAMS.K_LQ_int_up3(5);
 
 
 % KF

@@ -187,7 +187,8 @@ xlabel('Time [s]');
 
 % BODE
 f(1) = figure;
-subplot(2,1,1)
+clearvars sub;
+sub(1) = subplot(2,1,1);
 hold on
 sgtitle("Experiment: " + string(strrep(strrep(filename_real, ".mat", ""), "_", "\_")));
 semilogx(freq_out_real, magn_tf_real, 'LineWidth', 2.0, 'Color', data_color);
@@ -197,9 +198,10 @@ legend('$G_{\theta_{ref}-\theta}$ real', '$G_{\theta_{ref}-\theta}$ simulated', 
 hold off
 ylabel('Magnitude [dB]');
 xlim([freq_min, freq_max]);
+set(gca,'Xticklabel',[]);
 grid on;
 
-subplot(2,1,2)
+sub(2) = subplot(2,1,2);
 hold on
 semilogx(freq_out_real, phase_tf_real, 'LineWidth', 2.0, 'Color', data_color);
 semilogx(freq_out_resim, phase_tf_resim, 'LineWidth', 1.5, 'Color', simulation_color);
@@ -207,8 +209,18 @@ plot(freq_vector, phase_bode_ref, 'LineWidth', 1.5, 'Color', reference_color);
 hold off
 xlim([freq_min, freq_max]);
 xlabel('Frequency [rad/s]');
-ylabel('Phase [degrees]');
+ylabel('Phase [deg]');
 
 title_label = "Bode_" + string(strrep(filename_real, ".mat", ""));
 saveas(f(1), fullfile(paths.report_images_folder, title_label + ".png"));
+
+linkaxes(sub, 'x');
+
+tmp = get(sub(1), 'Position');
+left_pos = tmp(1);
+top_pos = tmp(2);
+width = tmp(3);
+height = tmp(4);
+spacing = 0.025;
+set(sub(2), 'Position', [left_pos, top_pos-height-spacing, width, height]);
 

@@ -226,7 +226,9 @@ linkaxes(sub, 'x');
 
 
 title_label = "Bode_" + string(strrep(filename_real, ".mat", ""));
-saveas(f(1), fullfile(paths.report_images_folder, title_label + ".png"));
+% saveas(f(1), fullfile(paths.report_images_folder, title_label + ".png"));
 
-
+save(fullfile(path, filename_resim), '-append', 'freq_out_real', 'magn_tf_real', ...
+    'freq_out_resim', 'magn_tf_resim', 'freq_vector', 'magn_bode_ref', 'freq_out_real', 'phase_tf_real', ...
+    'freq_out_resim', 'phase_tf_resim', 'freq_vector', 'phase_bode_ref', 'freq_min', 'freq_max');
 

@@ -169,7 +169,7 @@ for filename_idx = 1:length(filename)
     end
     zoomed_plot_handle([sub(1), sub(2), sub(3)], "Sinesweep", dynamic_dataset{filename_idx}, dynamic_dataset{filename_idx}.time(1), dynamic_dataset{filename_idx}.time(end));
     subplot(sub(1));
-    legend('Position',[0.843716678710699,0.835916200270927,0.091662336339736,0.10204690470116]);
+    legend('Position',[0.844799515743725,0.876427927349818,0.091662336339736,0.10204690470116]);
     
     % FIGURE 4
     f(4) = figure;
@@ -203,7 +203,7 @@ for filename_idx = 1:length(filename)
     sub(6) = subplot(3,4,10);
     zoomed_plot_handle([sub(1), sub(2), sub(3)], "Central sweep", dynamic_dataset{filename_idx},  sweep_cut_start, sweep_cut_end);
     zoomed_plot_handle([sub(4), sub(5), sub(6)], "Step", static_dataset{filename_idx}, start_step, end_step);
-    subplot(sub(2));
+    subplot(sub(4));
     legend('Position',[0.450121041112044,0.882058420880224,0.098877334632407,0.101950107904424]); % half page
     tmp = get(sub(1), 'Position');
     top_pos = tmp(2) + tmp(4);
@@ -257,13 +257,13 @@ for filename_idx = 1:length(filename)
     legend('Position', [0.829757018763094,0.876986499705379,0.128734228304222,0.102046904701159]);
     
     if any(save_figures == ["Y", "Yes", "y", "YES", "yes"])
-        saveas(f(1), fullfile(paths.paths.report_final_images_folder, title_label + ".png"));
-        saveas(f(2), fullfile(paths.paths.report_final_images_folder, title_label + "_full_experiment.png"));
-        saveas(f(3), fullfile(paths.paths.report_final_images_folder, title_label + "_only_sinesweep.png"));
-        saveas(f(4), fullfile(paths.paths.report_final_images_folder, title_label + "_only_steps.png"));
-        saveas(f(5), fullfile(paths.paths.report_final_images_folder, title_label + "_csweep_step.png"));
-        saveas(f(6), fullfile(paths.paths.report_final_images_folder, title_label + "_bode_csweep_step.png"));
-        saveas(f(7), fullfile(paths.paths.report_final_images_folder, title_label + "_bode_step.png"));
+        saveas(f(1), fullfile(paths.report_final_images_folder, title_label + ".png"));
+        saveas(f(2), fullfile(paths.report_final_images_folder, title_label + "_full_experiment.png"));
+        saveas(f(3), fullfile(paths.report_final_images_folder, title_label + "_only_sinesweep.png"));
+        saveas(f(4), fullfile(paths.report_final_images_folder, title_label + "_only_steps.png"));
+        saveas(f(5), fullfile(paths.report_final_images_folder, title_label + "_csweep_step.png"));
+        saveas(f(6), fullfile(paths.report_final_images_folder, title_label + "_bode_csweep_step.png"));
+        saveas(f(7), fullfile(paths.report_final_images_folder, title_label + "_bode_step.png"));
     end
     
 end
@@ -501,19 +501,18 @@ end
 function bode_plot(subplot_handles, dataset, top_pos, bot_pos, left_pos, right_pos, reference_color, data_color, simulation_color)
 
     subplot(subplot_handles(1));
-    
-    semilogx(dataset.freq_out_real, dataset.magn_tf_real, 'LineWidth', 2.0, 'Color', data_color, 'DisplayName', '$G_{\theta_{ref}-\theta}$ real'); hold on; grid on;
+    plot(dataset.freq_vector, dataset.magn_bode_ref, 'LineWidth', 1.5, 'Color', reference_color, 'DisplayName', '$G_{\theta_{ref}-\theta}$ reference'); hold on; grid on;
+    semilogx(dataset.freq_out_real, dataset.magn_tf_real, 'LineWidth', 2.0, 'Color', data_color, 'DisplayName', '$G_{\theta_{ref}-\theta}$ real');
     semilogx(dataset.freq_out_resim, dataset.magn_tf_resim, 'LineWidth', 1.5, 'Color', simulation_color, 'DisplayName', '$G_{\theta_{ref}-\theta}$ simulated');
-    plot(dataset.freq_vector, dataset.magn_bode_ref, 'LineWidth', 1.5, 'Color', reference_color, 'DisplayName', '$G_{\theta_{ref}-\theta}$ reference');
+    
     
     ylabel('$Magnitude\;[dB]$');
     set(gca,'Xticklabel',[]);
 
     subplot(subplot_handles(2));
-    
-    semilogx(dataset.freq_out_real, dataset.phase_tf_real, 'LineWidth', 2.0, 'Color', data_color, 'HandleVisibility', 'off'); hold on; grid on;
+    plot(dataset.freq_vector, dataset.phase_bode_ref, 'LineWidth', 1.5, 'Color', reference_color, 'HandleVisibility', 'off'); hold on; grid on;
+    semilogx(dataset.freq_out_real, dataset.phase_tf_real, 'LineWidth', 2.0, 'Color', data_color, 'HandleVisibility', 'off');
     semilogx(dataset.freq_out_resim, dataset.phase_tf_resim, 'LineWidth', 1.5, 'Color', simulation_color, 'HandleVisibility', 'off');
-    plot(dataset.freq_vector, dataset.phase_bode_ref, 'LineWidth', 1.5, 'Color', reference_color, 'HandleVisibility', 'off');
     
     linkaxes(subplot_handles, 'x');
     xlim([dataset.freq_min, dataset.freq_max]);

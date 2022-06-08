@@ -26,16 +26,16 @@ data_color = colors.blue(4);
 simulation_color = colors.blue(1);
 
 %% REAL DATASET SELECTION
-[filename_real, path] = uigetfile(paths.parsed_data_folder);
-filename_real = string(filename_real)';
-Log_data_real = load(filename_real);
+[filename, path] = uigetfile(paths.resim_parsed_data_folder);
+filename = string(filename)';
+Log_data = load(filename);
 
 %% Reshape data
 is_only_dynamic = input('(1: only dynamic exp, 0: complete test): \n');
 is_down = input('(1: pendulum down, 0: pendulum up): \n');
 
 if is_only_dynamic == 1 
-    points_input = length(Log_data_real.time);
+    points_input = length(Log_data.time);
 else
     if is_down == 1
         points_input = 154858;
@@ -43,7 +43,6 @@ else
         points_input = 129000;
     end
 end
-
 freq_min = 0.4;
 if is_down == 1
     freq_max = 9;
@@ -52,9 +51,9 @@ else
 end
 
 %% FFT
-input_real = Log_data_real.theta_ref(1:points_input);
-output_real = Log_data_real.theta(1:points_input);
-t_real = Log_data_real.time(1:points_input);
+input_real = Log_data.theta_ref(1:points_input);
+output_real = Log_data.theta(1:points_input);
+t_real = Log_data.time(1:points_input);
 
 [magn_in_real, phase_in_real, freq_in_real] = my_fft(input_real, t_real);
 [magn_out_real, phase_out_real, freq_out_real] = my_fft(output_real, t_real);
@@ -71,15 +70,10 @@ phase_tf_real(phase_tf_real < -180) = phase_tf_real(phase_tf_real < -180) + 360;
 phase_tf_real = phase_tf_real * pi / 180;
 phase_tf_real = unwrap(phase_tf_real) * 180 / pi;
 
-%% RESIM DATASET SELECTION
-[filename_resim, path] = uigetfile(paths.resim_parsed_data_folder);
-filename_resim = string(filename_resim)';
-Log_data_resim = load(filename_resim);
-
 %% FFT
-input_resim = Log_data_resim.theta_ref(1:points_input);
-output_resim = Log_data_resim.theta_sim(1:points_input);
-t_resim = Log_data_resim.time(1:points_input);
+input_resim = Log_data.theta_ref(1:points_input);
+output_resim = Log_data.theta_sim(1:points_input);
+t_resim = Log_data.time(1:points_input);
 
 [magn_in_resim, phase_in_resim, freq_in_resim] = my_fft(input_resim, t_resim);
 [magn_out_resim, phase_out_resim, freq_out_resim] = my_fft(output_resim, t_resim);
@@ -194,7 +188,7 @@ f(1) = figure;
 clearvars sub;
 sub(1) = subplot(2,1,1);
 hold on
-sgtitle("Experiment: " + string(strrep(strrep(filename_real, ".mat", ""), "_", "\_")));
+sgtitle("Experiment: " + string(strrep(strrep(filename, ".mat", ""), "_", "\_")));
 semilogx(freq_out_real, magn_tf_real, 'LineWidth', 2.0, 'Color', data_color);
 semilogx(freq_out_resim, magn_tf_resim, 'LineWidth', 1.5, 'Color', simulation_color);
 plot(freq_vector, magn_bode_ref, 'LineWidth', 1.5, 'Color', reference_color);
@@ -225,10 +219,10 @@ set(sub(2), 'Position', [left_pos, top_pos-height-spacing, width, height]);
 linkaxes(sub, 'x');
 
 
-title_label = "Bode_" + string(strrep(filename_real, ".mat", ""));
+title_label = "Bode_" + string(strrep(filename, ".mat", ""));
 % saveas(f(1), fullfile(paths.report_images_folder, title_label + ".png"));
 
-save(fullfile(path, filename_resim), '-append', 'freq_out_real', 'magn_tf_real', ...
+save(fullfile(path, filename), '-append', 'freq_out_real', 'magn_tf_real', ...
     'freq_out_resim', 'magn_tf_resim', 'freq_vector', 'magn_bode_ref', 'freq_out_real', 'phase_tf_real', ...
     'freq_out_resim', 'phase_tf_resim', 'freq_vector', 'phase_bode_ref', 'freq_min', 'freq_max');
 
